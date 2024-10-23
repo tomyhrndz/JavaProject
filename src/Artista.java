@@ -19,6 +19,22 @@ public class Artista {
     }
 
     public String getID(){
-        return ID;}
+        return ID;
+    }
+
+    public String getGenero() {
+        return Genero;
+    }
+
+    public int getCantIntegrantes() {
+        return CantIntegrantes;
+    }
+
+    public void Mostrar() {
+        System.out.println("ID: " + ID);
+        System.out.println("Nombre: " + Nombre);
+        System.out.println("Cantidad de integrantes: " + CantIntegrantes);
+        System.out.println("Genero musical: " + Genero);
+    }
 }
 
