@@ -1,6 +1,6 @@
-public class Sensillo extends Canciones{
+public class Sencillo extends Canciones{
 
-    public Sensillo(String Nombre, String Duracion) {
+    public Sencillo(String Nombre, String Duracion) {
         super(Nombre, Duracion);
     }
 

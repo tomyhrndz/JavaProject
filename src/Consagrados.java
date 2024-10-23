@@ -1,4 +1,4 @@
-public class Consagrados extends Artistas{
+public class Consagrados extends Artista{
 
     public Consagrados(String ID, String Nombre, int CantIntegrantes, String Genero) {
         super(ID, Nombre, CantIntegrantes, Genero);
