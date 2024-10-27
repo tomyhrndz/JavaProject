@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
         Discografica Spotify = new Discografica();
         Spotify.CargaDatos();
-        Spotify.MostrarArtista();
+        Spotify.ConsultaDatos(2, "Hip-Hop");
     }
 }
 

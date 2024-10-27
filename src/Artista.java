@@ -24,7 +24,13 @@ public class Artista implements Comparable<Artista>{
         return this.ID.compareTo(A.getID());
     }
 
+    public void CargarDisco(Disco nuevo) {
+        Discos.add(nuevo);
+    }
 
+    public void CargarRecital (Recital nuevo) {
+        Recitales.add(nuevo);
+    }
 
     public String getID(){
         return ID;
@@ -40,9 +46,19 @@ public class Artista implements Comparable<Artista>{
 
     public void Mostrar() {
         System.out.println("ID: " + ID);
+        /*
         System.out.println("Nombre: " + Nombre);
         System.out.println("Cantidad de integrantes: " + CantIntegrantes);
         System.out.println("Genero musical: " + Genero);
+
+        for (Disco discos: Discos) {
+            discos.Mostrar();
+        }
+
+        for (Recital recitales: Recitales) {
+            recitales.Mostrar();
+        }
+         */
     }
 
 

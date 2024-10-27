@@ -15,6 +15,8 @@ import java.nio.Buffer;
 import java.nio.channels.FileLock;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.SimpleTimeZone;
 import java.util.TreeSet;
@@ -31,13 +33,15 @@ public class Discografica {
 
     public void CargaDatos() {
         StringBuilder InformeErrores = new StringBuilder();
+        Artista NuevoArtista = null;
+        Disco NuevoDisco = null;
+
         try {
             File Arch = new File("Artistas.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newDefaultInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(Arch);
             doc.getDocumentElement().normalize();
-            StringBuilder errores = new StringBuilder();
 
             NodeList ListaArtistas = doc.getElementsByTagName("artista");
             for (int i=0; i < ListaArtistas.getLength(); i++) {
@@ -50,24 +54,27 @@ public class Discografica {
                     String ID = elemento.getElementsByTagName("ID").item(0).getTextContent();
                     String Nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
                     String Integrantes = elemento.getElementsByTagName("cantidad_integrantes").item(0).getTextContent().trim();
-                    Integrantes = Integrantes.replace(" ", "");
                     int CantIntegrantes= Integer.parseInt(Integrantes);
-                    System.out.println("La cantidad de integrantes es: " + CantIntegrantes);
-
-
-                    if (CantIntegrantes < 1)
-                        errores.append("La cantidad de integrantes no puede ser negativa o cero: ").append(CantIntegrantes).append("\n");
-
+                    if (CantIntegrantes < 1) {
+                        throw new IllegalArgumentException(": La cantidad de integrantes es negativa o cero");
+                    }
                     String Genero = elemento.getElementsByTagName("genero_musical").item(0).getTextContent();
+
+                    if (ID.startsWith("EMG")) {
+                        NuevoArtista = new Emergentes(ID.substring(3), Nombre, CantIntegrantes, Genero);
+                        Artistas.add(NuevoArtista);
+                    }else {
+                        NuevoArtista = new Consagrados(ID.substring(3), Nombre, CantIntegrantes, Genero);
+                        Artistas.add(NuevoArtista);
+                    }
 
                     //Procesar los datos del disco
                     NodeList ListaDiscos = elemento.getElementsByTagName("disco");
                     for (int j=0; j < ListaDiscos.getLength(); j ++) {
                         Element discoElemento = (Element) ListaDiscos.item(j);
-
                         int UnidadesVendidas = Integer.parseInt(discoElemento.getElementsByTagName("unidades_vendidas").item(0).getTextContent());
-                        if (UnidadesVendidas < 1)
-                            errores.append("Las unidades vendidas no puede ser negativa: ").append(UnidadesVendidas).append("\n");
+
+                        NuevoDisco = new Disco(UnidadesVendidas);
                         // Procesar canciones del disco actual
                         NodeList ListaCanciones = discoElemento.getElementsByTagName("cancion");
                         for (int k=0; k < ListaCanciones.getLength(); k++) {
@@ -76,15 +83,16 @@ public class Discografica {
 
                             String NombreCancion = CancionElemento.getElementsByTagName("nombreCancion").item(0).getTextContent();
                             String Duracion = CancionElemento.getElementsByTagName("duracion").item(0).getTextContent();
-                            int Reproducciones = Integer.parseInt(CancionElemento.getElementsByTagName("reproducciones").item(0).getTextContent());
-                            //if (Reproducciones < 1)
-                                //errores.append("Las reproducciones no pueden ser negativas: ").append(Reproducciones).append("\n");
+                            String CantRepro = CancionElemento.getElementsByTagName("reproducciones").item(0).getTextContent().trim();
+                            int Reproducciones = Integer.parseInt(CantRepro);
+                            if (Reproducciones < 1)
+                                throw new IllegalArgumentException(": Las reproducciones son menos o iguales a cero");
                             boolean EsSencillo = Boolean.parseBoolean(CancionElemento.getElementsByTagName("es_sencillo").item(0).getTextContent());
 
+                            NuevoDisco.AgregarCanciones(NombreCancion, Duracion, Reproducciones, EsSencillo);
                         }
-
+                        NuevoArtista.CargarDisco(NuevoDisco);
                     }
-
                     //Procesar los datos de los recitales
                     NodeList ListaRecitales = elemento.getElementsByTagName("recital");
                     for (int l=0; l < ListaRecitales.getLength(); l++) {
@@ -92,24 +100,22 @@ public class Discografica {
 
                         String FechaString = RecitalesElemento.getElementsByTagName("fecha").item(0).getTextContent();
                         String[] Fecha = FechaString.split("-", 3);
-                        Float Recaudacion = Float.parseFloat(RecitalesElemento.getElementsByTagName("recaudacion").item(0).getTextContent());
-                        Float Costos = Float.parseFloat(RecitalesElemento.getElementsByTagName("costos_produccion").item(0).getTextContent());
+                        int year = Integer.parseInt(Fecha[0]);
+                        int mes = Integer.parseInt(Fecha[1]);
+                        int dia = Integer.parseInt(Fecha[2]);
+                        String MontoRecaudacion =RecitalesElemento.getElementsByTagName("recaudacion").item(0).getTextContent().trim();
+                        Float Recaudacion = Float.parseFloat(MontoRecaudacion);
+                        if (Recaudacion < 1)
+                            throw new IllegalArgumentException(": El costo es menor o igual a cero");
+                        String Costo = RecitalesElemento.getElementsByTagName("costos_produccion").item(0).getTextContent().trim();
+                        Float CostoProduccion = Float.parseFloat(Costo);
+                        if (CostoProduccion < 1)
+                            throw new IllegalArgumentException(": El costo de la produccion es menor o igual a cero");
+
+                        Recital NuevoRecital = new Recital(year, mes, dia, Recaudacion, CostoProduccion);
+                        NuevoArtista.CargarRecital(NuevoRecital);
                     }
-
-                    if (errores.length() > 1)
-                        throw new IllegalArgumentException();
-
-                    if (ID.startsWith("EMG")) {
-                        Emergentes Nuevo = new Emergentes(ID.substring(3), Nombre, CantIntegrantes, Genero);
-                        Artistas.add(Nuevo);
-                    }else {
-                        Consagrados Nuevo = new Consagrados(ID.substring(3), Nombre, CantIntegrantes, Genero);
-                        Artistas.add(Nuevo);
-                    }
-
-
                 }
-
             }
         }catch (FileNotFoundException e) {
             String mensaje = "El archivo no fue encontrado: " + e.getMessage();
@@ -138,6 +144,8 @@ public class Discografica {
                 writer.write("======[Informe de errores]======");
                 writer.newLine();
                 writer.write(InformeErrores.toString());
+                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                writer.write("    " + LocalDateTime.now().format(formato));
 
             } catch (IOException e) {
                 System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
@@ -151,7 +159,7 @@ public class Discografica {
         boolean encontro = false;
         Artista act = null;
 
-        while(iterator.hasNext() && encontro) {
+        while(iterator.hasNext() && !encontro) {
             act = iterator.next();
             if (CantInt == act.getCantIntegrantes() && Genero.equals(act.getGenero()))
                 encontro = true;
