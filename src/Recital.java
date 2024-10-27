@@ -1,11 +1,11 @@
 import java.time.LocalDate;
 
-public class Recitales {
+public class Recital {
     private LocalDate Fecha;
     private float Recaudacion;
     private float CostoProduccion;
 
-    public Recitales(int year, int mes, int dia) {
+    public Recital(int year, int mes, int dia) {
         this.Fecha = LocalDate.of(year, mes, dia);
         this.Recaudacion = 0;
         this.CostoProduccion = 0;

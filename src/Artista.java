@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
-public class Artista {
+public class Artista implements Comparable<Artista>{
     private String ID;
     private String Nombre;
     private int CantIntegrantes;
     private String Genero;
-    private HashSet<Discos> Discos;
-    private ArrayList<Recitales> Recitales;
+    private HashSet<Disco> Discos;
+    private ArrayList<Recital> Recitales;
 
     public Artista(String ID, String Nombre, int CantIntegrantes, String Genero) {
         this.ID = ID;
@@ -17,6 +18,13 @@ public class Artista {
         Discos = new HashSet<>();
         Recitales = new ArrayList<>();
     }
+
+    @Override
+    public int compareTo(Artista A) {
+        return this.ID.compareTo(A.getID());
+    }
+
+
 
     public String getID(){
         return ID;
@@ -36,5 +44,7 @@ public class Artista {
         System.out.println("Cantidad de integrantes: " + CantIntegrantes);
         System.out.println("Genero musical: " + Genero);
     }
+
+
 }
 

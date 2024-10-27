@@ -1,0 +1,651 @@
+<artistas>
+    <artista>
+        <ID>EMG001</ID>
+        <nombre>Los Noveles</nombre>
+        <cantidad_integrantes>3</cantidad_integrantes>
+        <genero_musical>Indie Rock</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>300</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Primer Paso</nombre>
+                        <duracion>03:15</duracion>
+                        <reproducciones>15000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>El Viaje</nombre>
+                        <duracion>05:20</duracion>
+                        <reproducciones>12000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Horizonte</nombre>
+                        <duracion>04:05</duracion>
+                        <reproducciones>8000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>150</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>En la Distancia</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>9500</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Cambio de Ruta</nombre>
+                        <duracion>04:30</duracion>
+                        <reproducciones>7000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-06-12</fecha>
+                <recaudacion>8000</recaudacion>
+                <costos_produccion>2500</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON002</ID>
+        <nombre>Estela y los Planetas</nombre>
+        <cantidad_integrantes>5</cantidad_integrantes>
+        <genero_musical>Pop Alternativo</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>500</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Luz Interior</nombre>
+                        <duracion>04:05</duracion>
+                        <reproducciones>50000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Estrella Fugaz</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>45000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>800</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Cuerpos Celestes</nombre>
+                        <duracion>06:10</duracion>
+                        <reproducciones>60000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Universo en Piel</nombre>
+                        <duracion>04:30</duracion>
+                        <reproducciones>55000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-05-10</fecha>
+                <recaudacion>20000</recaudacion>
+                <costos_produccion>5000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-09-22</fecha>
+                <recaudacion>30000</recaudacion>
+                <costos_produccion>7000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-15</fecha>
+                <recaudacion>25000</recaudacion>
+                <costos_produccion>6000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG003</ID>
+        <nombre>Sonidos Urbanos</nombre>
+        <cantidad_integrantes>2</cantidad_integrantes>
+        <genero_musical>Hip-Hop</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>400</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Voces de la Calle</nombre>
+                        <duracion>02:55</duracion>
+                        <reproducciones>20000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Latidos</nombre>
+                        <duracion>03:10</duracion>
+                        <reproducciones>15000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Manos al Aire</nombre>
+                        <duracion>02:50</duracion>
+                        <reproducciones>17000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>300</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Ritmo de Vida</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>13000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Pies Descalzos</nombre>
+                        <duracion>04:00</duracion>
+                        <reproducciones>11000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-07-14</fecha>
+                <recaudacion>12000</recaudacion>
+                <costos_produccion>3000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-08-30</fecha>
+                <recaudacion>14000</recaudacion>
+                <costos_produccion>4000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON004</ID>
+        <nombre>Clásicos del Alma</nombre>
+        <cantidad_integrantes>6</cantidad_integrantes>
+        <genero_musical>Jazz</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>900</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Notas Profundas</nombre>
+                        <duracion>07:30</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Alma Azul</nombre>
+                        <duracion>05:25</duracion>
+                        <reproducciones>21000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Sin Prisa</nombre>
+                        <duracion>06:40</duracion>
+                        <reproducciones>18000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-03-18</fecha>
+                <recaudacion>45000</recaudacion>
+                <costos_produccion>8000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-10</fecha>
+                <recaudacion>52000</recaudacion>
+                <costos_produccion>8500</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG001</ID>
+        <nombre>Los Noveles</nombre>
+        <cantidad_integrantes>3</cantidad_integrantes>
+        <genero_musical>Indie Rock</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>300</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Primer Paso</nombre>
+                        <duracion>03:15</duracion>
+                        <reproducciones>15000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>El Viaje</nombre>
+                        <duracion>05:20</duracion>
+                        <reproducciones>12000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Horizonte</nombre>
+                        <duracion>04:05</duracion>
+                        <reproducciones>8000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>150</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>En la Distancia</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>9500</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Cambio de Ruta</nombre>
+                        <duracion>04:30</duracion>
+                        <reproducciones>7000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-06-12</fecha>
+                <recaudacion>8000</recaudacion>
+                <costos_produccion>2500</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON002</ID>
+        <nombre>Estela y los Planetas</nombre>
+        <cantidad_integrantes>5</cantidad_integrantes>
+        <genero_musical>Pop Alternativo</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>500</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Luz Interior</nombre>
+                        <duracion>04:05</duracion>
+                        <reproducciones>50000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Estrella Fugaz</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>45000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>800</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Cuerpos Celestes</nombre>
+                        <duracion>06:10</duracion>
+                        <reproducciones>60000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Universo en Piel</nombre>
+                        <duracion>04:30</duracion>
+                        <reproducciones>55000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-05-10</fecha>
+                <recaudacion>20000</recaudacion>
+                <costos_produccion>5000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-09-22</fecha>
+                <recaudacion>30000</recaudacion>
+                <costos_produccion>7000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-15</fecha>
+                <recaudacion>25000</recaudacion>
+                <costos_produccion>6000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG003</ID>
+        <nombre>Sonidos Urbanos</nombre>
+        <cantidad_integrantes>2</cantidad_integrantes>
+        <genero_musical>Hip-Hop</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>400</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Voces de la Calle</nombre>
+                        <duracion>02:55</duracion>
+                        <reproducciones>20000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Latidos</nombre>
+                        <duracion>03:10</duracion>
+                        <reproducciones>15000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Manos al Aire</nombre>
+                        <duracion>02:50</duracion>
+                        <reproducciones>17000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>300</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Ritmo de Vida</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>13000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Pies Descalzos</nombre>
+                        <duracion>04:00</duracion>
+                        <reproducciones>11000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-07-14</fecha>
+                <recaudacion>12000</recaudacion>
+                <costos_produccion>3000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-08-30</fecha>
+                <recaudacion>14000</recaudacion>
+                <costos_produccion>4000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON004</ID>
+        <nombre>Clásicos del Alma</nombre>
+        <cantidad_integrantes>6</cantidad_integrantes>
+        <genero_musical>Jazz</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>900</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Notas Profundas</nombre>
+                        <duracion>07:30</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Alma Azul</nombre>
+                        <duracion>05:25</duracion>
+                        <reproducciones>21000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Sin Prisa</nombre>
+                        <duracion>06:40</duracion>
+                        <reproducciones>18000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-03-18</fecha>
+                <recaudacion>45000</recaudacion>
+                <costos_produccion>8000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-01</fecha>
+                <recaudacion>50000</recaudacion>
+                <costos_produccion>9000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <identificador>EMG005</identificador>
+        <nombre>Caminos Rotos</nombre>
+        <cantidad_integrantes>4</cantidad_integrantes>
+        <genero_musical>Folk</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>200</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Senderos</nombre>
+                        <duracion>03:20</duracion>
+                        <reproducciones>10000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>La Última Canción</nombre>
+                        <duracion>04:00</duracion>
+                        <reproducciones>12000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>150</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Eco en el Viento</nombre>
+                        <duracion>04:15</duracion>
+                        <reproducciones>9000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Esperanza</nombre>
+                        <duracion>02:50</duracion>
+                        <reproducciones>11000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-01-10</fecha>
+                <recaudacion>8000</recaudacion>
+                <costos_produccion>3000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-02-14</fecha>
+                <recaudacion>15000</recaudacion>
+                <costos_produccion>5000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <identificador>CON006</identificador>
+        <nombre>La Fuerza del Rock</nombre>
+        <cantidad_integrantes>5</cantidad_integrantes>
+        <genero_musical>Rock</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>1200</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Rugido de Libertad</nombre>
+                        <duracion>04:35</duracion>
+                        <reproducciones>65000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Fuego en el Corazón</nombre>
+                        <duracion>05:10</duracion>
+                        <reproducciones>80000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>950</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Desafío</nombre>
+                        <duracion>04:00</duracion>
+                        <reproducciones>50000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Caminos de Hierro</nombre>
+                        <duracion>03:50</duracion>
+                        <reproducciones>55000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-07-05</fecha>
+                <recaudacion>75000</recaudacion>
+                <costos_produccion>15000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-08-17</fecha>
+                <recaudacion>100000</recaudacion>
+                <costos_produccion>20000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <identificador>EMG007</identificador>
+        <nombre>Nueva Era</nombre>
+        <cantidad_integrantes>3</cantidad_integrantes>
+        <genero_musical>Electrónica</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>600</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Infinito</nombre>
+                        <duracion>03:40</duracion>
+                        <reproducciones>25000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Ritmo Cósmico</nombre>
+                        <duracion>05:00</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-03-30</fecha>
+                <recaudacion>20000</recaudacion>
+                <costos_produccion>5000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-06-25</fecha>
+                <recaudacion>30000</recaudacion>
+                <costos_produccion>8000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-09-10</fecha>
+                <recaudacion>40000</recaudacion>
+                <costos_produccion>7000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <identificador>CON008</identificador>
+        <nombre>Tradiciones Musicales</nombre>
+        <cantidad_integrantes>8</cantidad_integrantes>
+        <genero_musical>Folklore</genero_musical>
+        <discos>
+            <disco>
+                <unidades_vendidas>700</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>Caminos del Folklore</nombre>
+                        <duracion>04:20</duracion>
+                        <reproducciones>15000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Raíces</nombre>
+                        <duracion>03:45</duracion>
+                        <reproducciones>12000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <unidades_vendidas>900</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombre>El Pueblo Canta</nombre>
+                        <duracion>05:10</duracion>
+                        <reproducciones>35000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombre>Memorias del Pasado</nombre>
+                        <duracion>04:30</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-05-12</fecha>
+                <recaudacion>45000</recaudacion>
+                <costos_produccion>12000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-08-14</fecha>
+                <recaudacion>70000</recaudacion>
+                <costos_produccion>18000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+</artistas>

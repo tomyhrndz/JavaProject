@@ -1,9 +1,11 @@
-public class Canciones {
+import javax.swing.text.StyledEditorKit;
+
+public class Cancion {
     private String Nombre;
     private String Duracion;
     private int CantReproducciones;
 
-    public Canciones(String Nombre, String Duracion) {
+    public Cancion(String Nombre, String Duracion) {
         this.Nombre = Nombre;
         this.Duracion = Duracion;
         CantReproducciones = 0;
