@@ -1,3 +1,5 @@
+package discografica;
+
 import java.time.LocalDate;
 
 public class Recital {
@@ -20,7 +22,7 @@ public class Recital {
     }
 
     public void Mostrar() {
-        System.out.println("======================= Recital =======================");
+        System.out.println("======================= discografica.Recital =======================");
         System.out.println("Fecha: " + Fecha);
         System.out.println("Recaudacion: " + Recaudacion);
         System.out.println("Costo de produccion: " + CostoProduccion);

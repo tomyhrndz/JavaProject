@@ -1,4 +1,4 @@
-import javax.swing.text.StyledEditorKit;
+package discografica;
 
 public class Cancion {
     private String Nombre;

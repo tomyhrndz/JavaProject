@@ -1,5 +1,6 @@
+package discografica;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Disco {
     private int UnidadesVendidas;

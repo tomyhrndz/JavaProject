@@ -1,3 +1,6 @@
+package discografica;
+
+import exceptions.ArtistaNoEncontradoException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -7,22 +10,13 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.*;
-import java.nio.Buffer;
-import java.nio.channels.FileLock;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.SimpleTimeZone;
+import java.util.List;
 import java.util.TreeSet;
-import java.util.spi.CalendarNameProvider;
-import java.util.stream.StreamSupport;
-
 
 public class Discografica {
     TreeSet<Artista> Artistas;
@@ -154,48 +148,40 @@ public class Discografica {
 
     }
 
-    public void ConsultaDatos(int CantInt, String Genero) {
-        Iterator<Artista> iterator = Artistas.iterator();
-        boolean encontro = false;
-        Artista act = null;
 
-        while(iterator.hasNext() && !encontro) {
-            act = iterator.next();
-            if (CantInt == act.getCantIntegrantes() && Genero.equals(act.getGenero()))
-                encontro = true;
+    public List<Artista> consultaDatos(int CantInt, String Genero) {
+        List<Artista> artistasEncontrados = new ArrayList<>();
+
+        for(Artista artista : Artistas) {
+            if (CantInt == artista.getCantIntegrantes() && Genero.equals(artista.getGenero()))
+                artistasEncontrados.add(artista);
         }
-
-        if (encontro)
-            act.Mostrar(); // Reformar para mostrar por GUI
-        else
-            System.out.println("No se encontro");
-
+        return artistasEncontrados;
     }
 
-    public int bajaArtista(String ID) {
-        Iterator<Artista> iterator = Artistas.iterator();
-        boolean bandera = true;
-        Artista act = null;
+    public void bajaArtista(String ID) {
+        try {
+            Artista eliminar = buscarArtista(ID);
+            Artistas.remove(eliminar);
+        } catch (ArtistaNoEncontradoException e) {
+            throw e;
+        }
+    }
 
-        while (iterator.hasNext() && bandera) { //Mientras no lo encuentre y exista un siguiente
+    public Artista buscarArtista(String ID) throws ArtistaNoEncontradoException {
+        Iterator<Artista> iterator = Artistas.iterator();
+        Artista act = null;
+        boolean bandera = false;
+
+        while (iterator.hasNext() && !bandera) { //Mientras no lo encuentre y exista un siguiente
             act = iterator.next();              //Avanza el iterator
             if (ID.equals(act.getID())) {
-                bandera = false;                //Encontro el ID
+                bandera = true;                //Encontro el ID
             }
         }
-        if (bandera) { //No encontro el ID
-            return 0;
-        } else { // Eliminar ID
-            Artistas.remove(act);
-            return 1;
+        if(bandera){
+            return act;
         }
-    }
-
-    public void MostrarArtista() {
-
-        for (Artista act : Artistas) {
-            System.out.println("");
-            act.Mostrar();
-        }
+        throw new ArtistaNoEncontradoException("El artista con ID " + ID + " no fue encontrado.");
     }
 }

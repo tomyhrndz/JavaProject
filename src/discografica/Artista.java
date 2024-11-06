@@ -1,6 +1,7 @@
+package discografica;
+
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class Artista implements Comparable<Artista>{
     private String ID;
@@ -51,7 +52,7 @@ public class Artista implements Comparable<Artista>{
         System.out.println("Cantidad de integrantes: " + CantIntegrantes);
         System.out.println("Genero musical: " + Genero);
 
-        for (Disco discos: Discos) {
+        for (discografica.Disco discos: Discos) {
             discos.Mostrar();
         }
 
