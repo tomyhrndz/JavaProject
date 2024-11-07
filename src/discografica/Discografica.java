@@ -6,17 +6,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Discografica {
     TreeSet<Artista> Artistas;
@@ -25,13 +21,13 @@ public class Discografica {
         Artistas = new TreeSet<>();
     }
 
-    public void CargaDatos() {
+    public void CargaDatos(String path) {
         StringBuilder InformeErrores = new StringBuilder();
         Artista NuevoArtista = null;
         Disco NuevoDisco = null;
 
         try {
-            File Arch = new File("Artistas.xml");
+            File Arch = new File(path);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newDefaultInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(Arch);
@@ -113,23 +109,23 @@ public class Discografica {
             }
         }catch (FileNotFoundException e) {
             String mensaje = "El archivo no fue encontrado: " + e.getMessage();
-            System.err.println(mensaje);
+            //System.err.println(mensaje);
             InformeErrores.append(mensaje).append(System.lineSeparator());
         } catch (NumberFormatException e) {
             String mensaje = "Error en el formato de los números: " + e.getMessage();
-            System.err.println(mensaje);
+            //System.err.println(mensaje);
             InformeErrores.append(mensaje).append(System.lineSeparator());
         } catch (NullPointerException e) {
             String mensaje = "Falta rellenar el campo alguno de los datos: " + e.getMessage();
-            System.err.println(mensaje);
+            //System.err.println(mensaje);
             InformeErrores.append(mensaje).append(System.lineSeparator());
         } catch (ParserConfigurationException | IOException | SAXException e) {
             String mensaje = "Error durante el analisis: " + e.getMessage();
-            System.err.println(mensaje);
+            //System.err.println(mensaje);
             InformeErrores.append(mensaje).append(System.lineSeparator());
         } catch (IllegalArgumentException e) {
             String mensaje = "Error" + e.getMessage();
-            System.err.println(mensaje);
+            //System.err.println(mensaje);
             InformeErrores.append(mensaje).append(System.lineSeparator());
         }
 
@@ -142,10 +138,9 @@ public class Discografica {
                 writer.write("    " + LocalDateTime.now().format(formato));
 
             } catch (IOException e) {
-                System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
+                //System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
             }
         }
-
     }
 
 
@@ -164,7 +159,7 @@ public class Discografica {
             Artista eliminar = buscarArtista(ID);
             Artistas.remove(eliminar);
         } catch (ArtistaNoEncontradoException e) {
-            throw e;
+            System.err.println("Error: Artista no encontrado");
         }
     }
 
@@ -183,5 +178,26 @@ public class Discografica {
             return act;
         }
         throw new ArtistaNoEncontradoException("El artista con ID " + ID + " no fue encontrado.");
+    }
+
+    public List<Cancion> topCancionesGenero(String genero) {
+        List<Cancion> canciones = new ArrayList<>();
+
+        List<Cancion> cancionesGenero = new ArrayList<>();
+
+        // Crea lista con todas las canciones del Genero
+        for (Artista artista : Artistas) {
+            if (genero.equals(artista.getGenero())) {
+                for(Disco disco : artista.getDiscos()){
+                    cancionesGenero.addAll(disco.getCanciones());
+                }
+            }
+        }
+
+        // Ordena la lista basado en las reproducciones
+        cancionesGenero.sort(Comparator.comparingInt(Cancion::getCantReproducciones).reversed());
+        // Devuelve sublista de las primeras 10
+        return cancionesGenero.size() > 10 ? cancionesGenero.subList(0, 10) : cancionesGenero;
+
     }
 }

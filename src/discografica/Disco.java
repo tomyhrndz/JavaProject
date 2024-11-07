@@ -26,13 +26,6 @@ public class Disco {
         return UnidadesVendidas;
     }
 
-    public void Mostrar() {
-        System.out.println("================== Discos ==================");
-        System.out.println("    Cantidad de unidades vendidas: " + UnidadesVendidas);
-
-        for (Cancion act : canciones) {
-            act.Mostrar();
-        }
-    }
+    public ArrayList<Cancion> getCanciones() {return canciones;}
+    
 }
-

@@ -45,9 +45,12 @@ public class Artista implements Comparable<Artista>{
         return CantIntegrantes;
     }
 
+    public HashSet<Disco> getDiscos(){ return Discos; }
+
+    /*
     public void Mostrar() {
         System.out.println("ID: " + ID);
-        /*
+
         System.out.println("Nombre: " + Nombre);
         System.out.println("Cantidad de integrantes: " + CantIntegrantes);
         System.out.println("Genero musical: " + Genero);
@@ -59,8 +62,8 @@ public class Artista implements Comparable<Artista>{
         for (Recital recitales: Recitales) {
             recitales.Mostrar();
         }
-         */
-    }
+
+    }*/
 
 
 }

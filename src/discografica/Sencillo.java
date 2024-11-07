@@ -1,9 +1,9 @@
 package discografica;
 
-public class Sencillo extends Canciones{
+public class Sencillo extends Cancion{
 
-    public Sencillo(String Nombre, String Duracion) {
-        super(Nombre, Duracion);
+    public Sencillo(String Nombre, String Duracion, int Reproducciones) {
+        super(Nombre, Duracion, Reproducciones);
     }
 
     @Override

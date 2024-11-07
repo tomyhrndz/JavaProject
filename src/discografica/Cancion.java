@@ -19,11 +19,8 @@ public class Cancion {
         return CantReproducciones;
     }
 
-    public void Mostrar() {
-        System.out.println("========Canciones========");
-        System.out.println("      Nombre de : " + Nombre);
-        System.out.println("      Duracion " + Duracion);
-        System.out.println("      Cantidad de reproducciones: " + CantReproducciones);
+    public String getNombre() {
+        return Nombre;
     }
 }
 
