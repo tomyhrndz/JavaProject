@@ -22,4 +22,8 @@ public class Recital {
     }
 
     public float GetGananciaRecital(){ return Recaudacion - CostoProduccion; }
+
+    public LocalDate GetFecha() { return Fecha; }
+    public float GetRecaudacion() { return Recaudacion; }
+    public float GetCostoProduccion() { return CostoProduccion; }
 }

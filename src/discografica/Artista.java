@@ -47,46 +47,29 @@ public class Artista implements Comparable<Artista>{
 
     public HashSet<Disco> getDiscos(){ return Discos; }
 
-    /*
-    public void Mostrar() {
-        System.out.println("ID: " + ID);
-
-        System.out.println("Nombre: " + Nombre);
-        System.out.println("Cantidad de integrantes: " + CantIntegrantes);
-        System.out.println("Genero musical: " + Genero);
-
-        for (discografica.Disco discos: Discos) {
-            discos.Mostrar();
-        }
-
-        for (Recital recitales: Recitales) {
-            recitales.Mostrar();
-        }
-
-    }*/
 	public String obtenerDetalles() {
         StringBuilder sb = new StringBuilder();
         sb.append("ID: ").append(ID).append("\n");
-        sb.append("Nombre: ").append(nombre).append("\n");
-        sb.append("Cantidad de integrantes: ").append(cantIntegrantes).append("\n");
-        sb.append("Género musical: ").append(genero).append("\n");
+        sb.append("Nombre: ").append(Nombre).append("\n");
+        sb.append("Cantidad de integrantes: ").append(CantIntegrantes).append("\n");
+        sb.append("Género musical: ").append(Genero).append("\n");
 
         sb.append("Discos:\n");
-        for (Disco disco : discos) {
-            sb.append("  - ").append(disco.getNombre())
+        int i=0;
+        for (Disco disco : Discos) {
+            i++;
+            sb.append(i).append("- ")
               .append(" (Unidades vendidas: ").append(disco.getUnidadesVendidas()).append(")\n");
         }
 
         sb.append("Recitales:\n");
-        for (Recital recital : recitales) {
-            sb.append("  - Fecha: ").append(recital.getFecha())
-              .append(", Recaudación: $").append(recital.getRecaudacion())
-              .append(", Costos: $").append(recital.getCostos()).append("\n");
+        for (Recital recital : Recitales) {
+            sb.append("  - Fecha: ").append(recital.GetFecha())
+              .append(", Recaudación: $").append(recital.GetRecaudacion())
+              .append(", Costos: $").append(recital.GetCostoProduccion()).append("\n");
         }
 
         return sb.toString();
     }
 
-
 }
-
