@@ -41,14 +41,47 @@ public class Discografica {
                     Element elemento = (Element) NodArtista;
 
                     //Lee los datos para los atributos de las clases artistas
-                    String ID = elemento.getElementsByTagName("ID").item(0).getTextContent();
-                    String Nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
-                    String Integrantes = elemento.getElementsByTagName("cantidad_integrantes").item(0).getTextContent().trim();
-                    int CantIntegrantes= Integer.parseInt(Integrantes);
-                    if (CantIntegrantes < 1) {
-                        throw new IllegalArgumentException(": La cantidad de integrantes es negativa o cero");
+
+                    String ID = null;
+                    String Nombre = null;
+                    int CantIntegrantes = 0;
+                    String Genero = null;
+                    try {
+                        ID = elemento.getElementsByTagName("ID").item(0).getTextContent();
+                        if (ID.isEmpty())
+                            throw new Exception("El tag ID esta vacio en la entrada numero: " + (i+1));
+
+                    }catch (Exception e) {
+                        InformeErrores.append(e.getMessage()).append(System.lineSeparator());
                     }
-                    String Genero = elemento.getElementsByTagName("genero_musical").item(0).getTextContent();
+
+                    try {
+                        Nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
+                        if (Nombre.isEmpty())
+                            throw new Exception("El tag nombre esta vacio en la entrada numero: " + (i+1));
+
+                    }catch (Exception e) {
+                        InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                    }
+
+                    try {
+                        String Integrantes = elemento.getElementsByTagName("cantidad_integrantes").item(0).getTextContent().trim();
+                        CantIntegrantes = Integer.parseInt(Integrantes);
+                        if (CantIntegrantes < 1) {
+                            throw new IllegalArgumentException("La cantidad de integrantes es negativa o cero");
+                        }
+                    }catch (Exception e) {
+                        InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                    }
+
+                    try {
+                        Genero = elemento.getElementsByTagName("genero_musical").item(0).getTextContent();
+                        if (Genero.isEmpty())
+                            throw new Exception("El tag genero_musical esta vacio en la entrada numero: " + (i+1));
+
+                    }catch (Exception e) {
+                        InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                    }
 
                     if (ID.startsWith("EMG")) {
                         NuevoArtista = new Emergentes(ID.substring(3), Nombre, CantIntegrantes, Genero);
@@ -62,7 +95,22 @@ public class Discografica {
                     NodeList ListaDiscos = elemento.getElementsByTagName("disco");
                     for (int j=0; j < ListaDiscos.getLength(); j ++) {
                         Element discoElemento = (Element) ListaDiscos.item(j);
-                        int UnidadesVendidas = Integer.parseInt(discoElemento.getElementsByTagName("unidades_vendidas").item(0).getTextContent());
+                        int UnidadesVendidas = 0;
+
+                        try {
+                            String Vendidas = discoElemento.getElementsByTagName("unidades_vendidas").item(0).getTextContent().trim();
+                            if (Vendidas.isEmpty())
+                                throw new Exception("El tag unidades_vendidas esta vacio en la entrada numero: " + (i+1));
+                            else {
+                                UnidadesVendidas = Integer.parseInt(Vendidas);
+                                if (UnidadesVendidas < 1) {
+                                    throw new IllegalArgumentException("La cantidad de unidades vendidas es negativa o cero");
+                                }
+                            }
+                        }catch (Exception e) {
+                            InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                        }
+
 
                         NuevoDisco = new Disco(UnidadesVendidas);
                         // Procesar canciones del disco actual
@@ -71,13 +119,49 @@ public class Discografica {
                             //NodeList ListaCancion = elemento.getElementsByTagName("canciones");
                             Element CancionElemento = (Element) ListaCanciones.item(k);
 
-                            String NombreCancion = CancionElemento.getElementsByTagName("nombreCancion").item(0).getTextContent();
-                            String Duracion = CancionElemento.getElementsByTagName("duracion").item(0).getTextContent();
-                            String CantRepro = CancionElemento.getElementsByTagName("reproducciones").item(0).getTextContent().trim();
-                            int Reproducciones = Integer.parseInt(CantRepro);
-                            if (Reproducciones < 1)
-                                throw new IllegalArgumentException(": Las reproducciones son menos o iguales a cero");
-                            boolean EsSencillo = Boolean.parseBoolean(CancionElemento.getElementsByTagName("es_sencillo").item(0).getTextContent());
+                            String NombreCancion = null;
+                            String Duracion = null;
+                            int Reproducciones = 0;
+                            boolean EsSencillo = false;
+
+                            try {
+                                NombreCancion = CancionElemento.getElementsByTagName("nombreCancion").item(0).getTextContent();
+                                if (NombreCancion.isEmpty())
+                                    throw new Exception("El tag nombreCancion esta vacio en la entrada numero: " + (i+1));
+
+                            }catch (Exception e) {
+                                InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                            }
+
+                            try {
+                                Duracion = CancionElemento.getElementsByTagName("duracion").item(0).getTextContent();
+                                if (Duracion.isEmpty())
+                                    throw new Exception("El tag duracion esta vacio en la entrada numero: " + (i+1));
+
+                            }catch (Exception e) {
+                                InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                            }
+                            try {
+                                String CantRepro = CancionElemento.getElementsByTagName("reproducciones").item(0).getTextContent().trim();
+                                if (CantRepro.isEmpty())
+                                    throw new Exception("El tag duracion esta vacio en la entrada numero: " + (i+1));
+                                else {
+                                    Reproducciones = Integer.parseInt(CantRepro);
+                                    if (Reproducciones < 1)
+                                        throw new IllegalArgumentException("Las reproducciones son menos o iguales a cero");
+                                }
+                            }catch (Exception e) {
+                                InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                            }
+                            try {
+                                String Sencillo = CancionElemento.getElementsByTagName("es_sencillo").item(0).getTextContent();
+                                if (Sencillo.isEmpty())
+                                    throw new Exception("El tag duracion esta vacio en la entrada numero: " + (i+1));
+                                else
+                                    EsSencillo = Boolean.parseBoolean(Sencillo);
+                            }catch (Exception e) {
+                                InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                            }
 
                             NuevoDisco.AgregarCanciones(NombreCancion, Duracion, Reproducciones, EsSencillo);
                         }
@@ -87,46 +171,56 @@ public class Discografica {
                     NodeList ListaRecitales = elemento.getElementsByTagName("recital");
                     for (int l=0; l < ListaRecitales.getLength(); l++) {
                         Element RecitalesElemento = (Element) ListaRecitales.item(l);
+                        int year = 0, mes = 0, dia = 0;
+                        float Recaudacion = 0, CostoProduccion = 0;
 
-                        String FechaString = RecitalesElemento.getElementsByTagName("fecha").item(0).getTextContent();
-                        String[] Fecha = FechaString.split("-", 3);
-                        int year = Integer.parseInt(Fecha[0]);
-                        int mes = Integer.parseInt(Fecha[1]);
-                        int dia = Integer.parseInt(Fecha[2]);
-                        String MontoRecaudacion =RecitalesElemento.getElementsByTagName("recaudacion").item(0).getTextContent().trim();
-                        Float Recaudacion = Float.parseFloat(MontoRecaudacion);
-                        if (Recaudacion < 1)
-                            throw new IllegalArgumentException(": El costo es menor o igual a cero");
-                        String Costo = RecitalesElemento.getElementsByTagName("costos_produccion").item(0).getTextContent().trim();
-                        Float CostoProduccion = Float.parseFloat(Costo);
-                        if (CostoProduccion < 1)
-                            throw new IllegalArgumentException(": El costo de la produccion es menor o igual a cero");
+                        try {
+                            String FechaString = RecitalesElemento.getElementsByTagName("fecha").item(0).getTextContent();
+                            if (FechaString.isEmpty())
+                                throw new Exception("El tag fecha esta vacio en la entrada numero: " + (i+1));
+                            else {
+                                String[] Fecha = FechaString.split("-", 3);
+                                year = Integer.parseInt(Fecha[0]);
+                                mes = Integer.parseInt(Fecha[1]);
+                                dia = Integer.parseInt(Fecha[2]);
+                            }
+                        } catch (Exception e) {
+                            InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                        }
+
+                        try {
+                            String MontoRecaudacion =RecitalesElemento.getElementsByTagName("recaudacion").item(0).getTextContent().trim();
+                            if (MontoRecaudacion.isEmpty())
+                                throw new Exception("El tag recaudacion esta vacio en la entrada numero: " + (i+1));
+                            else {
+                                Recaudacion = Float.parseFloat(MontoRecaudacion);
+                                if (Recaudacion < 1)
+                                    throw new IllegalArgumentException("El monto recaudado es menor o igual a cero");
+                            }
+                        } catch (Exception e) {
+                            InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                        }
+
+                        try {
+                            String Costo = RecitalesElemento.getElementsByTagName("costos_produccion").item(0).getTextContent().trim();
+                            if (Costo.isEmpty())
+                                throw new Exception("El tag costos_produccion esta vacio en la entrada numero: " + (i+1));
+                            else {
+                                CostoProduccion = Float.parseFloat(Costo);
+                                if (CostoProduccion < 1)
+                                    throw new IllegalArgumentException("El costo de la produccion menor o igual a cero");
+                            }
+                        } catch (Exception e) {
+                            InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                        }
 
                         Recital NuevoRecital = new Recital(year, mes, dia, Recaudacion, CostoProduccion);
                         NuevoArtista.CargarRecital(NuevoRecital);
                     }
                 }
             }
-        }catch (FileNotFoundException e) {
-            String mensaje = "El archivo no fue encontrado: " + e.getMessage();
-            //System.err.println(mensaje);
-            InformeErrores.append(mensaje).append(System.lineSeparator());
-        } catch (NumberFormatException e) {
-            String mensaje = "Error en el formato de los números: " + e.getMessage();
-            //System.err.println(mensaje);
-            InformeErrores.append(mensaje).append(System.lineSeparator());
-        } catch (NullPointerException e) {
-            String mensaje = "Falta rellenar el campo alguno de los datos: " + e.getMessage();
-            //System.err.println(mensaje);
-            InformeErrores.append(mensaje).append(System.lineSeparator());
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            String mensaje = "Error durante el analisis: " + e.getMessage();
-            //System.err.println(mensaje);
-            InformeErrores.append(mensaje).append(System.lineSeparator());
-        } catch (IllegalArgumentException e) {
-            String mensaje = "Error" + e.getMessage();
-            //System.err.println(mensaje);
-            InformeErrores.append(mensaje).append(System.lineSeparator());
+            throw new RuntimeException(e);
         }
 
         if (InformeErrores.length() > 1) {
@@ -138,9 +232,10 @@ public class Discografica {
                 writer.write("    " + LocalDateTime.now().format(formato));
 
             } catch (IOException e) {
-                //System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
+                System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
             }
         }
+
     }
 
 
