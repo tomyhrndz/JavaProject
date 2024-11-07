@@ -21,10 +21,5 @@ public class Recital {
         Recaudacion = recaudacion;
     }
 
-    public void Mostrar() {
-        System.out.println("======================= discografica.Recital =======================");
-        System.out.println("Fecha: " + Fecha);
-        System.out.println("Recaudacion: " + Recaudacion);
-        System.out.println("Costo de produccion: " + CostoProduccion);
-    }
+    public float GetGananciaRecital(){ return Recaudacion - CostoProduccion; }
 }

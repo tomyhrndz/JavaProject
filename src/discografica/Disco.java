@@ -27,5 +27,26 @@ public class Disco {
     }
 
     public ArrayList<Cancion> getCanciones() {return canciones;}
-    
+
+    public double GetGananciaReproducciones()
+    {
+        double Sumador = 0;
+        for (Cancion act : canciones)
+        {
+            double Cant = act.getCantReproducciones();
+            if(act.EsSencillo())
+                Cant *= 1.5;
+            if(Cant > 0 && Cant < 5000)
+                Sumador += 6 * Cant * 1.02;
+            else
+                if(Cant >= 5000 && Cant < 10000)
+                    Sumador += 6 * Cant * 1.05;
+                else
+                    if(Cant > 10000)
+                        Sumador += 6 * Cant * 1.1;
+        }
+        return Sumador;
+    }
+
+    public double GetGananciaDisco(){ return UnidadesVendidas * canciones.size() * 500; }
 }
