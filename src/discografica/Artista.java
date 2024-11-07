@@ -64,6 +64,28 @@ public class Artista implements Comparable<Artista>{
         }
 
     }*/
+	public String obtenerDetalles() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(ID).append("\n");
+        sb.append("Nombre: ").append(nombre).append("\n");
+        sb.append("Cantidad de integrantes: ").append(cantIntegrantes).append("\n");
+        sb.append("Género musical: ").append(genero).append("\n");
+
+        sb.append("Discos:\n");
+        for (Disco disco : discos) {
+            sb.append("  - ").append(disco.getNombre())
+              .append(" (Unidades vendidas: ").append(disco.getUnidadesVendidas()).append(")\n");
+        }
+
+        sb.append("Recitales:\n");
+        for (Recital recital : recitales) {
+            sb.append("  - Fecha: ").append(recital.getFecha())
+              .append(", Recaudación: $").append(recital.getRecaudacion())
+              .append(", Costos: $").append(recital.getCostos()).append("\n");
+        }
+
+        return sb.toString();
+    }
 
 
 }

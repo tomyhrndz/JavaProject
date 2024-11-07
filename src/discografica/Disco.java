@@ -34,8 +34,6 @@ public class Disco {
         for (Cancion act : canciones)
         {
             double Cant = act.getCantReproducciones();
-            if(act.EsSencillo())
-                Cant *= 1.5;
             if(Cant > 0 && Cant < 5000)
                 Sumador += 6 * Cant * 1.02;
             else

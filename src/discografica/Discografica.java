@@ -295,4 +295,14 @@ public class Discografica {
         return cancionesGenero.size() > 10 ? cancionesGenero.subList(0, 10) : cancionesGenero;
 
     }
+
+	public List<String> listarTodosArtistas(){
+		List<String> detallesArtistas = new ArrayList<>();
+
+		for(Artista artista : Artistas){
+			detallesArtistas.add(arista.obtenerDetalles());
+		}
+
+		return detallesArtistas;
+	}
 }
