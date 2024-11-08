@@ -239,15 +239,26 @@ public class Discografica {
     }
 
 
-    public List<Artista> consultaDatos(int CantInt, String Genero) {
+    public List<Artista> consultaDatos(int CantInt) {
         List<Artista> artistasEncontrados = new ArrayList<>();
 
         for(Artista artista : Artistas) {
-            if (CantInt == artista.getCantIntegrantes() && Genero.equals(artista.getGenero()))
+            if (CantInt == artista.getCantIntegrantes())
                 artistasEncontrados.add(artista);
         }
         return artistasEncontrados;
     }
+
+    public List<Artista> consultaDatos(String genero){
+        List<Artista> artistasEncontrados = new ArrayList<>();
+
+        for(Artista artista : Artistas) {
+            if (genero.equals(artista.getGenero()))
+                artistasEncontrados.add(artista);
+        }
+        return artistasEncontrados;
+    }
+
 
     public void bajaArtista(String ID) {
         try {
@@ -300,9 +311,15 @@ public class Discografica {
 		List<String> detallesArtistas = new ArrayList<>();
 
 		for(Artista artista : Artistas){
-			detallesArtistas.add(arista.obtenerDetalles());
+			detallesArtistas.add(artista.obtenerDetalles());
 		}
 
 		return detallesArtistas;
 	}
+
+    public HashSet<Disco> reporteDiscos(String ID){
+        Artista artista = buscarArtista(ID);
+        HashSet<Disco> discos = artista.getDiscos();
+        return discos;
+    }
 }

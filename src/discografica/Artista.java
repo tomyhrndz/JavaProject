@@ -64,7 +64,7 @@ public class Artista implements Comparable<Artista>{
 			for(Cancion cancion: disco.getCanciones()){
 				sb.append("-Nombre: ").append(cancion.getNombre()).append("\n-Duracion:")
 					.append(cancion.getDuracion()).append("\n-Reproducciones: ")
-					.append(cancion.getCantReproducciones).append("\n");
+					.append(cancion.getCantReproducciones()).append("\n");
 			}
         }
 
