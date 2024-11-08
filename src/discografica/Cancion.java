@@ -22,5 +22,7 @@ public class Cancion {
     public String getNombre() {
         return Nombre;
     }
+
+	public String getDuracion(){return Duracion;}
 }
 

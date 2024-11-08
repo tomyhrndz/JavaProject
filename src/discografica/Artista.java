@@ -59,7 +59,13 @@ public class Artista implements Comparable<Artista>{
         for (Disco disco : Discos) {
             i++;
             sb.append(i).append("- ")
-              .append(" (Unidades vendidas: ").append(disco.getUnidadesVendidas()).append(")\n");
+              .append(" (Unidades vendidas: ").append(disco.getUnidadesVendidas()).append(")\n")
+			  .append("Canciones:").append("\n");
+			for(Cancion cancion: disco.getCanciones()){
+				sb.append("-Nombre: ").append(cancion.getNombre()).append("\n-Duracion:")
+					.append(cancion.getDuracion()).append("\n-Reproducciones: ")
+					.append(cancion.getCantReproducciones).append("\n");
+			}
         }
 
         sb.append("Recitales:\n");
