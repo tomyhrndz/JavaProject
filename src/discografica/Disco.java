@@ -1,8 +1,9 @@
 package discografica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Disco {
+public class Disco implements Serializable {
     private int UnidadesVendidas;
     private ArrayList<Cancion> canciones;
 

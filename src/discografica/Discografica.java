@@ -13,8 +13,9 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.io.Serializable;
 
-public class Discografica {
+public class Discografica implements Serializable{
     TreeSet<Artista> Artistas;
 
     public Discografica () {

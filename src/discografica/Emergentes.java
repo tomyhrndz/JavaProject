@@ -1,6 +1,8 @@
 package discografica;
 
-public class Emergentes extends Artista{
+import java.io.Serializable;
+
+public class Emergentes extends Artista implements Serializable {
 
     public Emergentes(String ID, String Nombre, int CantIntegrantes, String Genero) {
         super(ID, Nombre, CantIntegrantes, Genero);

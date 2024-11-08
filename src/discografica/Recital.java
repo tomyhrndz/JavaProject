@@ -1,8 +1,9 @@
 package discografica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Recital {
+public class Recital implements Serializable {
     private LocalDate Fecha;
     private float Recaudacion;
     private float CostoProduccion;

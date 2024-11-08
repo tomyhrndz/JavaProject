@@ -1,9 +1,10 @@
 package discografica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Artista implements Comparable<Artista>{
+public class Artista implements Comparable<Artista>, Serializable {
     private String ID;
     private String Nombre;
     private int CantIntegrantes;

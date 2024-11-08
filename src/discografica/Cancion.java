@@ -1,6 +1,8 @@
 package discografica;
 
-public class Cancion {
+import java.io.Serializable;
+
+public class Cancion implements Serializable {
     private String Nombre;
     private String Duracion;
     private int CantReproducciones;
