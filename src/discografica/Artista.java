@@ -21,6 +21,8 @@ public class Artista implements Comparable<Artista>, Serializable {
         Recitales = new ArrayList<>();
     }
 
+    public Liquidacion getLiquidacion() { return null; }
+
     @Override
     public int compareTo(Artista A) {
         return this.ID.compareTo(A.getID());
@@ -47,6 +49,8 @@ public class Artista implements Comparable<Artista>, Serializable {
     }
 
     public HashSet<Disco> getDiscos(){ return Discos; }
+
+    public ArrayList<Recital> getRecitales(){ return Recitales; }
 
 	public String obtenerDetalles() {
         StringBuilder sb = new StringBuilder();

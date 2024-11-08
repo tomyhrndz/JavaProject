@@ -323,4 +323,10 @@ public class Discografica implements Serializable{
         HashSet<Disco> discos = artista.getDiscos();
         return discos;
     }
+
+    public void LiquidacionArtista(String IDArtista)
+    {
+        Artista artista  = buscarArtista(IDArtista);
+        Liquidacion liquidacion = artista.getLiquidacion();
+    }
 }
