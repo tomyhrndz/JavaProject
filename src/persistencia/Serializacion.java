@@ -17,7 +17,12 @@ public class Serializacion {
     public static <T> T cargarObjeto(String archivo, Class<T> tipo) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(archivo))) {
             return tipo.cast(in.readObject());
-        } catch (IOException | ClassNotFoundException e) {
+        }
+        catch(FileNotFoundException e) {
+            System.err.println("Archivo de Serializacion no encontrado: " + e.getMessage());
+            return null;
+        }
+        catch (IOException | ClassNotFoundException e) {
             System.err.println("Error al cargar los datos: " + e.getMessage());
             return null;
         }
