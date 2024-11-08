@@ -22,13 +22,15 @@ public class Discografica implements Serializable{
         Artistas = new TreeSet<>();
     }
 
-    public void CargaDatos(String path) {
+    public void CargaDatos(String path) throws FileNotFoundException {
         StringBuilder InformeErrores = new StringBuilder();
         Artista NuevoArtista = null;
         Disco NuevoDisco = null;
 
         try {
+
             File Arch = new File(path);
+
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newDefaultInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(Arch);
@@ -220,7 +222,10 @@ public class Discografica implements Serializable{
                     }
                 }
             }
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        }catch (FileNotFoundException e){
+            throw new FileNotFoundException("No se encontro el archivo");
+        }
+        catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
 

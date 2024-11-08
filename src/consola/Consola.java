@@ -2,6 +2,8 @@ package consola;
 
 import discografica.Discografica;
 import persistencia.Serializacion;
+
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -87,6 +89,9 @@ public class Consola {
         catch (NullPointerException e) {
             System.err.println("Error: referencia nula, asegúrese de que todos los objetos estén inicializados (Enter para continuar)");
             sc.nextLine();
+        }
+        catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
         }
     }
 
