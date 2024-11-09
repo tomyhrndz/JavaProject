@@ -1,12 +1,15 @@
 package consola;
 
+import discografica.Artista;
+import discografica.Cancion;
+import discografica.Disco;
 import discografica.Discografica;
+import exceptions.ArtistaNoEncontradoException;
 import persistencia.Serializacion;
+import reportes.Reporte;
 
 import java.io.FileNotFoundException;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Consola {
     private Discografica discografica;
@@ -44,13 +47,13 @@ public class Consola {
                         System.out.println("3. ");
                         break;
                     case 4:
-                        System.out.println("4. ");
+                        consultarDatos(sc);
                         break;
                     case 5:
-                        System.out.println("5. ");
+                        bajaArtista(sc);
                         break;
                     case 6:
-                        System.out.println("6. ");
+                        reportes(sc);
                         break;
                     case 0:
                         Serializacion.guardarObjeto(discografica, "discografica.dat");
@@ -102,5 +105,93 @@ public class Consola {
         }
         System.out.println("Enter para continuar");
         sc.nextLine();
+    }
+
+    public void consultarDatos(Scanner sc){
+        try{
+            int opcion;
+            List<Artista> artistas = new ArrayList<>();
+            System.out.println("Consultar por:");
+            System.out.println("1. Cantidad de Integrantes");
+            System.out.println("2. Genero musical");
+            opcion = sc.nextInt();
+            sc.nextLine();
+            switch(opcion){
+                case 1:
+                    System.out.println("Ingresar cantidad de integrantes:");
+                    int integrantes = sc.nextInt();
+                    sc.nextLine();
+                    artistas = discografica.consultaDatos(integrantes);
+                    break;
+                case 2:
+                    System.out.println("Ingresar el Genero musical:");
+                    String genero = sc.nextLine();
+                    artistas = discografica.consultaDatos(genero);
+                    break;
+                default:
+                    System.out.println("Opcion no valida (Enter para continuar)");
+                    sc.nextLine();
+                    consultarDatos(sc);
+                    break;
+            }
+            if(artistas.size() == 0){
+                System.out.println("No se encontraron artistas que cumplieran las condiciones");
+            }
+            for(Artista artista : artistas){
+                System.out.println();
+                System.out.println(artista.obtenerDetalles());
+                System.out.println();
+            }
+        }catch(InputMismatchException e){
+            System.err.println("Ingrese una opcion valida (Enter para continuar)");
+            sc.nextLine();
+            consultarDatos(sc);
+        }
+    }
+
+    public void bajaArtista(Scanner sc){
+        System.out.println("Ingrese el ID del artista que desea eliminar: ");
+        String id = sc.nextLine();
+        try {
+            discografica.bajaArtista(id);
+            System.out.println("El artista se elimino con exito");
+        }catch (ArtistaNoEncontradoException e) {
+            System.err.println("Artista no encontrado");
+        }
+
+    }
+
+    public void reportes(Scanner sc){
+        try{
+            System.out.println("Ingrese el reporte que desea: ");
+            System.out.println("1. Top 10 Canciones de un Genero");
+            System.out.println("2. Unidades vendidas para cada Disco de un Artista");
+            int opcion = sc.nextInt();
+            sc.nextLine();
+            switch(opcion){
+                case 1:
+                    System.out.println("Ingresar el Genero Musical: ");
+                    String genero = sc.nextLine();
+                    List<Cancion> canciones = discografica.topCancionesGenero(genero);
+                    System.out.println(Reporte.topCanciones(canciones, genero));
+                    break;
+                case 2:
+                    System.out.println("Ingresar el ID del Artista que desea: ");
+                    String artista = sc.nextLine();
+                    HashSet<Disco> discos = discografica.reporteDiscos(artista);
+                    System.out.println(Reporte.promedio(discos, artista));
+                    break;
+                default:
+                    System.out.println("Opcion no valida (Enter para continuar)");
+                    sc.nextLine();
+                    reportes(sc);
+            }
+        }catch(InputMismatchException e){
+            System.err.println("Ingrese una opcion valida (Enter para continuar)");
+            sc.nextLine();
+            reportes(sc);
+        }catch (ArtistaNoEncontradoException e) {
+            System.err.println("Artista no encontrado");
+        }
     }
 }

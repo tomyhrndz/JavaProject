@@ -257,9 +257,8 @@ public class Discografica implements Serializable{
 
     public List<Artista> consultaDatos(String genero){
         List<Artista> artistasEncontrados = new ArrayList<>();
-
         for(Artista artista : Artistas) {
-            if (genero.equals(artista.getGenero()))
+            if (genero.equalsIgnoreCase(artista.getGenero()))
                 artistasEncontrados.add(artista);
         }
         return artistasEncontrados;
@@ -271,7 +270,7 @@ public class Discografica implements Serializable{
             Artista eliminar = buscarArtista(ID);
             Artistas.remove(eliminar);
         } catch (ArtistaNoEncontradoException e) {
-            System.err.println("Error: Artista no encontrado");
+            throw e;
         }
     }
 
@@ -299,7 +298,7 @@ public class Discografica implements Serializable{
 
         // Crea lista con todas las canciones del Genero
         for (Artista artista : Artistas) {
-            if (genero.equals(artista.getGenero())) {
+            if (genero.equalsIgnoreCase(artista.getGenero())) {
                 for(Disco disco : artista.getDiscos()){
                     cancionesGenero.addAll(disco.getCanciones());
                 }
