@@ -1,6 +1,7 @@
 package discografica;
 
 import exceptions.ArtistaNoEncontradoException;
+import exceptions.ErroresEnArchivoException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -22,10 +23,11 @@ public class Discografica implements Serializable{
         Artistas = new TreeSet<>();
     }
 
-    public void CargaDatos(String path) throws FileNotFoundException {
+    public void CargaDatos(String path) throws FileNotFoundException{
         StringBuilder InformeErrores = new StringBuilder();
         Artista NuevoArtista = null;
         Disco NuevoDisco = null;
+        TreeSet<Artista> cargarArtistas = new TreeSet<>();
 
         try {
 
@@ -73,6 +75,9 @@ public class Discografica implements Serializable{
                         if (CantIntegrantes < 1) {
                             throw new IllegalArgumentException("La cantidad de integrantes es negativa o cero");
                         }
+                        if (Integrantes.isEmpty()){
+                            throw new Exception("La cantidad de integrantes esta vacio en la entrada numero: " + (i+1));
+                        }
                     }catch (Exception e) {
                         InformeErrores.append(e.getMessage()).append(System.lineSeparator());
                     }
@@ -88,10 +93,10 @@ public class Discografica implements Serializable{
 
                     if (ID.startsWith("EMG")) {
                         NuevoArtista = new Emergentes(ID.substring(3), Nombre, CantIntegrantes, Genero);
-                        Artistas.add(NuevoArtista);
+                        cargarArtistas.add(NuevoArtista);
                     }else {
                         NuevoArtista = new Consagrados(ID.substring(3), Nombre, CantIntegrantes, Genero);
-                        Artistas.add(NuevoArtista);
+                        cargarArtistas.add(NuevoArtista);
                     }
 
                     //Procesar los datos del disco
@@ -106,7 +111,7 @@ public class Discografica implements Serializable{
                                 throw new Exception("El tag unidades_vendidas esta vacio en la entrada numero: " + (i+1));
                             else {
                                 UnidadesVendidas = Integer.parseInt(Vendidas);
-                                if (UnidadesVendidas < 1) {
+                                if (UnidadesVendidas < 0) {
                                     throw new IllegalArgumentException("La cantidad de unidades vendidas es negativa o cero");
                                 }
                             }
@@ -228,18 +233,25 @@ public class Discografica implements Serializable{
         catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e);
+        }
 
-        if (InformeErrores.length() > 1) {
+        if (!InformeErrores.isEmpty()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("Informe_errores.txt"))) {
                 writer.write("======[Informe de errores]======");
                 writer.newLine();
                 writer.write(InformeErrores.toString());
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
                 writer.write("    " + LocalDateTime.now().format(formato));
+                throw new ErroresEnArchivoException(InformeErrores.toString());
 
             } catch (IOException e) {
                 System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
             }
+        }
+        else{
+            Artistas.addAll(cargarArtistas);
         }
 
     }

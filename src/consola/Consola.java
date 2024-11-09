@@ -5,6 +5,7 @@ import discografica.Cancion;
 import discografica.Disco;
 import discografica.Discografica;
 import exceptions.ArtistaNoEncontradoException;
+import exceptions.ErroresEnArchivoException;
 import persistencia.Serializacion;
 import reportes.Reporte;
 
@@ -95,6 +96,10 @@ public class Consola {
         }
         catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
+        }
+        catch (ErroresEnArchivoException e){
+            System.err.println("Error en el archivo:\n" +
+                    e.getMessage());
         }
     }
 

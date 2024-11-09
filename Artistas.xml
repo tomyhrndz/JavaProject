@@ -139,7 +139,7 @@
                     <cancion>
                         <nombreCancion>Manos al Aire</nombreCancion>
                         <duracion>02:50</duracion>
-                        <reproducciones>17000</reproducciones>
+                        <reproducciones></reproducciones>
                         <es_sencillo>true</es_sencillo>
                     </cancion>
                 </canciones>
@@ -157,7 +157,7 @@
                         <nombreCancion>Pies Descalzos</nombreCancion>
                         <duracion>04:00</duracion>
                         <reproducciones>11000</reproducciones>
-                        <es_sencillo>false</es_sencillo>
+                        <es_sencillo></es_sencillo>
                     </cancion>
                 </canciones>
             </disco>

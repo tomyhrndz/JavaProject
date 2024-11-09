@@ -1,3 +1,4 @@
 ======[Informe de errores]======
-El tag nombreCancion esta vacio en la entrada numero: 1
-    09-11-2024 18:33:59
+El tag duracion esta vacio en la entrada numero: 3
+El tag duracion esta vacio en la entrada numero: 3
+    09-11-2024 19:19:06
