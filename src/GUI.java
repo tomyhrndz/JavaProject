@@ -1,10 +1,13 @@
+import discografica.Artista;
 import discografica.Discografica;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 
 public class GUI {
@@ -70,33 +73,7 @@ public class GUI {
 
 
         // Agregar el segundo panel al panel principal
-        mainPanel.add(artistaPanel, "artistaPanel");
-
-        // Añadir ActionListener a los botones
-        gestionDeArtistasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Cambiar a la segunda pantalla cuando se presiona el botón "Gestión de artistas"
-                cardLayout.show(mainPanel, "artistaPanel");
-                JPanel buttonPanelArtistas = new JPanel(new GridLayout(4, 1, 0, 90));
-                buttonPanelArtistas.setBorder(BorderFactory.createEmptyBorder(40, 0, 50, 0)); // Espacio alrededor del panel de botones
-                JButton agregarArtistasButton = new JButton("Cargar artistas");
-                agregarArtistasButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        listenerCargaArtista(startPanel, mainPanel, cardLayout, frame);
-                    }
-                });
-                JButton eliminarArtistaButton = new JButton("Eliminar artista");
-                JButton liquidacionesButton = new JButton("Generar liquidacion");
-                JButton volverButton = new JButton("Volver");
-                buttonPanelArtistas.add(agregarArtistasButton);
-                buttonPanelArtistas.add(eliminarArtistaButton);
-                buttonPanelArtistas.add(liquidacionesButton);
-                buttonPanelArtistas.add(volverButton);
-                artistaPanel.add(buttonPanelArtistas, BorderLayout.CENTER);
-            }
-        });
+        MenuArtistas(startPanel, mainPanel, artistaPanel, cardLayout, frame, gestionDeArtistasButton);
 
         informesButton.addActionListener(new ActionListener() {
             @Override
@@ -111,6 +88,164 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 // Cerrar la aplicación cuando se presiona el botón "Salir"
                 frame.dispose();
+            }
+        });
+    }
+
+    public static void MenuArtistas (JPanel startPanel, JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton){
+        mainPanel.add(artistaPanel, "artistaPanel");
+
+
+        JPanel buttonPanelArtistas = new JPanel(new GridLayout(5, 1, 0, 60));
+        buttonPanelArtistas.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0)); // Espacio alrededor del panel de botones
+        JButton agregarArtistasButton = new JButton("Cargar artistas");
+        JButton consultaArtistasButton = new JButton("Consultar datos de artistas");
+        JButton eliminarArtistaButton = new JButton("Eliminar artista");
+        JButton liquidacionesButton = new JButton("Generar liquidacion");
+        JButton volverButton = new JButton("Volver");
+
+        buttonPanelArtistas.add(agregarArtistasButton);
+        SeccionCarga(startPanel, mainPanel, cardLayout, frame, gestionDeArtistasButton, agregarArtistasButton);
+
+        buttonPanelArtistas.add(consultaArtistasButton);
+        SeccionConsulta(startPanel, mainPanel, artistaPanel,cardLayout, frame, consultaArtistasButton);
+
+        buttonPanelArtistas.add(eliminarArtistaButton);
+
+        buttonPanelArtistas.add(liquidacionesButton);
+        buttonPanelArtistas.add(volverButton);
+        artistaPanel.add(buttonPanelArtistas, BorderLayout.CENTER);
+
+
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "StartPanel");
+            }
+        });
+    }
+
+    public static void SeccionCarga(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton, JButton agregarArtistasButton) {
+        gestionDeArtistasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cambiar a la segunda pantalla cuando se presiona el botón "Gestión de artistas"
+                cardLayout.show(mainPanel, "artistaPanel");
+
+                agregarArtistasButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        listenerCargaArtista(startPanel, mainPanel, cardLayout, frame);
+                    }
+                });
+            }
+        });
+    }
+
+    public static void SeccionConsulta(JPanel startPanel, JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JFrame frame, JButton consultaArtistasButton) {
+        consultaArtistasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final List<Artista>[] datosArtistas = new List[1];
+
+                JPanel buscaPanel = new JPanel(new BorderLayout());
+                mainPanel.add(buscaPanel, "buscaPanel");
+                cardLayout.show(mainPanel, "buscaPanel");
+
+                JLabel tituloLabel = new JLabel("Consultar datos", SwingConstants.CENTER);
+                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                buscaPanel.add(tituloLabel, BorderLayout.NORTH);
+
+                JPanel filtrosPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+                JLabel generoLabel = new JLabel("Genero: ");
+                JTextField generoText = new JTextField(15);
+                JLabel integrantesLabel = new JLabel("Cantidad de integrantes: ");
+                JTextField integrantesText = new JTextField(15);
+
+                JButton enviarButton = new JButton("Enviar");
+                enviarButton.setPreferredSize(new Dimension(90, 20));
+                filtrosPanel.add(generoLabel);
+                filtrosPanel.add(generoText);
+                filtrosPanel.add(integrantesLabel);
+                filtrosPanel.add(integrantesText);
+                filtrosPanel.add(enviarButton);
+
+                buscaPanel.add(filtrosPanel, BorderLayout.CENTER);
+
+                JButton volverButton = new JButton("Volver");
+                volverButton.setPreferredSize(new Dimension(90, 20));
+                JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                volverPanel.add(volverButton);
+                buscaPanel.add(volverPanel, BorderLayout.SOUTH);
+
+                JButton volverTablaButton = new JButton("Volver");
+                volverTablaButton.setPreferredSize(new Dimension(90, 20));
+                JPanel volverTablaPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                volverTablaPanel.add(volverTablaButton);
+
+                JPanel tablaPanel = new JPanel(new BorderLayout());
+
+                enviarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        String genero = generoText.getText();
+                        String integrantes = integrantesText.getText();
+                        if (integrantes.isEmpty())
+                            datosArtistas[0] = Spotify.consultaDatos(genero);
+                        else {
+                            if (genero.isEmpty())
+                                datosArtistas[0] = Spotify.consultaDatos(Integer.parseInt(integrantes));
+                            else {
+                                datosArtistas[0] = Spotify.consultaDatos(genero, Integer.parseInt(integrantes));
+                            }
+                        }
+
+                        String[] columnas = {"ID", "Nombre", "Cantidad de integrantes", "Genero"};
+                        DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
+
+                        for(Artista artista: datosArtistas[0]) {
+                            Object[] Data = {artista.getID(), artista.getNombre(), artista.getCantIntegrantes(), artista.getGenero()};
+                            tablaModelo.addRow(Data);
+                        }
+
+                        JTable tabla = new JTable(tablaModelo);
+                        JScrollPane scrollPane = new JScrollPane(tabla);
+
+                        tablaPanel.removeAll();
+                        tablaPanel.add(scrollPane, BorderLayout.CENTER);
+                        buscaPanel.remove(filtrosPanel);
+                        buscaPanel.add(volverTablaPanel, BorderLayout.SOUTH);
+                        buscaPanel.remove(volverPanel);
+                        buscaPanel.add(tablaPanel, BorderLayout.CENTER);
+                        buscaPanel.revalidate();
+                        buscaPanel.repaint();
+
+
+                    }
+                });
+
+                volverButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "artistaPanel");
+                    }
+                });
+
+                volverTablaButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Volver a mostrar el panel de filtros
+                        buscaPanel.remove(tablaPanel);
+                        buscaPanel.add(filtrosPanel, BorderLayout.CENTER);
+                        buscaPanel.add(volverPanel, BorderLayout.SOUTH);
+                        buscaPanel.remove(volverTablaPanel);
+                        buscaPanel.revalidate();
+                        buscaPanel.repaint();
+                    }
+                });
+
+
             }
         });
     }
@@ -146,7 +281,6 @@ public class GUI {
 
         // Agregar el campo de texto al panel de entrada
         inputPanel.add(archivoTextField);
-        System.out.println(archivoTextField.getText());
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Espaciado horizontal entre los botones
 
         // Crear los botones más angostos
@@ -176,6 +310,12 @@ public class GUI {
             }
         });
         JButton volverButton = new JButton("Volver");
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "artistaPanel");
+            }
+        });
 
         enviarButton.setPreferredSize(new Dimension(140, 30));
         volverButton.setPreferredSize(new Dimension(140, 30));

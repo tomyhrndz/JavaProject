@@ -40,6 +40,8 @@ public class Artista implements Comparable<Artista>, Serializable {
         return ID;
     }
 
+    public String getNombre() {return Nombre; }
+
     public String getGenero() {
         return Genero;
     }

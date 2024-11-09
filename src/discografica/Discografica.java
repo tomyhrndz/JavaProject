@@ -254,7 +254,17 @@ public class Discografica implements Serializable{
         List<Artista> artistasEncontrados = new ArrayList<>();
 
         for(Artista artista : Artistas) {
-            if (genero.equals(artista.getGenero()))
+            if (genero.equalsIgnoreCase(artista.getGenero()))
+                artistasEncontrados.add(artista);
+        }
+        return artistasEncontrados;
+    }
+
+    public List<Artista> consultaDatos(String genero, int CantInt){
+        List<Artista> artistasEncontrados = new ArrayList<>();
+
+        for(Artista artista : Artistas) {
+            if (genero.equalsIgnoreCase(artista.getGenero()) && CantInt == artista.getCantIntegrantes())
                 artistasEncontrados.add(artista);
         }
         return artistasEncontrados;
