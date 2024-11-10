@@ -92,7 +92,7 @@ public class GUI {
                 mainPanel.add(reportesPanel, "reportesPanel");
                 cardLayout.show(mainPanel, "reportesPanel");
 
-                JLabel tituloLabel = new JLabel("Carga artistas");
+                JLabel tituloLabel = new JLabel("Reportes");
                 tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
                 tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 reportesPanel.add(tituloLabel, BorderLayout.NORTH);
