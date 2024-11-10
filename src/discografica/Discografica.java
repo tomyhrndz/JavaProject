@@ -276,7 +276,7 @@ public class Discografica implements Serializable{
             Artista eliminar = buscarArtista(ID);
             Artistas.remove(eliminar);
         } catch (ArtistaNoEncontradoException e) {
-            System.err.println("Error: Artista no encontrado");
+            throw e;
         }
     }
 

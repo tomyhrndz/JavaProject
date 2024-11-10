@@ -1,5 +1,6 @@
 import discografica.Artista;
 import discografica.Discografica;
+import exceptions.ArtistaNoEncontradoException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -387,11 +388,14 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String ID = idText.getText();
-                        Spotify.bajaArtista(ID);
-                        JOptionPane.showMessageDialog(frame, "El artista se dio de baja de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                        cardLayout.show(mainPanel, "artistaPanel");
-                        //BUSCAR FORMA DE QUE INFORME DE UN ERROR
+                        try {
+                            String ID = idText.getText();
+                            Spotify.bajaArtista(ID);
+                            JOptionPane.showMessageDialog(frame, "El artista se dio de baja de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            cardLayout.show(mainPanel, "artistaPanel");
+                        }catch (ArtistaNoEncontradoException eA){
+                            JOptionPane.showMessageDialog(frame, eA.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                        }
 
                     }
                 });
