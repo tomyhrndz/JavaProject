@@ -1,5 +1,6 @@
 package discografica;
 
+import java.time.LocalDate;
 import java.io.Serializable;
 
 public class Emergentes extends Artista implements Serializable {
@@ -20,10 +21,13 @@ public class Emergentes extends Artista implements Serializable {
             GananciaDisco += disco.GetGananciaDisco();
         }
 
-        for(Recital recital : getRecitales())
-        {
-            GananciaRecitales += recital.GetGananciaRecital();
-        }
+        int ActMonth = LocalDate.now().getMonthValue();
+        int ActYear = LocalDate.now().getYear();
+
+        GananciaRecitales = getRecitales().stream()
+                .filter(item -> item.GetFecha().getMonthValue() == ActMonth && item.GetFecha().getYear() == ActYear)
+                .mapToDouble(Recital :: GetGananciaRecital)
+                .sum();
 
         GananciaDisco *= Constantes.PorcentajeArtistaEmergente;
         GananciaReproducciones *= Constantes.PorcentajeArtistaEmergente;
