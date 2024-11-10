@@ -20,7 +20,7 @@ public class GUI {
     public static void main(String[] args) {
 
         Discografica ob = Serializacion.cargarObjeto("discografica.dat", Discografica.class);
-        if(ob != null){
+        if(ob != null && !ob.getArtistas().isEmpty()){
             Spotify = ob;
         }
 
@@ -128,7 +128,9 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Cerrar la aplicación cuando se presiona el botón "Salir"
-                Serializacion.guardarObjeto(Spotify, "discografica.dat");
+                if(Spotify != null && !Spotify.getArtistas().isEmpty()) {
+                    Serializacion.guardarObjeto(Spotify, "discografica.dat");
+                }
                 frame.dispose();
             }
         });
@@ -308,9 +310,10 @@ public class GUI {
 
                         String genero = generoText.getText();
                         String integrantes = integrantesText.getText();
-                        if(Spotify != null) {
+                        if(Spotify != null && !Spotify.getArtistas().isEmpty()) {
                             if(integrantes.isEmpty() && genero.isEmpty()) {
                                 JOptionPane.showMessageDialog(artistaPanel, "Complete uno o ambos campos.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                                datosArtistas[0] = null;
                             }else {
                                 if (integrantes.isEmpty())
                                     datosArtistas[0] = Spotify.consultaDatos(genero);
@@ -322,30 +325,31 @@ public class GUI {
                                     }
                                 }
                             }
+                            if(datosArtistas[0] != null) {
+                                if (!datosArtistas[0].isEmpty()) {
+                                    String[] columnas = {"ID", "Nombre", "Cantidad de integrantes", "Genero"};
+                                    DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
 
-                            if (!datosArtistas[0].isEmpty()) {
-                                String[] columnas = {"ID", "Nombre", "Cantidad de integrantes", "Genero"};
-                                DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
+                                    for (Artista artista : datosArtistas[0]) {
+                                        Object[] Data = {artista.getID(), artista.getNombre(), artista.getCantIntegrantes(), artista.getGenero()};
+                                        tablaModelo.addRow(Data);
+                                    }
 
-                                for (Artista artista : datosArtistas[0]) {
-                                    Object[] Data = {artista.getID(), artista.getNombre(), artista.getCantIntegrantes(), artista.getGenero()};
-                                    tablaModelo.addRow(Data);
+                                    JTable tabla = new JTable(tablaModelo);
+                                    JScrollPane scrollPane = new JScrollPane(tabla);
+
+                                    tablaPanel.removeAll();
+                                    tablaPanel.add(scrollPane, BorderLayout.CENTER);
+                                    buscaPanel.remove(filtrosPanel);
+                                    buscaPanel.add(volverTablaPanel, BorderLayout.SOUTH);
+                                    buscaPanel.remove(volverPanel);
+                                    buscaPanel.add(tablaPanel, BorderLayout.CENTER);
+                                    buscaPanel.revalidate();
+                                    buscaPanel.repaint();
+
+                                } else {
+                                    JOptionPane.showMessageDialog(artistaPanel, "No se encontraron artistas con esas condiciones.", "Error", JOptionPane.INFORMATION_MESSAGE);
                                 }
-
-                                JTable tabla = new JTable(tablaModelo);
-                                JScrollPane scrollPane = new JScrollPane(tabla);
-
-                                tablaPanel.removeAll();
-                                tablaPanel.add(scrollPane, BorderLayout.CENTER);
-                                buscaPanel.remove(filtrosPanel);
-                                buscaPanel.add(volverTablaPanel, BorderLayout.SOUTH);
-                                buscaPanel.remove(volverPanel);
-                                buscaPanel.add(tablaPanel, BorderLayout.CENTER);
-                                buscaPanel.revalidate();
-                                buscaPanel.repaint();
-
-                            } else {
-                                JOptionPane.showMessageDialog(artistaPanel, "No se encontraron artistas con esas condiciones.", "Error", JOptionPane.INFORMATION_MESSAGE);
                             }
                         }else {
                             JOptionPane.showMessageDialog(artistaPanel, "Los artistas no han sido cargados.", "Error", JOptionPane.INFORMATION_MESSAGE);

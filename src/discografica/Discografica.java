@@ -356,4 +356,6 @@ public class Discografica implements Serializable{
         Artista artista  = buscarArtista(IDArtista);
         Liquidacion liquidacion = artista.getLiquidacion();
     }
+
+    public TreeSet<Artista> getArtistas(){ return Artistas; }
 }
