@@ -321,7 +321,7 @@ public class Discografica implements Serializable{
 
         // Crea lista con todas las canciones del Genero
         for (Artista artista : Artistas) {
-            if (genero.equals(artista.getGenero())) {
+            if (genero.equalsIgnoreCase(artista.getGenero())) {
                 for(Disco disco : artista.getDiscos()){
                     cancionesGenero.addAll(disco.getCanciones());
                 }
