@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Disco implements Serializable {
+    private String Nombre;
     private int UnidadesVendidas;
     private ArrayList<Cancion> canciones;
 
 
-    public Disco(int UnidadesVendidas) {
+    public Disco(String Nombre, int UnidadesVendidas) {
+        this.Nombre = Nombre;
         this.UnidadesVendidas = UnidadesVendidas;
         canciones = new ArrayList<>();
     }
@@ -22,6 +24,8 @@ public class Disco implements Serializable {
             canciones.add(nuevo);
         }
     }
+
+    public String getNombre() {return Nombre; }
 
     public int getUnidadesVendidas() {
         return UnidadesVendidas;

@@ -104,6 +104,15 @@ public class Discografica implements Serializable{
                     for (int j=0; j < ListaDiscos.getLength(); j ++) {
                         Element discoElemento = (Element) ListaDiscos.item(j);
                         int UnidadesVendidas = 0;
+                        String nombreDisco = null;
+
+                        try {
+                            nombreDisco = discoElemento.getElementsByTagName("nombreDisco").item(0).getTextContent();
+                            if (nombreDisco.isEmpty())
+                                throw new Exception("El tag nombreDisco esta vacio en la entrada numero: " + (i+1));
+                        } catch (Exception e) {
+                            InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+                        }
 
                         try {
                             String Vendidas = discoElemento.getElementsByTagName("unidades_vendidas").item(0).getTextContent().trim();
@@ -120,7 +129,7 @@ public class Discografica implements Serializable{
                         }
 
 
-                        NuevoDisco = new Disco(UnidadesVendidas);
+                        NuevoDisco = new Disco(nombreDisco, UnidadesVendidas);
                         // Procesar canciones del disco actual
                         NodeList ListaCanciones = discoElemento.getElementsByTagName("cancion");
                         for (int k=0; k < ListaCanciones.getLength(); k++) {
@@ -310,7 +319,7 @@ public class Discografica implements Serializable{
         }
         if(bandera){
             return act;
-        }//REVISAR, CREO QUE DEBERIA DEVOLVER NULL NO UNA EXCEPCION
+        }
         throw new ArtistaNoEncontradoException("El artista con ID " + ID + " no fue encontrado.");
     }
 
@@ -321,7 +330,7 @@ public class Discografica implements Serializable{
 
         // Crea lista con todas las canciones del Genero
         for (Artista artista : Artistas) {
-            if (genero.equals(artista.getGenero())) {
+            if (genero.equalsIgnoreCase(artista.getGenero())) {
                 for(Disco disco : artista.getDiscos()){
                     cancionesGenero.addAll(disco.getCanciones());
                 }

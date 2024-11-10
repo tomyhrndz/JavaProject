@@ -6,6 +6,7 @@
         <genero_musical>Indie Rock</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Primer Acto</nombreDisco>
                 <unidades_vendidas>300</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -29,6 +30,7 @@
                 </canciones>
             </disco>
             <disco>
+                <nombreDisco>Viaje y Destino</nombreDisco>
                 <unidades_vendidas>150</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -62,6 +64,7 @@
         <genero_musical>Pop Alternativo</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Luz y Sombras</nombreDisco>
                 <unidades_vendidas>500</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -79,6 +82,7 @@
                 </canciones>
             </disco>
             <disco>
+                <nombreDisco>Universo Sonoro</nombreDisco>
                 <unidades_vendidas>800</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -122,6 +126,7 @@
         <genero_musical>Hip-Hop</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Latidos de la Ciudad</nombreDisco>
                 <unidades_vendidas>400</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -145,6 +150,7 @@
                 </canciones>
             </disco>
             <disco>
+                <nombreDisco>Ritmos y Realidades</nombreDisco>
                 <unidades_vendidas>300</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -183,6 +189,7 @@
         <genero_musical>Jazz</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Alma en Jazz</nombreDisco>
                 <unidades_vendidas>900</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -227,6 +234,7 @@
         <genero_musical>Folk</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Historias Olvidadas</nombreDisco>
                 <unidades_vendidas>200</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -244,6 +252,7 @@
                 </canciones>
             </disco>
             <disco>
+                <nombreDisco>Susurros del Viento</nombreDisco>
                 <unidades_vendidas>150</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -282,6 +291,7 @@
         <genero_musical>Rock</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Rugido Eterno</nombreDisco>
                 <unidades_vendidas>1200</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -299,6 +309,7 @@
                 </canciones>
             </disco>
             <disco>
+                <nombreDisco>Hierro y Fuego</nombreDisco>
                 <unidades_vendidas>950</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -337,6 +348,7 @@
         <genero_musical>Electrónica</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Sonidos Cósmicos</nombreDisco>
                 <unidades_vendidas>600</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -380,6 +392,7 @@
         <genero_musical>Folklore</genero_musical>
         <discos>
             <disco>
+                <nombreDisco>Raíces del Alma</nombreDisco>
                 <unidades_vendidas>700</unidades_vendidas>
                 <canciones>
                     <cancion>
@@ -397,6 +410,7 @@
                 </canciones>
             </disco>
             <disco>
+                <nombreDisco>Voces del Pueblo</nombreDisco>
                 <unidades_vendidas>900</unidades_vendidas>
                 <canciones>
                     <cancion>

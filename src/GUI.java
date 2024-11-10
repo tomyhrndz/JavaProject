@@ -1,5 +1,6 @@
 import discografica.Artista;
 import discografica.Cancion;
+import discografica.Disco;
 import discografica.Discografica;
 import exceptions.ArtistaNoEncontradoException;
 import persistencia.Serializacion;
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -90,7 +91,7 @@ public class GUI {
         reportesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reporteCanciones(mainPanel, cardLayout, frame);
+                reportes(mainPanel, cardLayout, frame);
             }
         });
 
@@ -412,7 +413,7 @@ public class GUI {
         });
     }
 
-    public static void reporteCanciones(JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
+    public static void reportes(JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
         JPanel reportesPanel = new JPanel(new BorderLayout());
         mainPanel.add(reportesPanel, "reportesPanel");
         cardLayout.show(mainPanel, "reportesPanel");
@@ -445,6 +446,14 @@ public class GUI {
             }
         });
 
+        reporteCanciones(mainPanel, cardLayout, tituloLabel, topCancionesButton);
+        reporteDiscos(mainPanel, cardLayout, tituloLabel, discosVendidosButton);
+
+        reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
+        reportesPanel.add(volverPanel, BorderLayout.SOUTH);
+    }
+
+    public static void reporteCanciones(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JButton topCancionesButton) {
         JPanel reporteCancionesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
         JLabel tituloCancionesLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -516,7 +525,7 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String genero = generoTextField.getText();
+                        String genero = generoTextField.getText().trim();
                         if (genero.isEmpty()){
                             JOptionPane.showMessageDialog(reporteCancionesPanel, "Ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
                         }else {
@@ -553,10 +562,118 @@ public class GUI {
                 cardLayout.show(mainPanel, "reporteCancionesPanel");
             }
         });
+    }
 
+    public static void reporteDiscos(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JButton discosVendidosButton) {
+        JPanel reporteDiscosPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+        JLabel tituloDiscosLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
-        reportesPanel.add(volverPanel, BorderLayout.SOUTH);
+        mainPanel.add(reporteDiscosPanel, "reporteDiscosPanel");
+        reporteDiscosPanel.add(tituloDiscosLabel, BorderLayout.NORTH);
+
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JTextField archivoTextField = new JTextField("Ingrese el ID del artista que desea analizar: ", 30);
+
+        discosVendidosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Limpiar el panel para evitar agregar componentes duplicados
+                reporteDiscosPanel.removeAll();
+                reporteDiscosPanel.setLayout(new BoxLayout(reporteDiscosPanel, BoxLayout.Y_AXIS));
+
+                // Configurar el título
+                JLabel tituloDiscoLabel = new JLabel("Unidades vendidas por disco", SwingConstants.CENTER);
+                tituloDiscoLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                tituloDiscoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                reporteDiscosPanel.add(tituloDiscoLabel);
+
+                // Espacio entre el título y el campo de texto
+                reporteDiscosPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+                // Configurar el campo de texto
+                JTextField discoTextField = new JTextField("Ingrese el ID del artista que desea analizar: ", 30);
+                discoTextField.setMaximumSize(new Dimension(300, 25));
+                discoTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                discoTextField.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        if (discoTextField.getText().equals("Ingrese el ID del artista que desea analizar: ")) {
+                            discoTextField.setText("");
+                        }
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        if (discoTextField.getText().isEmpty()) {
+                            discoTextField.setText("");
+                        }
+                    }
+                });
+
+                reporteDiscosPanel.add(discoTextField);
+
+                // Espacio entre el campo de texto y los botones
+                reporteDiscosPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+                // Configurar los botones
+                JPanel botonesPanel = new JPanel();
+                botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+
+                JButton enviarButton = new JButton("Enviar");
+                JButton volverReporteButton = new JButton("Volver");
+                botonesPanel.add(enviarButton);
+                botonesPanel.add(volverReporteButton);
+
+                volverReporteButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "reportesPanel");
+                    }
+                });
+                JPanel tablaPanel = new JPanel(new BorderLayout());
+                enviarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String ID = discoTextField.getText().trim();
+                        if (ID.isEmpty()){
+                            JOptionPane.showMessageDialog(reporteDiscosPanel, "Ingrese un artista.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        }else {
+                            HashSet<Disco> reporteDiscos = null;
+                            reporteDiscos = Spotify.reporteDiscos(ID);
+                            Reporte.promedio(reporteDiscos, ID);
+                            String[] columnas = {"Nombre", "Unidades vendidas"};
+                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
+
+                            for (Disco discos : reporteDiscos) {
+                                Object[] Data = {discos.getNombre(), discos.getUnidadesVendidas()};
+                                tablaModelo.addRow(Data);
+                            }
+
+                            JTable tabla = new JTable(tablaModelo);
+                            JScrollPane scrollPane = new JScrollPane(tabla);
+
+                            tablaPanel.removeAll();
+                            tablaPanel.add(scrollPane, BorderLayout.CENTER);
+                            reporteDiscosPanel.add(tablaPanel, BorderLayout.CENTER);
+                            reporteDiscosPanel.revalidate();
+                            reporteDiscosPanel.repaint();
+                        }
+                    }
+                });
+
+                reporteDiscosPanel.add(botonesPanel);
+
+                // Ajustar el panel
+                reporteDiscosPanel.revalidate();
+                reporteDiscosPanel.repaint();
+
+                // Mostrar el panel
+                cardLayout.show(mainPanel, "reporteDiscosPanel");
+            }
+        });
+
     }
 }
 

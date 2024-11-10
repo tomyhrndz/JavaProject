@@ -38,7 +38,7 @@ public class Reporte {
         for (Disco disco : discos) {
             cantDiscos++;
             sum += disco.getUnidadesVendidas();
-            sb.append("Disco ").append(cantDiscos).append(": ").append(disco.getUnidadesVendidas()).append(" unidades\n");
+            sb.append("Disco ").append(disco.getNombre()).append(": ").append(disco.getUnidadesVendidas()).append(" unidades\n");
         }
         promedio = sum/cantDiscos;
         sb.append("Promedio por Disco: ").append(promedio).append(" unidades\n");
