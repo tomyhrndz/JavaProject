@@ -2,6 +2,8 @@ package discografica;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Recital implements Serializable {
     private LocalDate Fecha;
@@ -22,7 +24,22 @@ public class Recital implements Serializable {
         Recaudacion = recaudacion;
     }
 
-    public float GetGananciaRecital(){ return Recaudacion - CostoProduccion; }
+    public ObjetoLiquidacion GetGananciaRecital(boolean EsEmergente)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = Fecha.format(formatter);
+
+        double GanaciaRecital = Recaudacion - CostoProduccion;
+
+        if(EsEmergente)
+            GanaciaRecital *= Constantes.PorcentajeArtistaEmergente;
+        else
+            GanaciaRecital *= Constantes.PorcentajeArtistaConsagrado;
+
+        ObjetoLiquidacion ObjetoRecitalLiquidacion = new ObjetoLiquidacion(formattedDate, GanaciaRecital);
+
+        return ObjetoRecitalLiquidacion;
+    }
 
     public LocalDate GetFecha() { return Fecha; }
     public float GetRecaudacion() { return Recaudacion; }

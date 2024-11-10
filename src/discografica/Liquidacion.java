@@ -1,14 +1,9 @@
 package discografica;
 
-public class Liquidacion {
-    double GananciaDiscos;
-    double GananciaReproducciones;
-    double GananciaRecitales;
+import java.util.ArrayList;
 
-    public Liquidacion(double GananciaDiscos, double GananciaReproducciones, double GananciaRecitales)
-    {
-        this.GananciaDiscos = GananciaDiscos;
-        this.GananciaReproducciones = GananciaReproducciones;
-        this.GananciaRecitales = GananciaRecitales;
-    }
+public class Liquidacion {
+    ArrayList<ObjetoLiquidacion> LiquidacionDisco;//Nombre de cada disco con su respectiva ganancia
+    ArrayList<ObjetoLiquidacion> LiquidacionReproducciones;//Nombre de cada cancion con su respectiva ganancia
+    ArrayList<ObjetoLiquidacion> LiquidacionRecitales;//Fecha de cada recital con su respectiva ganancia
 }

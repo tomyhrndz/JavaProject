@@ -1,6 +1,7 @@
 package discografica;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -21,7 +22,7 @@ public class Artista implements Comparable<Artista>, Serializable {
         Recitales = new ArrayList<>();
     }
 
-    public Liquidacion getLiquidacion() { return null; }
+    public boolean EsEmergente(){ return true; }
 
     @Override
     public int compareTo(Artista A) {
@@ -83,6 +84,30 @@ public class Artista implements Comparable<Artista>, Serializable {
         }
 
         return sb.toString();
+    }
+
+    public Liquidacion getLiquidacion()
+    {
+        Liquidacion LiquidacionGanancia = new Liquidacion();
+
+        for(Disco disco : getDiscos())
+        {
+            LiquidacionGanancia.LiquidacionReproducciones.addAll(disco.GetGananciaReproducciones(EsEmergente()));
+            LiquidacionGanancia.LiquidacionDisco.add(disco.GetGananciaDisco(EsEmergente()));
+        }
+
+        int ActMonth = LocalDate.now().getMonthValue();
+        int ActYear = LocalDate.now().getYear();
+        LocalDate DateRecital;
+
+        for(Recital recital : getRecitales())
+        {
+            DateRecital =  recital.GetFecha();
+            if(DateRecital.getMonthValue() == ActMonth && DateRecital.getYear() == ActYear)
+                LiquidacionGanancia.LiquidacionRecitales.add(recital.GetGananciaRecital(EsEmergente()));
+        }
+
+        return LiquidacionGanancia;
     }
 
 }

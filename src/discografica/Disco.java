@@ -33,23 +33,40 @@ public class Disco implements Serializable {
 
     public ArrayList<Cancion> getCanciones() {return canciones;}
 
-    public double GetGananciaReproducciones()
+    public ArrayList<ObjetoLiquidacion> GetGananciaReproducciones(boolean EsEmergente)
     {
-        double Sumador = 0;
+        ArrayList<ObjetoLiquidacion> ganancias = new ArrayList<>();
+        ObjetoLiquidacion Aux = new ObjetoLiquidacion();
         for (Cancion act : canciones)
         {
+            Aux = new ObjetoLiquidacion();
             double Cant = act.getCantReproducciones();
             if(Cant > 0 && Cant < 5000)
-                Sumador += Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor5000;
+                Aux.Monto = Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor5000;
             else
                 if(Cant >= 5000 && Cant < 10000)
-                    Sumador += Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMenor10000;
+                    Aux.Monto = Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMenor10000;
                 else
                     if(Cant > 10000)
-                        Sumador += Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor10000;
+                        Aux.Monto = Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor10000;
+
+            Aux.Descripcion = act.getNombre();
+
+            if(EsEmergente)
+                Aux.Monto *= Constantes.PorcentajeArtistaEmergente;
+            else
+                Aux.Monto *= Constantes.PorcentajeArtistaConsagrado;
+
+            ganancias.add(Aux);
         }
-        return Sumador;
+        return ganancias;
     }
 
-    public double GetGananciaDisco(){ return UnidadesVendidas * canciones.size() * Constantes.ValorCancion; }
+    public ObjetoLiquidacion GetGananciaDisco(boolean EsEmergente)
+    {
+        if(EsEmergente)
+            return new ObjetoLiquidacion(Nombre, (UnidadesVendidas * canciones.size() * Constantes.ValorCancion) * Constantes.PorcentajeArtistaEmergente);
+        else
+            return new ObjetoLiquidacion(Nombre, (UnidadesVendidas * canciones.size() * Constantes.ValorCancion) * Constantes.PorcentajeArtistaConsagrado);
+    }
 }

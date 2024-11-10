@@ -10,30 +10,33 @@ public class Consagrados extends Artista implements Serializable {
     }
 
     @Override
+    public boolean EsEmergente(){ return false; }
+
+    /*
+    @Override
     public Liquidacion getLiquidacion()
     {
-        double GananciaDisco = 0;
-        double GananciaReproducciones = 0;
-        double GananciaRecitales = 0;
+        Liquidacion LiquidacionGanancia = new Liquidacion();
+
         for(Disco disco : getDiscos())
         {
-            GananciaReproducciones += disco.GetGananciaReproducciones();
-            GananciaDisco += disco.GetGananciaDisco();
+            LiquidacionGanancia.LiquidacionReproducciones.addAll(disco.GetGananciaReproducciones(false));
+            LiquidacionGanancia.LiquidacionDisco.add(disco.GetGananciaDisco(false));
         }
 
         int ActMonth = LocalDate.now().getMonthValue();
         int ActYear = LocalDate.now().getYear();
+        LocalDate DateRecital;
 
-        GananciaRecitales = getRecitales().stream()
-                .filter(item -> item.GetFecha().getMonthValue() == ActMonth && item.GetFecha().getYear() == ActYear)
-                .mapToDouble(Recital :: GetGananciaRecital)
-                .sum();
+        for(Recital recital : getRecitales())
+        {
+            DateRecital =  recital.GetFecha();
+            if(DateRecital.getMonthValue() == ActMonth && DateRecital.getYear() == ActYear)
+                LiquidacionGanancia.LiquidacionRecitales.add(recital.GetGananciaRecital(false));
+        }
 
-        GananciaDisco *= Constantes.PorcentajeArtistaConsagrado;
-        GananciaReproducciones *= Constantes.PorcentajeArtistaConsagrado;
-        GananciaRecitales *= Constantes.PorcentajeArtistaConsagrado;
-
-        return new Liquidacion(GananciaDisco, GananciaReproducciones, GananciaRecitales);
+        return LiquidacionGanancia;
     }
+     */
 }
 
