@@ -38,7 +38,7 @@ public class GUI {
         // Agregar la imagen al centro del panel de inicio
         startPanel.add(imageLabel, BorderLayout.CENTER);
 
-        setUpButtonListeners(startPanel, mainPanel, cardLayout, frame);
+        setUpBotones(startPanel, mainPanel, cardLayout, frame);
 
         // Configurar el marco
         frame.add(mainPanel);
@@ -46,19 +46,19 @@ public class GUI {
         frame.setVisible(true);
     }
 
-    public static void setUpButtonListeners(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
+    public static void setUpBotones(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
         // Crear un panel para los botones y usar GridLayout
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 90)); // 3 filas, 1 columna, 10 píxeles de espacio vertical
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 75)); // Espacio alrededor del panel de botones
 
         // Crear los botones
         JButton gestionDeArtistasButton = new JButton("Gestión de artistas");
-        JButton informesButton = new JButton("Informes");
+        JButton reportesButton = new JButton("Reportes");
         JButton salirButton = new JButton("Salir");
 
         // Agregar los botones al panel de botones
         buttonPanel.add(gestionDeArtistasButton);
-        buttonPanel.add(informesButton);
+        buttonPanel.add(reportesButton);
         buttonPanel.add(salirButton);
 
         // Agregar el panel de botones al lado derecho del panel de inicio
@@ -75,13 +75,45 @@ public class GUI {
         // Agregar el segundo panel al panel principal
         MenuArtistas(startPanel, mainPanel, artistaPanel, cardLayout, frame, gestionDeArtistasButton);
 
-        informesButton.addActionListener(new ActionListener() {
+        reportesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Cambiar a la segunda pantalla cuando se presiona el botón "Informes"
-                cardLayout.show(mainPanel, "SecondPanel");
+                JPanel reportesPanel = new JPanel(new BorderLayout());
+                mainPanel.add(reportesPanel, "reportesPanel");
+                cardLayout.show(mainPanel, "reportesPanel");
+
+                JLabel tituloLabel = new JLabel("Carga artistas");
+                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                reportesPanel.add(tituloLabel, BorderLayout.NORTH);
+
+                JPanel tipoReportePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+
+                JButton topCancionesButton = new JButton("Reporte top 10 canciones");
+                topCancionesButton.setPreferredSize(new Dimension(260, 25));
+                JButton discosVendidosButton = new JButton("Reporte unidades vendidas por disco");
+                discosVendidosButton.setPreferredSize(new Dimension(260, 25));
+                tipoReportePanel.add(topCancionesButton);
+                tipoReportePanel.add(discosVendidosButton);
+
+                JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+                JButton volverButton = new JButton("Volver");
+                volverButton.setPreferredSize(new Dimension(160, 25));
+                volverPanel.add(volverButton);
+
+                volverButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "StartPanel");
+                    }
+                });
+
+                reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
+                reportesPanel.add(volverPanel, BorderLayout.SOUTH);
             }
         });
+
 
         salirButton.addActionListener(new ActionListener() {
             @Override
@@ -105,12 +137,14 @@ public class GUI {
         JButton volverButton = new JButton("Volver");
 
         buttonPanelArtistas.add(agregarArtistasButton);
-        SeccionCarga(startPanel, mainPanel, cardLayout, frame, gestionDeArtistasButton, agregarArtistasButton);
+        SeccionCarga(mainPanel, cardLayout, frame, gestionDeArtistasButton, agregarArtistasButton);
 
         buttonPanelArtistas.add(consultaArtistasButton);
-        SeccionConsulta(startPanel, mainPanel, artistaPanel,cardLayout, frame, consultaArtistasButton);
+        SeccionConsulta(mainPanel, artistaPanel,cardLayout, consultaArtistasButton);
 
         buttonPanelArtistas.add(eliminarArtistaButton);
+        SeccionElimina(mainPanel, cardLayout, frame, eliminarArtistaButton);
+
 
         buttonPanelArtistas.add(liquidacionesButton);
         buttonPanelArtistas.add(volverButton);
@@ -125,24 +159,98 @@ public class GUI {
         });
     }
 
-    public static void SeccionCarga(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton, JButton agregarArtistasButton) {
+    public static void SeccionCarga(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton, JButton agregarArtistasButton) {
         gestionDeArtistasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cambiar a la segunda pantalla cuando se presiona el botón "Gestión de artistas"
                 cardLayout.show(mainPanel, "artistaPanel");
 
                 agregarArtistasButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        listenerCargaArtista(startPanel, mainPanel, cardLayout, frame);
+                        JPanel cargaPanel = new JPanel(new GridBagLayout());
+                        mainPanel.add(cargaPanel, "cargaPanel");
+                        cardLayout.show(mainPanel, "cargaPanel");
+
+                        JLabel tituloLabel = new JLabel("Carga artistas");
+                        tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                        tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+                        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+                        JTextField archivoTextField = new JTextField("Ingrese el nombre del archivo con los artistas:", 30);
+
+                        archivoTextField.addFocusListener(new java.awt.event.FocusListener() {
+                            @Override
+                            public void focusGained(java.awt.event.FocusEvent e) {
+                                if (archivoTextField.getText().equals("Ingrese el nombre del archivo con los artistas:")) {
+                                    archivoTextField.setText("");
+                                }
+                            }
+
+                            @Override
+                            public void focusLost(java.awt.event.FocusEvent e) {
+                                if (archivoTextField.getText().isEmpty()) {
+                                    archivoTextField.setText("Ingrese el nombre del archivo con los artistas:");
+                                }
+                            }
+                        });
+
+                        // Agregar el campo de texto al panel de entrada
+                        inputPanel.add(archivoTextField);
+                        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Espaciado horizontal entre los botones
+
+                        JButton enviarButton = new JButton("Aceptar");
+                        enviarButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                String Path = archivoTextField.getText() + ".xml";
+                                File Arch = new File(Path);
+                                if (Arch.exists()) {
+                                    Spotify.CargaDatos(Path);
+                                    JOptionPane.showMessageDialog(frame, "El archivo se cargó de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                                    cardLayout.show(mainPanel, "artistaPanel");
+                                } else {
+                                    JOptionPane.showMessageDialog(frame, "El archivo no existe.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                            }
+                        });
+
+                        JButton volverButton = new JButton("Volver");
+                        volverButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                cardLayout.show(mainPanel, "artistaPanel");
+                            }
+                        });
+
+                        enviarButton.setPreferredSize(new Dimension(140, 30));
+                        volverButton.setPreferredSize(new Dimension(140, 30));
+
+                        buttonPanel.add(enviarButton);
+                        buttonPanel.add(volverButton);
+
+                        GridBagConstraints gbc = new GridBagConstraints();
+                        gbc.gridx = 0;
+                        gbc.gridy = 0;
+                        gbc.anchor = GridBagConstraints.CENTER;
+                        gbc.insets = new Insets(10, 0, 20, 0);
+
+                        // Agregar el título al panel de carga
+                        cargaPanel.add(tituloLabel, gbc);
+
+                        // Configurar las posiciones del inputPanel y buttonPanel
+                        gbc.gridy = 1;
+                        cargaPanel.add(inputPanel, gbc);
+
+                        gbc.gridy = 2;
+                        cargaPanel.add(buttonPanel, gbc);
                     }
                 });
             }
         });
     }
 
-    public static void SeccionConsulta(JPanel startPanel, JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JFrame frame, JButton consultaArtistasButton) {
+    public static void SeccionConsulta(JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JButton consultaArtistasButton) {
         consultaArtistasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -250,93 +358,62 @@ public class GUI {
         });
     }
 
-    public static void listenerCargaArtista(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
-        // Crear un panel para la carga de artistas
-        JPanel cargaPanel = new JPanel(new GridBagLayout()); // Usar GridBagLayout para un mejor control del centrado
-        mainPanel.add(cargaPanel, "cargaPanel");
-        cardLayout.show(mainPanel, "cargaPanel");
-
-        // Crear un panel para el campo de texto
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Espaciado centrado
-
-        // Crear el JTextField con texto inicial
-        JTextField archivoTextField = new JTextField("Ingrese el nombre del archivo con los artistas:", 30); // Campo de texto más ancho
-
-        // Agregar un FocusListener para manejar el texto como un placeholder
-        archivoTextField.addFocusListener(new java.awt.event.FocusListener() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent e) {
-                if (archivoTextField.getText().equals("Ingrese el nombre del archivo con los artistas:")) {
-                    archivoTextField.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(java.awt.event.FocusEvent e) {
-                if (archivoTextField.getText().isEmpty()) {
-                    archivoTextField.setText("Ingrese el nombre del archivo con los artistas:");
-                }
-            }
-        });
-
-        // Agregar el campo de texto al panel de entrada
-        inputPanel.add(archivoTextField);
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Espaciado horizontal entre los botones
-
-        // Crear los botones más angostos
-        JButton enviarButton = new JButton("Aceptar");
-
-        enviarButton.addActionListener(new ActionListener() {
+    public static void SeccionElimina(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton eliminarArtistaButton) {
+        eliminarArtistaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String Path = archivoTextField.getText() + ".xml";
+                JPanel eliminarPanel = new JPanel(new BorderLayout());
+                mainPanel.add(eliminarPanel, "eliminaPanel");
+                cardLayout.show(mainPanel, "eliminaPanel");
 
-                // Llamar al método para cargar datos
+                JLabel tituloLabel = new JLabel("Baja de artistas", SwingConstants.CENTER);
+                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                eliminarPanel.add(tituloLabel, BorderLayout.NORTH);
+
+                JPanel datosPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+                JLabel idLabel = new JLabel("ID del artista: ");
+                JTextField idText = new JTextField(15);
+                JButton enviarButton = new JButton("Enviar");
+                enviarButton.setPreferredSize(new Dimension(90, 20));
+
+                JPanel volvelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+                JButton volverButton = new JButton("Volver");
+                volverButton.setPreferredSize(new Dimension(90, 20));
+                JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                volverPanel.add(volverButton);
+                eliminarPanel.add(volverPanel, BorderLayout.SOUTH);
+
+                enviarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String ID = idText.getText();
+                        Spotify.bajaArtista(ID);
+                        JOptionPane.showMessageDialog(frame, "El artista se dio de baja de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        cardLayout.show(mainPanel, "artistaPanel");
+                        //BUSCAR FORMA DE QUE INFORME DE UN ERROR
+
+                    }
+                });
+
+                volverButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "artistaPanel");
+                    }
+                });
 
 
-                // Comprobar si el archivo de informe de errores existe
-                File Arch = new File(Path);
-                if (Arch.exists()) {
-                    Spotify.CargaDatos(Path);
-                    // Mostrar un mensaje de éxito usando JOptionPane
-                    JOptionPane.showMessageDialog(frame, "El archivo se cargó de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                datosPanel.add(idLabel);
+                datosPanel.add(idText);
+                datosPanel.add(enviarButton);
 
-                    // Volver al panel "artistaPanel" después de cerrar el mensaje
-                    cardLayout.show(mainPanel, "artistaPanel");
-                }else {
-                    JOptionPane.showMessageDialog(frame, "El archivo no existe.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                }
+                eliminarPanel.add(datosPanel);
 
             }
         });
-        JButton volverButton = new JButton("Volver");
-        volverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel, "artistaPanel");
-            }
-        });
-
-        enviarButton.setPreferredSize(new Dimension(140, 30));
-        volverButton.setPreferredSize(new Dimension(140, 30));
-
-        // Agregar los botones al panel de botones
-        buttonPanel.add(enviarButton);
-        buttonPanel.add(volverButton);
-
-        // Usar GridBagConstraints para centrar verticalmente
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(10, 0, 20, 0); // Margen entre el campo de texto y los botones
-
-        // Agregar el campo de texto centrado verticalmente
-        cargaPanel.add(inputPanel, gbc);
-
-        // Ajustar gbc para los botones y agregarlos también centrados
-        gbc.gridy = 1;
-        cargaPanel.add(buttonPanel, gbc);
     }
+
+
 }
 

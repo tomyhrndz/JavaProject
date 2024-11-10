@@ -293,7 +293,7 @@ public class Discografica implements Serializable{
         }
         if(bandera){
             return act;
-        }
+        }//REVISAR, CREO QUE DEBERIA DEVOLVER NULL NO UNA EXCEPCION
         throw new ArtistaNoEncontradoException("El artista con ID " + ID + " no fue encontrado.");
     }
 
