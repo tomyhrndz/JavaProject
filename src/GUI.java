@@ -1,16 +1,18 @@
 import discografica.Artista;
+import discografica.Cancion;
 import discografica.Discografica;
 import exceptions.ArtistaNoEncontradoException;
 import persistencia.Serializacion;
+import reportes.Reporte;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -87,39 +89,7 @@ public class GUI {
         reportesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Cambiar a la segunda pantalla cuando se presiona el botón "Informes"
-                JPanel reportesPanel = new JPanel(new BorderLayout());
-                mainPanel.add(reportesPanel, "reportesPanel");
-                cardLayout.show(mainPanel, "reportesPanel");
-
-                JLabel tituloLabel = new JLabel("Carga artistas");
-                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
-                tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                reportesPanel.add(tituloLabel, BorderLayout.NORTH);
-
-                JPanel tipoReportePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
-
-                JButton topCancionesButton = new JButton("Reporte top 10 canciones");
-                topCancionesButton.setPreferredSize(new Dimension(260, 25));
-                JButton discosVendidosButton = new JButton("Reporte unidades vendidas por disco");
-                discosVendidosButton.setPreferredSize(new Dimension(260, 25));
-                tipoReportePanel.add(topCancionesButton);
-                tipoReportePanel.add(discosVendidosButton);
-
-                JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
-                JButton volverButton = new JButton("Volver");
-                volverButton.setPreferredSize(new Dimension(160, 25));
-                volverPanel.add(volverButton);
-
-                volverButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        cardLayout.show(mainPanel, "StartPanel");
-                    }
-                });
-
-                reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
-                reportesPanel.add(volverPanel, BorderLayout.SOUTH);
+                reporteCanciones(mainPanel, cardLayout, frame);
             }
         });
 
@@ -191,16 +161,16 @@ public class GUI {
                         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
                         JTextField archivoTextField = new JTextField("Ingrese el nombre del archivo con los artistas:", 30);
 
-                        archivoTextField.addFocusListener(new java.awt.event.FocusListener() {
+                        archivoTextField.addFocusListener(new FocusListener() {
                             @Override
-                            public void focusGained(java.awt.event.FocusEvent e) {
+                            public void focusGained(FocusEvent e) {
                                 if (archivoTextField.getText().equals("Ingrese el nombre del archivo con los artistas:")) {
                                     archivoTextField.setText("");
                                 }
                             }
 
                             @Override
-                            public void focusLost(java.awt.event.FocusEvent e) {
+                            public void focusLost(FocusEvent e) {
                                 if (archivoTextField.getText().isEmpty()) {
                                     archivoTextField.setText("Ingrese el nombre del archivo con los artistas:");
                                 }
@@ -441,6 +411,151 @@ public class GUI {
         });
     }
 
+    public static void reporteCanciones(JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
+        JPanel reportesPanel = new JPanel(new BorderLayout());
+        mainPanel.add(reportesPanel, "reportesPanel");
+        cardLayout.show(mainPanel, "reportesPanel");
 
+        JLabel tituloLabel = new JLabel("Reportes");
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        reportesPanel.add(tituloLabel, BorderLayout.NORTH);
+
+        JPanel tipoReportePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+
+        JButton topCancionesButton = new JButton("Reporte top 10 canciones");
+        topCancionesButton.setPreferredSize(new Dimension(260, 25));
+        JButton discosVendidosButton = new JButton("Reporte unidades vendidas por disco");
+        discosVendidosButton.setPreferredSize(new Dimension(260, 25));
+        tipoReportePanel.add(topCancionesButton);
+        tipoReportePanel.add(discosVendidosButton);
+        reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
+
+        JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+        JButton volverButton = new JButton("Volver");
+        volverButton.setPreferredSize(new Dimension(160, 25));
+        volverPanel.add(volverButton);
+        reportesPanel.add(volverPanel, BorderLayout.SOUTH);
+
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(mainPanel, "StartPanel");
+            }
+        });
+
+        JPanel reporteCancionesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
+        JLabel tituloCancionesLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+
+        mainPanel.add(reporteCancionesPanel, "reporteCancionesPanel");
+        reporteCancionesPanel.add(tituloCancionesLabel, BorderLayout.NORTH);
+
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JTextField archivoTextField = new JTextField("Ingrese el genero que desea analizar: ", 30);
+
+        topCancionesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Limpiar el panel para evitar agregar componentes duplicados
+                reporteCancionesPanel.removeAll();
+                reporteCancionesPanel.setLayout(new BoxLayout(reporteCancionesPanel, BoxLayout.Y_AXIS));
+
+                // Configurar el título
+                JLabel tituloCancionesLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
+                tituloCancionesLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                tituloCancionesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                reporteCancionesPanel.add(tituloCancionesLabel);
+
+                // Espacio entre el título y el campo de texto
+                reporteCancionesPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+                // Configurar el campo de texto
+                JTextField generoTextField = new JTextField("Ingrese el género que desea analizar: ", 30);
+                generoTextField.setMaximumSize(new Dimension(300, 25));
+                generoTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                generoTextField.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        if (generoTextField.getText().equals("Ingrese el género que desea analizar: ")) {
+                            generoTextField.setText("");
+                        }
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        if (generoTextField.getText().isEmpty()) {
+                            generoTextField.setText("");
+                        }
+                    }
+                });
+
+                reporteCancionesPanel.add(generoTextField);
+
+                // Espacio entre el campo de texto y los botones
+                reporteCancionesPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+                // Configurar los botones
+                JPanel botonesPanel = new JPanel();
+                botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+
+                JButton enviarButton = new JButton("Enviar");
+                JButton volverReporteButton = new JButton("Volver");
+                botonesPanel.add(enviarButton);
+                botonesPanel.add(volverReporteButton);
+
+                volverReporteButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "reportesPanel");
+                    }
+                });
+                JPanel tablaPanel = new JPanel(new BorderLayout());
+                enviarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String genero = generoTextField.getText();
+                        if (genero.isEmpty()){
+                            JOptionPane.showMessageDialog(reporteCancionesPanel, "Ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        }else {
+                            final List<Cancion>[] reporteCanciones = new List[1];
+                            reporteCanciones[0] = Spotify.topCancionesGenero(genero);
+                            Reporte.topCanciones(reporteCanciones[0], genero);
+                            String[] columnas = {"Nombre", "Duracion", "Cantidad de reproducciones"};
+                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
+
+                            for (Cancion canciones : reporteCanciones[0]) {
+                                Object[] Data = {canciones.getNombre(), canciones.getDuracion(), canciones.getCantReproducciones()};
+                                tablaModelo.addRow(Data);
+                            }
+
+                            JTable tabla = new JTable(tablaModelo);
+                            JScrollPane scrollPane = new JScrollPane(tabla);
+
+                            tablaPanel.removeAll();
+                            tablaPanel.add(scrollPane, BorderLayout.CENTER);
+                            reporteCancionesPanel.add(tablaPanel, BorderLayout.CENTER);
+                            reporteCancionesPanel.revalidate();
+                            reporteCancionesPanel.repaint();
+                        }
+                    }
+                });
+
+                reporteCancionesPanel.add(botonesPanel);
+
+                // Ajustar el panel
+                reporteCancionesPanel.revalidate();
+                reporteCancionesPanel.repaint();
+
+                // Mostrar el panel
+                cardLayout.show(mainPanel, "reporteCancionesPanel");
+            }
+        });
+
+
+        reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
+        reportesPanel.add(volverPanel, BorderLayout.SOUTH);
+    }
 }
 

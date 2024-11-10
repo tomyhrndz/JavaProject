@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Reporte {
 
-    public static String topCanciones(List<Cancion> canciones, String genero) {
+    public static void topCanciones(List<Cancion> canciones, String genero) {
         StringBuilder sb = new StringBuilder("Top 10 Canciones (" + genero + ")").append("\n");
         for (Cancion cancion : canciones) {
             sb.append("Canción: ").append(cancion.getNombre())
@@ -27,8 +27,6 @@ public class Reporte {
             System.err.println("Error al crear o escribir en el archivo: " + e.getMessage());
         }
 
-        //Lo devuelve para mostrar en la GUI
-        return sb.toString();
     }
 
     public static String promedio(HashSet<Disco>discos, String artista){
