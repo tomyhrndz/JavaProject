@@ -86,28 +86,28 @@ public class Artista implements Comparable<Artista>, Serializable {
         return sb.toString();
     }
 
-    public Liquidacion getLiquidacion()
+    public Liquidacion getLiquidacion(LocalDate fecha)
     {
-        Liquidacion LiquidacionGanancia = new Liquidacion();
+        Liquidacion liquidacionGanancia = new Liquidacion();
 
         for(Disco disco : getDiscos())
         {
-            LiquidacionGanancia.LiquidacionReproducciones.addAll(disco.GetGananciaReproducciones(EsEmergente()));
-            LiquidacionGanancia.LiquidacionDisco.add(disco.GetGananciaDisco(EsEmergente()));
+            liquidacionGanancia.addDisco(disco.GetGananciaDisco(EsEmergente()));
+            liquidacionGanancia.addReproducciones(disco.GetGananciaReproducciones(EsEmergente()));
         }
 
-        int ActMonth = LocalDate.now().getMonthValue();
-        int ActYear = LocalDate.now().getYear();
+        int ActMonth = fecha.getMonthValue();
+        int ActYear = fecha.getYear();
         LocalDate DateRecital;
 
         for(Recital recital : getRecitales())
         {
             DateRecital =  recital.GetFecha();
             if(DateRecital.getMonthValue() == ActMonth && DateRecital.getYear() == ActYear)
-                LiquidacionGanancia.LiquidacionRecitales.add(recital.GetGananciaRecital(EsEmergente()));
+                liquidacionGanancia.addRecitales(recital.GetGananciaRecital(EsEmergente()));
         }
 
-        return LiquidacionGanancia;
+        return liquidacionGanancia;
     }
 
 }

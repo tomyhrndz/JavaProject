@@ -33,6 +33,8 @@ public class Disco implements Serializable {
 
     public ArrayList<Cancion> getCanciones() {return canciones;}
 
+
+
     public ArrayList<ObjetoLiquidacion> GetGananciaReproducciones(boolean EsEmergente)
     {
         ArrayList<ObjetoLiquidacion> ganancias = new ArrayList<>();
@@ -42,20 +44,20 @@ public class Disco implements Serializable {
             Aux = new ObjetoLiquidacion();
             double Cant = act.getCantReproducciones();
             if(Cant > 0 && Cant < 5000)
-                Aux.Monto = Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor5000;
+                Aux.setMonto( Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor5000);
             else
                 if(Cant >= 5000 && Cant < 10000)
-                    Aux.Monto = Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMenor10000;
+                    Aux.setMonto(Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMenor10000);
                 else
                     if(Cant > 10000)
-                        Aux.Monto = Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor10000;
+                        Aux.setMonto(Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor10000);
 
-            Aux.Descripcion = act.getNombre();
+            Aux.setDescripcion(act.getNombre());
 
             if(EsEmergente)
-                Aux.Monto *= Constantes.PorcentajeArtistaEmergente;
+                Aux.setMonto(Aux.getMonto()*Constantes.PorcentajeArtistaEmergente);
             else
-                Aux.Monto *= Constantes.PorcentajeArtistaConsagrado;
+                Aux.setMonto(Aux.getMonto()*Constantes.PorcentajeArtistaConsagrado);
 
             ganancias.add(Aux);
         }

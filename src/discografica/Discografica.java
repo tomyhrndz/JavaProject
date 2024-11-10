@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -360,10 +361,10 @@ public class Discografica implements Serializable{
         return discos;
     }
 
-    public void LiquidacionArtista(String IDArtista)
+    public void LiquidacionArtista(String IDArtista, LocalDate fecha)
     {
         Artista artista  = buscarArtista(IDArtista);
-        Liquidacion liquidacion = artista.getLiquidacion();
+        Liquidacion liquidacion = artista.getLiquidacion(fecha);
     }
 
     public TreeSet<Artista> getArtistas(){ return Artistas; }
