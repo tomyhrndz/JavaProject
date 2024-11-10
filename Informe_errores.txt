@@ -1,4 +1,0 @@
-======[Informe de errores]======
-El tag duracion esta vacio en la entrada numero: 3
-El tag duracion esta vacio en la entrada numero: 3
-    09-11-2024 19:19:06

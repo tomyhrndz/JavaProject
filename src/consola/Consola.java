@@ -105,10 +105,14 @@ public class Consola {
 
     public void mostrarDatos(Scanner sc){
         List<String> artistas = discografica.listarTodosArtistas();
-        for(String artista : artistas){
-            System.out.println(artista);
+        if(!artistas.isEmpty()) {
+            for (String artista : artistas) {
+                System.out.println(artista);
+            }
+        }else{
+            System.out.print("No hay artistas cargados ");
         }
-        System.out.println("Enter para continuar");
+        System.out.println("(Enter para continuar)");
         sc.nextLine();
     }
 
