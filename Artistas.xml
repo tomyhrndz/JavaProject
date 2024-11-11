@@ -345,7 +345,7 @@
         <ID>EMG4100</ID>
         <nombre>Nueva Era</nombre>
         <cantidad_integrantes>3</cantidad_integrantes>
-        <genero_musical>Electrónica</genero_musical>
+        <genero_musical>Electronica</genero_musical>
         <discos>
             <disco>
                 <nombreDisco>Sonidos Cósmicos</nombreDisco>
@@ -438,6 +438,737 @@
                 <fecha>2024-08-14</fecha>
                 <recaudacion>70000</recaudacion>
                 <costos_produccion>18000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+<artista>
+        <ID>EMG7201</ID>
+        <nombre>Voces de Cristal</nombre>
+        <cantidad_integrantes>4</cantidad_integrantes>
+        <genero_musical>Indie Rock</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Espejismos</nombreDisco>
+                <unidades_vendidas>800</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Reflejo</nombreCancion>
+                        <duracion>03:20</duracion>
+                        <reproducciones>35000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Sombras</nombreCancion>
+                        <duracion>04:05</duracion>
+                        <reproducciones>28000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Brisa Cálida</nombreCancion>
+                        <duracion>03:50</duracion>
+                        <reproducciones>31000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Horizontes</nombreDisco>
+                <unidades_vendidas>950</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Horizonte Azul</nombreCancion>
+                        <duracion>04:10</duracion>
+                        <reproducciones>45000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Amanecer</nombreCancion>
+                        <duracion>05:00</duracion>
+                        <reproducciones>39000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-04-20</fecha>
+                <recaudacion>25000</recaudacion>
+                <costos_produccion>8000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON9032</ID>
+        <nombre>Ritmo del Sol</nombre>
+        <cantidad_integrantes>6</cantidad_integrantes>
+        <genero_musical>Pop Alternativo</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Verano Eterno</nombreDisco>
+                <unidades_vendidas>1500</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Sol de Medianoche</nombreCancion>
+                        <duracion>03:40</duracion>
+                        <reproducciones>80000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Luz de Amor</nombreCancion>
+                        <duracion>04:30</duracion>
+                        <reproducciones>75000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Brilla</nombreCancion>
+                        <duracion>03:25</duracion>
+                        <reproducciones>60000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Verano en Piel</nombreCancion>
+                        <duracion>04:10</duracion>
+                        <reproducciones>70000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Ritmo Dorado</nombreDisco>
+                <unidades_vendidas>1300</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Caminos del Sol</nombreCancion>
+                        <duracion>03:55</duracion>
+                        <reproducciones>90000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Luz Dorada</nombreCancion>
+                        <duracion>04:45</duracion>
+                        <reproducciones>65000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-06-15</fecha>
+                <recaudacion>30000</recaudacion>
+                <costos_produccion>10000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-09-25</fecha>
+                <recaudacion>50000</recaudacion>
+                <costos_produccion>15000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG8931</ID>
+        <nombre>Sonidos del Mar</nombre>
+        <cantidad_integrantes>5</cantidad_integrantes>
+        <genero_musical>Folk</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Olas y Mareas</nombreDisco>
+                <unidades_vendidas>700</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Brisa de la Mañana</nombreCancion>
+                        <duracion>03:15</duracion>
+                        <reproducciones>20000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Ritmo de las Olas</nombreCancion>
+                        <duracion>04:10</duracion>
+                        <reproducciones>18000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Marea Alta</nombreCancion>
+                        <duracion>05:00</duracion>
+                        <reproducciones>22000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Profundidades</nombreDisco>
+                <unidades_vendidas>850</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Aguas Tranquilas</nombreCancion>
+                        <duracion>04:30</duracion>
+                        <reproducciones>25000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Horizonte Azul</nombreCancion>
+                        <duracion>03:50</duracion>
+                        <reproducciones>23000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Mareas Vivas</nombreDisco>
+                <unidades_vendidas>1000</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Mar Sereno</nombreCancion>
+                        <duracion>04:20</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Roca y Arena</nombreCancion>
+                        <duracion>05:15</duracion>
+                        <reproducciones>28000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Amanecer Marino</nombreCancion>
+                        <duracion>03:45</duracion>
+                        <reproducciones>26000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-05-18</fecha>
+                <recaudacion>40000</recaudacion>
+                <costos_produccion>12000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-10</fecha>
+                <recaudacion>55000</recaudacion>
+                <costos_produccion>15000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON4529</ID>
+        <nombre>Latidos del Alma</nombre>
+        <cantidad_integrantes>3</cantidad_integrantes>
+        <genero_musical>Hip-Hop</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Ritmos del Barrio</nombreDisco>
+                <unidades_vendidas>1200</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Latidos Fuertes</nombreCancion>
+                        <duracion>02:50</duracion>
+                        <reproducciones>40000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>En el Asfalto</nombreCancion>
+                        <duracion>03:10</duracion>
+                        <reproducciones>35000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Voces del Alma</nombreCancion>
+                        <duracion>03:25</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Palabras Sin Filtro</nombreCancion>
+                        <duracion>02:45</duracion>
+                        <reproducciones>32000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Corazón Urbano</nombreDisco>
+                <unidades_vendidas>950</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Ritmo y Poesía</nombreCancion>
+                        <duracion>04:00</duracion>
+                        <reproducciones>42000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Corazón de Acero</nombreCancion>
+                        <duracion>03:35</duracion>
+                        <reproducciones>39000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-07-28</fecha>
+                <recaudacion>22000</recaudacion>
+                <costos_produccion>6000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG5738</ID>
+        <nombre>Melodías del Futuro</nombre>
+        <cantidad_integrantes>2</cantidad_integrantes>
+        <genero_musical>Electronica</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Vibraciones</nombreDisco>
+                <unidades_vendidas>300</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Eco Eléctrico</nombreCancion>
+                        <duracion>05:10</duracion>
+                        <reproducciones>12000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Sonidos del Futuro</nombreCancion>
+                        <duracion>04:20</duracion>
+                        <reproducciones>10000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Ritmo Infinito</nombreCancion>
+                        <duracion>03:40</duracion>
+                        <reproducciones>11000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Electricidad</nombreDisco>
+                <unidades_vendidas>450</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Corriente</nombreCancion>
+                        <duracion>04:15</duracion>
+                        <reproducciones>15000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Descarga</nombreCancion>
+                        <duracion>03:30</duracion>
+                        <reproducciones>13000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-08-12</fecha>
+                <recaudacion>18000</recaudacion>
+                <costos_produccion>5000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-11-05</fecha>
+                <recaudacion>25000</recaudacion>
+                <costos_produccion>7000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+<artista>
+        <ID>CON3012</ID>
+        <nombre>Raíces del Sonido</nombre>
+        <cantidad_integrantes>6</cantidad_integrantes>
+        <genero_musical>Folklore</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Susurros del Bosque</nombreDisco>
+                <unidades_vendidas>800</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Río Silencioso</nombreCancion>
+                        <duracion>04:50</duracion>
+                        <reproducciones>35000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Canción de Cuna</nombreCancion>
+                        <duracion>03:30</duracion>
+                        <reproducciones>27000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Raíces Antiguas</nombreCancion>
+                        <duracion>05:15</duracion>
+                        <reproducciones>40000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Corazón de la Tierra</nombreDisco>
+                <unidades_vendidas>950</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Tierra Viva</nombreCancion>
+                        <duracion>04:40</duracion>
+                        <reproducciones>32000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Camino de la Luna</nombreCancion>
+                        <duracion>03:55</duracion>
+                        <reproducciones>29000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-06-20</fecha>
+                <recaudacion>50000</recaudacion>
+                <costos_produccion>15000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-09-12</fecha>
+                <recaudacion>60000</recaudacion>
+                <costos_produccion>18000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG9876</ID>
+        <nombre>Voces Urbanas</nombre>
+        <cantidad_integrantes>3</cantidad_integrantes>
+        <genero_musical>Hip-Hop</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Calles y Sueños</nombreDisco>
+                <unidades_vendidas>400</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Corazones en Llamas</nombreCancion>
+                        <duracion>03:10</duracion>
+                        <reproducciones>22000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Luces de la Ciudad</nombreCancion>
+                        <duracion>02:55</duracion>
+                        <reproducciones>21000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Sueños de Barrio</nombreCancion>
+                        <duracion>03:20</duracion>
+                        <reproducciones>25000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Palabras de Hierro</nombreCancion>
+                        <duracion>03:45</duracion>
+                        <reproducciones>18000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Ritmos de Hierro</nombreDisco>
+                <unidades_vendidas>650</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Acero en la Piel</nombreCancion>
+                        <duracion>03:50</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Puños de Acero</nombreCancion>
+                        <duracion>04:10</duracion>
+                        <reproducciones>27000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-07-15</fecha>
+                <recaudacion>20000</recaudacion>
+                <costos_produccion>7000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-11-30</fecha>
+                <recaudacion>35000</recaudacion>
+                <costos_produccion>12000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON5643</ID>
+        <nombre>Ritmos Cósmicos</nombre>
+        <cantidad_integrantes>4</cantidad_integrantes>
+        <genero_musical>Electronica</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Galaxia</nombreDisco>
+                <unidades_vendidas>500</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Estrella de Neón</nombreCancion>
+                        <duracion>04:25</duracion>
+                        <reproducciones>35000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Pulso Cósmico</nombreCancion>
+                        <duracion>05:05</duracion>
+                        <reproducciones>29000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Luz Intergaláctica</nombreCancion>
+                        <duracion>04:00</duracion>
+                        <reproducciones>32000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Nebulosa</nombreDisco>
+                <unidades_vendidas>750</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Nube de Polvo</nombreCancion>
+                        <duracion>04:35</duracion>
+                        <reproducciones>37000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Sombras de la Luna</nombreCancion>
+                        <duracion>05:20</duracion>
+                        <reproducciones>33000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-08-10</fecha>
+                <recaudacion>40000</recaudacion>
+                <costos_produccion>10000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-20</fecha>
+                <recaudacion>45000</recaudacion>
+                <costos_produccion>12000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+<artista>
+        <ID>EMG4321</ID>
+        <nombre>Melodía Eterna</nombre>
+        <cantidad_integrantes>4</cantidad_integrantes>
+        <genero_musical>Jazz</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Tiempo en Acordes</nombreDisco>
+                <unidades_vendidas>1200</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Notas en el Viento</nombreCancion>
+                        <duracion>06:15</duracion>
+                        <reproducciones>50000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Sueño de Medianoche</nombreCancion>
+                        <duracion>07:05</duracion>
+                        <reproducciones>47000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Reflejos Dorados</nombreCancion>
+                        <duracion>05:50</duracion>
+                        <reproducciones>52000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Ritmo de Luces</nombreDisco>
+                <unidades_vendidas>1100</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Sombras de la Tarde</nombreCancion>
+                        <duracion>04:45</duracion>
+                        <reproducciones>45000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Luz Azul</nombreCancion>
+                        <duracion>06:10</duracion>
+                        <reproducciones>48000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Vibraciones Suaves</nombreCancion>
+                        <duracion>05:30</duracion>
+                        <reproducciones>43000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-04-05</fecha>
+                <recaudacion>55000</recaudacion>
+                <costos_produccion>14000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>CON7751</ID>
+        <nombre>Ritmo del Fuego</nombre>
+        <cantidad_integrantes>3</cantidad_integrantes>
+        <genero_musical>Rock</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Infierno Sonoro</nombreDisco>
+                <unidades_vendidas>950</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Llamas Eternas</nombreCancion>
+                        <duracion>03:40</duracion>
+                        <reproducciones>75000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Cenizas en el Viento</nombreCancion>
+                        <duracion>04:50</duracion>
+                        <reproducciones>62000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Fuego y Pasión</nombreCancion>
+                        <duracion>05:20</duracion>
+                        <reproducciones>70000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Rugido del Volcán</nombreDisco>
+                <unidades_vendidas>850</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Terremoto de Emociones</nombreCancion>
+                        <duracion>04:10</duracion>
+                        <reproducciones>67000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Tormenta de Luz</nombreCancion>
+                        <duracion>05:00</duracion>
+                        <reproducciones>65000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-07-22</fecha>
+                <recaudacion>80000</recaudacion>
+                <costos_produccion>20000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-10-18</fecha>
+                <recaudacion>90000</recaudacion>
+                <costos_produccion>25000</costos_produccion>
+            </recital>
+        </recitales>
+    </artista>
+
+    <artista>
+        <ID>EMG5490</ID>
+        <nombre>Éxodo Celestial</nombre>
+        <cantidad_integrantes>2</cantidad_integrantes>
+        <genero_musical>Electronica</genero_musical>
+        <discos>
+            <disco>
+                <nombreDisco>Éxtasis Cósmico</nombreDisco>
+                <unidades_vendidas>700</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Viaje Estelar</nombreCancion>
+                        <duracion>04:00</duracion>
+                        <reproducciones>20000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Destello Lunar</nombreCancion>
+                        <duracion>05:30</duracion>
+                        <reproducciones>17000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Cuerpo Celeste</nombreCancion>
+                        <duracion>04:45</duracion>
+                        <reproducciones>18000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+            <disco>
+                <nombreDisco>Pulso de la Galaxia</nombreDisco>
+                <unidades_vendidas>900</unidades_vendidas>
+                <canciones>
+                    <cancion>
+                        <nombreCancion>Pulso de Luz</nombreCancion>
+                        <duracion>03:50</duracion>
+                        <reproducciones>30000</reproducciones>
+                        <es_sencillo>true</es_sencillo>
+                    </cancion>
+                    <cancion>
+                        <nombreCancion>Ondas Sónicas</nombreCancion>
+                        <duracion>04:35</duracion>
+                        <reproducciones>25000</reproducciones>
+                        <es_sencillo>false</es_sencillo>
+                    </cancion>
+                </canciones>
+            </disco>
+        </discos>
+        <recitales>
+            <recital>
+                <fecha>2024-06-10</fecha>
+                <recaudacion>30000</recaudacion>
+                <costos_produccion>9000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-09-05</fecha>
+                <recaudacion>45000</recaudacion>
+                <costos_produccion>12000</costos_produccion>
+            </recital>
+            <recital>
+                <fecha>2024-12-12</fecha>
+                <recaudacion>50000</recaudacion>
+                <costos_produccion>15000</costos_produccion>
             </recital>
         </recitales>
     </artista>
