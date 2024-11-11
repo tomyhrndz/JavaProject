@@ -11,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +33,7 @@ public class Discografica implements Serializable{
      * @param path Archivo XML para cargar Datos
      * @throws FileNotFoundException
      */
-    public void CargaDatos(String path) throws FileNotFoundException {
+    public void CargaDatos(String path) throws FileNotFoundException, ErroresEnArchivoException {
         StringBuilder InformeErrores = new StringBuilder();
         Artista NuevoArtista = null;
         Disco NuevoDisco = null;
@@ -272,8 +271,10 @@ public class Discografica implements Serializable{
                 writer.write("    " + LocalDateTime.now().format(formato));
                 throw new ErroresEnArchivoException(InformeErrores.toString());
 
-            } catch (IOException | ErroresEnArchivoException e) {
-                System.err.println("No se pudo escribir el informe de errores" + e.getMessage());
+            } catch(ErroresEnArchivoException e){
+                throw e;
+            }catch (IOException e) {
+                System.err.println("No se pudo escribir el informe de errores " + e.getMessage());
             }
         }
         else{

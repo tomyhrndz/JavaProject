@@ -2,6 +2,7 @@ package gui;
 
 import discografica.*;
 import exceptions.ArtistaNoEncontradoException;
+import exceptions.ErroresEnArchivoException;
 import persistencia.Serializacion;
 import reportes.Reporte;
 
@@ -11,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -247,6 +249,9 @@ public class GUI {
                                     cardLayout.show(mainPanel, "artistaPanel");
                                 } catch (FileNotFoundException ex) {
                                     JOptionPane.showMessageDialog(frame, "El archivo no existe.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                                } catch (ErroresEnArchivoException ex) {
+                                    System.err.println(ex.getMessage());
+                                    JOptionPane.showMessageDialog(frame, "Hubo uno o mas errores al cargar el archivo. Puede acceder al informe en Informe_errores.txt", "Error", JOptionPane.INFORMATION_MESSAGE);
                                 }
                             }
                         });
@@ -1026,9 +1031,8 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
                         String genero = generoTextField.getText().trim();
-                        if (genero.isEmpty()) {
+                        if (genero.isEmpty() || genero.equals("Ingrese el género que desea analizar:")) {
                             JOptionPane.showMessageDialog(reporteCancionesPanel, "Ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             ArrayList<Cancion> reporteCanciones = Spotify.topCancionesGenero(genero);
