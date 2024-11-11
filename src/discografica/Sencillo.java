@@ -9,7 +9,7 @@ public class Sencillo extends Cancion implements Serializable {
     }
 
     @Override
-    public int getCantReproducciones() {
-        return (int) (super.getCantReproducciones() * 1.5);
+    public boolean esSencillo(){
+        return true;
     }
 }

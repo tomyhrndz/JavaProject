@@ -2,9 +2,16 @@ package persistencia;
 
 import java.io.*;
 
+/**
+ * Clase Maneja la persistencia de Discografica
+ */
 public class Serializacion {
 
-    //Guarda Serializacion Clasica
+    /**
+     * Recibe un Objeto y lo guarda en un archivo binario determinado por @archivo
+     * @param objeto Objeto Discografica
+     * @param archivo Nombre del archivo de persistencia
+     */
     public static void guardarObjeto(Object objeto, String archivo) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(archivo))) {
             out.writeObject(objeto);
@@ -13,7 +20,13 @@ public class Serializacion {
         }
     }
 
-    // Carga Serializacion Clasica
+    /**
+     * Lee un archivo binario y carga el objeto que contenga
+     * @param archivo archivo bianrio
+     * @param tipo Tipo del Objeto que se busca cargar
+     * @param <T> Tipo del Objeto que se busca cargar
+     * @return Objeto contenido en el archivo
+     */
     public static <T> T cargarObjeto(String archivo, Class<T> tipo) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(archivo))) {
             return tipo.cast(in.readObject());

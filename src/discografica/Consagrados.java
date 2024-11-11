@@ -1,7 +1,6 @@
 package discografica;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Consagrados extends Artista implements Serializable {
 

@@ -12,6 +12,11 @@ import java.util.List;
 
 public class Reporte {
 
+    /**
+     * Genera un archivo con el reporte de las 10 canciones con mas reproducciones de un genero musical
+     * @param canciones lista de canciones con mas reproducciones del genero musical
+     * @param genero genero musical
+     */
     public static void topCanciones(List<Cancion> canciones, String genero) {
         StringBuilder sb = new StringBuilder("Top 10 Canciones (" + genero + ")").append("\n");
         for (Cancion cancion : canciones) {
@@ -29,6 +34,13 @@ public class Reporte {
 
     }
 
+    /**
+     * Genera un archivo con detalle de unidades vendidas para cada disco para un artista recibido como parámetro e
+     * informar la cantidad de unidades promedio por disco
+     * @param discos HashSet Discos del Artista
+     * @param artista Nombre del Artista
+     * @return Promedio de unidades vendidas por Disco
+     */
     public static float promedio(HashSet<Disco>discos, String artista){
         float sum = 0;
         int cantDiscos= 0;

@@ -3,7 +3,6 @@ package discografica;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class Recital implements Serializable {
     private LocalDate Fecha;
@@ -14,16 +13,13 @@ public class Recital implements Serializable {
         this.Fecha = LocalDate.of(year, mes, dia);
         this.Recaudacion = Recaudacion;
         this.CostoProduccion = CostoProduccion;
-    };
-
-    public void setCostoProduccion(float costoProduccion) {
-        CostoProduccion = costoProduccion;
     }
 
-    public void setRecaudacion(float recaudacion) {
-        Recaudacion = recaudacion;
-    }
-
+    /**
+     * Genera Liquidacion del Recital
+     * @param EsEmergente Boolean para definir porcentajes
+     * @return Objeto Liquidacion del Recital
+     */
     public ObjetoLiquidacion GetGananciaRecital(boolean EsEmergente)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -41,7 +37,21 @@ public class Recital implements Serializable {
         return ObjetoRecitalLiquidacion;
     }
 
+    /**
+     * Devuelve la fecha del recital
+     * @return fecha del recital
+     */
     public LocalDate GetFecha() { return Fecha; }
+
+    /**
+     * Devuelve la recaudacion del recital
+     * @return ecaudacion del recital
+     */
     public float GetRecaudacion() { return Recaudacion; }
+
+    /**
+     * Devuelve el costo de produccion del recital
+     * @return costo del recital
+     */
     public float GetCostoProduccion() { return CostoProduccion; }
 }

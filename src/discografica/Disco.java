@@ -15,6 +15,13 @@ public class Disco implements Serializable {
         canciones = new ArrayList<>();
     }
 
+    /**
+     * Agrega objeto cancion en la lista de Canciones del Disco
+     * @param Nombre nombre de la Cancion
+     * @param Duracion duracion de la Cancion
+     * @param Reproducciones reproducciones de la Cancion
+     * @param Sencillo boolean es Sencillo
+     */
     public void AgregarCanciones(String Nombre, String Duracion, int Reproducciones, Boolean Sencillo) {
         if (Sencillo) {
             Sencillo nuevo = new Sencillo(Nombre, Duracion, Reproducciones);
@@ -25,16 +32,32 @@ public class Disco implements Serializable {
         }
     }
 
+    /**
+     * Devuelve el nombre del Disco
+     * @return Nombre del Disco
+     */
     public String getNombre() {return Nombre; }
 
+    /**
+     * Devuelve la cantidad de unidades vendidas del Disco
+     * @return Cantidad de Unidades Vendidas del Disco
+     */
     public int getUnidadesVendidas() {
         return UnidadesVendidas;
     }
 
+    /**
+     * Devuelve la lista de Canciones del Disco
+     * @return ArrayList de Canciones del Disco
+     */
     public ArrayList<Cancion> getCanciones() {return canciones;}
 
 
-
+    /**
+     * Genera la liquidacion de las Canciones del Disco
+     * @param EsEmergente Boolean para Distinguir los porcentajes a usar
+     * @return ArrayList de ObjetoLiquidacion perteneciente a las Reproducciones de las Canciones
+     */
     public ArrayList<ObjetoLiquidacion> GetGananciaReproducciones(boolean EsEmergente)
     {
         ArrayList<ObjetoLiquidacion> ganancias = new ArrayList<>();
@@ -42,7 +65,7 @@ public class Disco implements Serializable {
         for (Cancion act : canciones)
         {
             Aux = new ObjetoLiquidacion();
-            double Cant = act.getCantReproducciones();
+            double Cant = act.getReproduccionesLiquidacion();
             if(Cant > 0 && Cant < 5000)
                 Aux.setMonto( Constantes.GananciaxReproduccion * Cant * Constantes.PorcentajeMayor5000);
             else
@@ -64,6 +87,11 @@ public class Disco implements Serializable {
         return ganancias;
     }
 
+    /**
+     * Genera la liquidacion del Disco
+     * @param EsEmergente Boolean para Distinguir los porcentajes a usar
+     * @return ObjetoLiquidacion perteneciente a las unidades vendidas del Disco
+     */
     public ObjetoLiquidacion GetGananciaDisco(boolean EsEmergente)
     {
         if(EsEmergente)

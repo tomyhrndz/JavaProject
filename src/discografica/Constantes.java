@@ -1,5 +1,8 @@
 package discografica;
 
+/**
+ * Clase de Constantes para la liquidacion de Artistas
+ */
 public class Constantes {
     //Discos
     public static final double ValorCancion = 500; //Valor de cada cancion por disco

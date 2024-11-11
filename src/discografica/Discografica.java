@@ -25,6 +25,11 @@ public class Discografica implements Serializable{
         Artistas = new TreeSet<>();
     }
 
+    /**
+     * Carga Artistas desde un Archivo XML, genera un Reporte si hay errores en el archivo
+     * @param path Archivo XML para cargar Datos
+     * @throws FileNotFoundException
+     */
     public void CargaDatos(String path) throws FileNotFoundException {
         StringBuilder InformeErrores = new StringBuilder();
         Artista NuevoArtista = null;
@@ -273,7 +278,11 @@ public class Discografica implements Serializable{
 
     }
 
-
+    /**
+     * Crea una lista de Artistas que tengan la misma cantidad de integrantes que CantInt
+     * @param CantInt cantidad de integrantes
+     * @return Lista de Artistas con la cantidad de integrantes
+     */
     public List<Artista> consultaDatos(int CantInt) {
         List<Artista> artistasEncontrados = new ArrayList<>();
 
@@ -284,6 +293,11 @@ public class Discografica implements Serializable{
         return artistasEncontrados;
     }
 
+    /**
+     * Crea una lista de Artistas que correspondan al genero musical
+     * @param genero genero muscial
+     * @return Lista de Artistas del genero musical
+     */
     public List<Artista> consultaDatos(String genero){
         List<Artista> artistasEncontrados = new ArrayList<>();
 
@@ -294,6 +308,12 @@ public class Discografica implements Serializable{
         return artistasEncontrados;
     }
 
+    /**
+     * Crea una lista que de Artistas que cumplan con la cantidad de integrantes y el genero musical
+     * @param genero genero musical
+     * @param CantInt cantidad de integrantes
+     * @return Lista de Artistas que cumplan con la cantidad de integrantes y el genero musical
+     */
     public List<Artista> consultaDatos(String genero, int CantInt){
         List<Artista> artistasEncontrados = new ArrayList<>();
 
@@ -304,7 +324,10 @@ public class Discografica implements Serializable{
         return artistasEncontrados;
     }
 
-
+    /**
+     * Da de baja el Artista con la ID pasada como parametro
+     * @param ID ID del Artista
+     */
     public void bajaArtista(String ID) {
         try {
             Artista eliminar = buscarArtista(ID);
@@ -314,6 +337,12 @@ public class Discografica implements Serializable{
         }
     }
 
+    /**
+     * Busca el Artista correspondiente a la ID
+     * @param ID ID del Artista
+     * @return Objeto Artista
+     * @throws ArtistaNoEncontradoException Si no encuentra el artista
+     */
     public Artista buscarArtista(String ID) throws ArtistaNoEncontradoException {
         Iterator<Artista> iterator = Artistas.iterator();
         Artista act = null;
@@ -331,6 +360,11 @@ public class Discografica implements Serializable{
         throw new ArtistaNoEncontradoException("El artista con ID " + ID + " no fue encontrado.");
     }
 
+    /**
+     * Genera una lista de las 10 canciones con mas reproducciones de un genero musical
+     * @param genero genero musical
+     * @return lista de canciones
+     */
     public List<Cancion> topCancionesGenero(String genero) {
         List<Cancion> canciones = new ArrayList<>();
 
@@ -352,27 +386,44 @@ public class Discografica implements Serializable{
 
     }
 
+    /**
+     * Devuelve una lista de todos Artistas
+     * @return lista de Artistas
+     */
 	public List<Artista> listarTodosArtistas(){
 		List<Artista> detallesArtistas = new ArrayList<>();
 
-		for(Artista artista : Artistas){
-			detallesArtistas.add(artista);
-		}
+        detallesArtistas.addAll(Artistas);
 
 		return detallesArtistas;
 	}
 
-
+    /**
+     * Devuelve los discos de un Artista por su ID
+     * @param ID ID del artista
+     * @return HashSet Discos
+     */
     public HashSet<Disco> reporteDiscos(String ID){
         Artista artista = buscarArtista(ID);
         HashSet<Disco> discos = artista.getDiscos();
         return discos;
     }
 
+    /**
+     * Genera la liquidacion de un Artista pasado por parametro en un
+     * mes pasado por parametro
+     * @param IDArtista ID del Artsita
+     * @param fecha
+     * @return Liquidacion del Artista
+     */
     public Liquidacion LiquidacionArtista(String IDArtista, YearMonth fecha) {
         Artista artista  = buscarArtista(IDArtista);
         return artista.getLiquidacion(fecha);
     }
 
+    /**
+     * Devuelve el TreeSet de Artistas
+     * @return TreeSet Artistas
+     */
     public TreeSet<Artista> getArtistas(){ return Artistas; }
 }
