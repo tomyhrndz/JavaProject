@@ -29,10 +29,10 @@ public class Reporte {
 
     }
 
-    public static String promedio(HashSet<Disco>discos, String artista){
+    public static float promedio(HashSet<Disco>discos, String artista){
         float sum = 0;
         int cantDiscos= 0;
-        float promedio = 0;
+        float prom = 0;
 
         StringBuilder sb = new StringBuilder("Unidades vendidas por Disco:\n");
         for (Disco disco : discos) {
@@ -40,8 +40,8 @@ public class Reporte {
             sum += disco.getUnidadesVendidas();
             sb.append("Disco ").append(disco.getNombre()).append(": ").append(disco.getUnidadesVendidas()).append(" unidades\n");
         }
-        promedio = sum/cantDiscos;
-        sb.append("Promedio por Disco: ").append(promedio).append(" unidades\n");
+        prom = sum/cantDiscos;
+        sb.append("Promedio por Disco: ").append(prom).append(" unidades\n");
 
         File archivo = new File("UnidadesVendidas("+ artista +").txt");
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, false))){
@@ -49,6 +49,7 @@ public class Reporte {
         }catch (Exception e){
             System.err.println("Error al crear o escribir el archivo: " + e.getMessage());
         }
-        return sb.toString();
+
+        return prom;
     }
 }

@@ -112,9 +112,10 @@ public class GUI {
         mainPanel.add(artistaPanel, "artistaPanel");
 
 
-        JPanel buttonPanelArtistas = new JPanel(new GridLayout(5, 1, 0, 60));
-        buttonPanelArtistas.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0)); // Espacio alrededor del panel de botones
+        JPanel buttonPanelArtistas = new JPanel(new GridLayout(6, 1, 0, 40));
+        buttonPanelArtistas.setBorder(BorderFactory.createEmptyBorder(45, 0, 15, 0)); // Espacio alrededor del panel de botones
         JButton agregarArtistasButton = new JButton("Cargar artistas");
+        JButton revisarArtistasButton = new JButton("Revisar todos los artistas");
         JButton consultaArtistasButton = new JButton("Consultar datos de artistas");
         JButton eliminarArtistaButton = new JButton("Eliminar artista");
         JButton liquidacionesButton = new JButton("Generar liquidacion");
@@ -122,6 +123,9 @@ public class GUI {
 
         buttonPanelArtistas.add(agregarArtistasButton);
         SeccionCarga(mainPanel, cardLayout, frame, gestionDeArtistasButton, agregarArtistasButton);
+
+        buttonPanelArtistas.add(revisarArtistasButton);
+        SeccionRevision(mainPanel, cardLayout, frame, revisarArtistasButton);
 
         buttonPanelArtistas.add(consultaArtistasButton);
         SeccionConsulta(mainPanel, artistaPanel,cardLayout, consultaArtistasButton);
@@ -233,6 +237,112 @@ public class GUI {
         });
     }
 
+    public static void SeccionRevision(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton revisarArtistasButton) {
+        revisarArtistasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final List<Artista> revisionArtistas = Spotify.listarTodosArtistas();
+                JPanel revisionPanel = new JPanel(new BorderLayout());
+                mainPanel.add(revisionPanel, "revisionPanel");
+                cardLayout.show(mainPanel, "revisionPanel");
+
+                JLabel tituloLabel = new JLabel("Consultar datos", SwingConstants.CENTER);
+                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                revisionPanel.add(tituloLabel, BorderLayout.NORTH);
+
+                JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                JButton volverButton = new JButton("Volver");
+                volverButton.setPreferredSize(new Dimension(240, 25));
+                buttonPanel.add(volverButton);
+                revisionPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+                volverButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "artistaPanel");
+                    }
+                });
+
+                if (!revisionArtistas.isEmpty()) {
+                    // Crear ComboBox con nombres de artistas
+                    JComboBox<String> artistaComboBox = new JComboBox<>();
+                    for (Artista artista : revisionArtistas) {
+                        artistaComboBox.addItem(artista.getNombre());
+                    }
+                    // Reducir el tamaño vertical del ComboBox
+                    artistaComboBox.setPreferredSize(new Dimension(200, 30)); // Ajuste vertical
+                    artistaComboBox.setMaximumSize(new Dimension(200, 30)); // Establecer tamaño máximo
+
+                    // Panel para mostrar detalles del artista en la misma fila
+                    JPanel detallesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Usamos FlowLayout para alineación horizontal
+                    //detallesPanel.setAlignmentX(Component.LEFT_ALIGNMENT());
+
+                    JLabel idLabel = new JLabel("ID: ");
+                    JLabel idValue = new JLabel();
+                    JLabel generoLabel = new JLabel("Género: ");
+                    JLabel generoValue = new JLabel();
+                    JLabel integrantesLabel = new JLabel("Integrantes: ");
+                    JLabel integrantesValue = new JLabel();
+
+                    // Ajustar el espaciado entre los labels
+                    idLabel.setPreferredSize(new Dimension(120, 25));
+                    idValue.setPreferredSize(new Dimension(120, 25));
+                    idValue.setBackground(Color.GRAY);
+                    generoLabel.setPreferredSize(new Dimension(120, 25));
+                    generoValue.setPreferredSize(new Dimension(120, 25));
+                    integrantesLabel.setPreferredSize(new Dimension(120, 25));
+                    integrantesValue.setPreferredSize(new Dimension(120, 25));
+
+                    // Añadir los JLabel en el panel de detalles con más espacio
+                    detallesPanel.add(idLabel);
+                    detallesPanel.add(idValue);
+                    detallesPanel.add(generoLabel);
+                    detallesPanel.add(generoValue);
+                    detallesPanel.add(integrantesLabel);
+                    detallesPanel.add(integrantesValue);
+
+                    // Panel superior con ComboBox y el título
+                    JPanel topPanel = new JPanel();
+                    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+                    JLabel nombreLabel = new JLabel("Seleccione un Artista");
+                    topPanel.add(nombreLabel);
+                    topPanel.add(artistaComboBox);
+                    topPanel.add(detallesPanel); // Agregar el panel de detalles aquí
+                    revisionPanel.add(topPanel, FlowLayout.LEFT);
+
+                    // Actualizar los detalles cuando se selecciona un artista
+                    artistaComboBox.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            int selectedIndex = artistaComboBox.getSelectedIndex();
+                            if (selectedIndex != -1) {
+                                Artista selectedArtista = revisionArtistas.get(selectedIndex);
+                                idValue.setText(selectedArtista.getID());
+                                generoValue.setText(selectedArtista.getGenero());
+                                integrantesValue.setText(String.valueOf(selectedArtista.getCantIntegrantes()));
+                            }
+                        }
+                    });
+
+                    // Seleccionar el primer artista por defecto
+                    artistaComboBox.setSelectedIndex(0);
+                    Artista firstArtista = revisionArtistas.get(0);
+                    idValue.setText(firstArtista.getID());
+                    generoValue.setText(firstArtista.getGenero());
+                    integrantesValue.setText(String.valueOf(firstArtista.getCantIntegrantes()));
+
+                } else {
+                    JOptionPane.showMessageDialog(revisionPanel, "No se encontraron artistas.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+    }
+
+
+
+
+
+
     public static void SeccionConsulta(JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JButton consultaArtistasButton) {
         consultaArtistasButton.addActionListener(new ActionListener() {
             @Override
@@ -300,7 +410,12 @@ public class GUI {
                             if(datosArtistas[0] != null) {
                                 if (!datosArtistas[0].isEmpty()) {
                                     String[] columnas = {"ID", "Nombre", "Cantidad de integrantes", "Genero"};
-                                    DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
+                                    DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
+                                        @Override
+                                        public boolean isCellEditable(int row, int column) {
+                                            return false; // Desactiva la edición de celdas
+                                        }
+                                    };
 
                                     for (Artista artista : datosArtistas[0]) {
                                         Object[] Data = {artista.getID(), artista.getNombre(), artista.getCantIntegrantes(), artista.getGenero()};
@@ -308,6 +423,7 @@ public class GUI {
                                     }
 
                                     JTable tabla = new JTable(tablaModelo);
+                                    tabla.getTableHeader().setReorderingAllowed(false);
                                     JScrollPane scrollPane = new JScrollPane(tabla);
 
                                     tablaPanel.removeAll();
@@ -447,7 +563,7 @@ public class GUI {
         });
 
         reporteCanciones(mainPanel, cardLayout, tituloLabel, topCancionesButton);
-        reporteDiscos(mainPanel, cardLayout, tituloLabel, discosVendidosButton);
+        reporteDiscos(mainPanel, cardLayout, tituloLabel, frame, discosVendidosButton);
 
         reportesPanel.add(tipoReportePanel, BorderLayout.CENTER);
         reportesPanel.add(volverPanel, BorderLayout.SOUTH);
@@ -508,7 +624,7 @@ public class GUI {
 
                 // Configurar los botones
                 JPanel botonesPanel = new JPanel();
-                botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+                botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
                 JButton enviarButton = new JButton("Enviar");
                 JButton volverReporteButton = new JButton("Volver");
@@ -533,7 +649,12 @@ public class GUI {
                             reporteCanciones[0] = Spotify.topCancionesGenero(genero);
                             Reporte.topCanciones(reporteCanciones[0], genero);
                             String[] columnas = {"Nombre", "Duracion", "Cantidad de reproducciones"};
-                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
+                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    return false; // Desactiva la edición de celdas
+                                }
+                            };
 
                             for (Cancion canciones : reporteCanciones[0]) {
                                 Object[] Data = {canciones.getNombre(), canciones.getDuracion(), canciones.getCantReproducciones()};
@@ -541,6 +662,7 @@ public class GUI {
                             }
 
                             JTable tabla = new JTable(tablaModelo);
+                            tabla.getTableHeader().setReorderingAllowed(false);
                             JScrollPane scrollPane = new JScrollPane(tabla);
 
                             tablaPanel.removeAll();
@@ -564,7 +686,7 @@ public class GUI {
         });
     }
 
-    public static void reporteDiscos(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JButton discosVendidosButton) {
+    public static void reporteDiscos(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JFrame frame,JButton discosVendidosButton) {
         JPanel reporteDiscosPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
         JLabel tituloDiscosLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -619,7 +741,7 @@ public class GUI {
 
                 // Configurar los botones
                 JPanel botonesPanel = new JPanel();
-                botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+                botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
                 JButton enviarButton = new JButton("Enviar");
                 JButton volverReporteButton = new JButton("Volver");
@@ -636,29 +758,43 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String ID = discoTextField.getText().trim();
-                        if (ID.isEmpty()){
-                            JOptionPane.showMessageDialog(reporteDiscosPanel, "Ingrese un artista.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                        }else {
+                        try {
+                            String ID = discoTextField.getText().trim();
                             HashSet<Disco> reporteDiscos = null;
                             reporteDiscos = Spotify.reporteDiscos(ID);
-                            Reporte.promedio(reporteDiscos, ID);
+                            float prom = Reporte.promedio(reporteDiscos, ID);
                             String[] columnas = {"Nombre", "Unidades vendidas"};
-                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0);
-
+                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    return false; // Desactiva la edición de celdas
+                                }
+                            };
                             for (Disco discos : reporteDiscos) {
                                 Object[] Data = {discos.getNombre(), discos.getUnidadesVendidas()};
                                 tablaModelo.addRow(Data);
                             }
 
                             JTable tabla = new JTable(tablaModelo);
+                            tabla.getTableHeader().setReorderingAllowed(false);
                             JScrollPane scrollPane = new JScrollPane(tabla);
+                            Object[] vaciaFila = {"", ""};
+
+                            Object[] promFila = {"Promedio", prom};
+                            tablaModelo.addRow(vaciaFila);
+                            tablaModelo.addRow(promFila);
+
+                            tabla.setRowHeight(tabla.getRowCount() - 1, 20); // Cambia 30 por la altura que desees
+
 
                             tablaPanel.removeAll();
                             tablaPanel.add(scrollPane, BorderLayout.CENTER);
                             reporteDiscosPanel.add(tablaPanel, BorderLayout.CENTER);
                             reporteDiscosPanel.revalidate();
                             reporteDiscosPanel.repaint();
+
+                        }catch (ArtistaNoEncontradoException eA){
+                            JOptionPane.showMessageDialog(frame, eA.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                 });

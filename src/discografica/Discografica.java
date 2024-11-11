@@ -30,8 +30,14 @@ public class Discografica implements Serializable{
         TreeSet<Artista> cargarArtistas = new TreeSet<>();
 
         try {
-
-            File Arch = new File(path);
+            File Arch = null;
+            try {
+                Arch = new File(path);
+                if (!Arch.exists())
+                    throw new FileNotFoundException("El archivo no existe");
+            }catch (FileNotFoundException e) {
+                InformeErrores.append(e.getMessage()).append(System.lineSeparator());
+            }
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newDefaultInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -344,15 +350,16 @@ public class Discografica implements Serializable{
 
     }
 
-	public List<String> listarTodosArtistas(){
-		List<String> detallesArtistas = new ArrayList<>();
+	public List<Artista> listarTodosArtistas(){
+		List<Artista> detallesArtistas = new ArrayList<>();
 
 		for(Artista artista : Artistas){
-			detallesArtistas.add(artista.obtenerDetalles());
+			detallesArtistas.add(artista);
 		}
 
 		return detallesArtistas;
 	}
+
 
     public HashSet<Disco> reporteDiscos(String ID){
         Artista artista = buscarArtista(ID);
