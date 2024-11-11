@@ -12,8 +12,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 
 public class GUI {
@@ -27,7 +31,7 @@ public class GUI {
         }
 
         // Crear el marco (JFrame)
-        JFrame frame = new JFrame("GUI");
+        JFrame frame = new JFrame("Gestion discografica");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 500); // Tamaño del marco
 
@@ -37,6 +41,10 @@ public class GUI {
 
         // Crear el panel de inicio (Pantalla principal)
         JPanel startPanel = new JPanel(new BorderLayout());
+
+        JLabel tituloLabel = new JLabel("Gestion discografica", SwingConstants.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        startPanel.add(tituloLabel, BorderLayout.NORTH);
 
         // Crear el JLabel para la imagen
         ImageIcon originalIcon = new ImageIcon("src/resources/Logo.png");
@@ -60,7 +68,7 @@ public class GUI {
     public static void setUpBotones(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
         // Crear un panel para los botones y usar GridLayout
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 90)); // 3 filas, 1 columna, 10 píxeles de espacio vertical
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 75)); // Espacio alrededor del panel de botones
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 75)); // Espacio alrededor del panel de botone
 
         // Crear los botones
         JButton gestionDeArtistasButton = new JButton("Gestión de artistas");
@@ -109,7 +117,6 @@ public class GUI {
     public static void MenuArtistas (JPanel startPanel, JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton){
         mainPanel.add(artistaPanel, "artistaPanel");
 
-
         JPanel buttonPanelArtistas = new JPanel(new GridLayout(6, 1, 0, 40));
         buttonPanelArtistas.setBorder(BorderFactory.createEmptyBorder(45, 0, 15, 0)); // Espacio alrededor del panel de botones
         JButton agregarArtistasButton = new JButton("Cargar artistas");
@@ -133,6 +140,8 @@ public class GUI {
 
 
         buttonPanelArtistas.add(liquidacionesButton);
+        SeccionLiquidacion(mainPanel, cardLayout, frame, liquidacionesButton);
+
         buttonPanelArtistas.add(volverButton);
         artistaPanel.add(buttonPanelArtistas, BorderLayout.CENTER);
 
@@ -468,6 +477,83 @@ public class GUI {
         });
     }
 
+    public static void SeccionLiquidacion(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton liquidacionesButton) {
+        liquidacionesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel liquidacionPanel = new JPanel(new BorderLayout());
+                mainPanel.add(liquidacionPanel, "liquidacionPanel");
+                cardLayout.show(mainPanel, "liquidacionPanel");
+
+                JLabel tituloLabel = new JLabel("Liquidacion mensual", SwingConstants.CENTER);
+                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                liquidacionPanel.add(tituloLabel, BorderLayout.NORTH);
+
+                JPanel filtrosPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+                JLabel mesLabel = new JLabel("Mes: ");
+                JTextField mesText = new JTextField(10);
+                JLabel yearLabel = new JLabel("Año: ");
+                JTextField yearText = new JTextField(10);
+                JLabel artistaLabel = new JLabel("ID del artista: ");
+                JTextField artistaText = new JTextField(10);
+
+
+                JButton enviarButton = new JButton("Enviar");
+                enviarButton.setPreferredSize(new Dimension(90, 20));
+                filtrosPanel.add(mesLabel);
+                filtrosPanel.add(mesText);
+                filtrosPanel.add(yearLabel);
+                filtrosPanel.add(yearText);
+                filtrosPanel.add(artistaLabel);
+                filtrosPanel.add(artistaText);
+                filtrosPanel.add(enviarButton);
+
+                liquidacionPanel.add(filtrosPanel, BorderLayout.CENTER);
+
+                enviarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Artista aux;
+                        YearMonth fecha = null;
+                        String date = null;
+                        String mes = mesText.getText();
+                        String year = yearText.getText();
+                        String id = artistaText.getText();
+                        DateTimeFormatter formato = DateTimeFormatter.ofPattern("MM-yyyy");
+                        if(Spotify != null && !Spotify.getArtistas().isEmpty()) {
+                            if(mes.isEmpty() && id.isEmpty()) {
+                                JOptionPane.showMessageDialog(liquidacionPanel, "Complete el campo del mes y ID", "Error", JOptionPane.INFORMATION_MESSAGE);
+                            }else {
+                                if (mes.isEmpty())
+                                    JOptionPane.showMessageDialog(liquidacionPanel, "Complete el campo del mes.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                                else {
+                                    if (id.isEmpty())
+                                        JOptionPane.showMessageDialog(liquidacionPanel, "Complete el campo artista.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                                    else {
+                                        if (year.isEmpty()) {
+                                            String yearActual = String.valueOf(LocalDate.now().getYear());
+                                            date = mes + "-" + yearActual;
+                                        }else{
+                                            date = mes+"-"+year;
+                                        }
+                                        fecha = YearMonth.parse(date, formato);
+
+                                    }
+                                }
+                            }
+                            if(fecha != null) {
+                                aux = Spotify.buscarArtista(id);
+                            }
+
+                        }else {
+                            JOptionPane.showMessageDialog(liquidacionPanel, "Los artistas no han sido cargados.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     public static void SeccionConsulta(JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JButton consultaArtistasButton) {
         consultaArtistasButton.addActionListener(new ActionListener() {
             @Override
@@ -653,6 +739,87 @@ public class GUI {
             }
         });
     }
+    /*
+    public static void SeccionLiquidacion1(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton liquidacionesButton) {
+        liquidacionesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel liquidacionPanel = new JPanel(new GridBagLayout());
+                mainPanel.add(liquidacionPanel, "liquidacionPanel");
+                cardLayout.show(mainPanel, "liquidacionPanel");
+
+                JLabel tituloLabel = new JLabel("Liquidacion mensual");
+                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+                JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+                JTextField mesTextField = new JTextField("Ingrese el mes y año analizar - Formato [mm/yyyy]", 30);
+
+                mesTextField.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        if (mesTextField.getText().equals("Ingrese el mes y año analizar - Formato [mm/yyyy]")) {
+                            mesTextField.setText("");
+                        }
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        if (mesTextField.getText().isEmpty()) {
+                            mesTextField.setText("Ingrese el mes y año analizar - Formato [mm/yyyy]");
+                        }
+                    }
+                });
+
+                // Agregar el campo de texto al panel de entrada
+                inputPanel.add(mesTextField);
+                JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Espaciado horizontal entre los botones
+
+                JButton enviarButton = new JButton("Aceptar");
+                enviarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String date = mesTextField.getText();
+                        DateTimeFormatter formato = DateTimeFormatter.ofPattern("MM-yyyy");
+                        try {
+                            YearMonth fecha = YearMonth.parse(date, formato);
+                        }
+                    }
+                });
+
+                JButton volverButton = new JButton("Volver");
+                volverButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        cardLayout.show(mainPanel, "artistaPanel");
+                    }
+                });
+
+                enviarButton.setPreferredSize(new Dimension(140, 30));
+                volverButton.setPreferredSize(new Dimension(140, 30));
+
+                buttonPanel.add(enviarButton);
+                buttonPanel.add(volverButton);
+
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.insets = new Insets(10, 0, 20, 0);
+
+                // Agregar el título al panel de carga
+                liquidacionPanel.add(tituloLabel, gbc);
+
+                // Configurar las posiciones del inputPanel y buttonPanel
+                gbc.gridy = 1;
+                liquidacionPanel.add(inputPanel, gbc);
+
+                gbc.gridy = 2;
+                liquidacionPanel.add(buttonPanel, gbc);
+
+            }
+        });
+    }*/
 
     public static void reportes(JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
         JPanel reportesPanel = new JPanel(new BorderLayout());

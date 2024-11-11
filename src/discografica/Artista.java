@@ -55,37 +55,6 @@ public class Artista implements Comparable<Artista>, Serializable {
 
     public ArrayList<Recital> getRecitales(){ return Recitales; }
 
-	public String obtenerDetalles() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ID: ").append(ID).append("\n");
-        sb.append("Nombre: ").append(Nombre).append("\n");
-        sb.append("Cantidad de integrantes: ").append(CantIntegrantes).append("\n");
-        sb.append("Género musical: ").append(Genero).append("\n");
-
-        sb.append("Discos:\n");
-        int i=0;
-        for (Disco disco : Discos) {
-            i++;
-            sb.append(i).append("- ")
-              .append(" (Unidades vendidas: ").append(disco.getUnidadesVendidas()).append(")\n")
-			  .append("Canciones:").append("\n");
-			for(Cancion cancion: disco.getCanciones()){
-				sb.append("-Nombre: ").append(cancion.getNombre()).append("\n-Duracion:")
-					.append(cancion.getDuracion()).append("\n-Reproducciones: ")
-					.append(cancion.getCantReproducciones()).append("\n");
-			}
-        }
-
-        sb.append("Recitales:\n");
-        for (Recital recital : Recitales) {
-            sb.append("  - Fecha: ").append(recital.GetFecha())
-              .append(", Recaudación: $").append(recital.GetRecaudacion())
-              .append(", Costos: $").append(recital.GetCostoProduccion()).append("\n");
-        }
-
-        return sb.toString();
-    }
-
     public Liquidacion getLiquidacion(LocalDate fecha)
     {
         Liquidacion liquidacionGanancia = new Liquidacion();
