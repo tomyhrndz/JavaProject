@@ -26,4 +26,8 @@ public class ObjetoLiquidacion {
     public double getMonto() {
         return Monto;
     }
+
+    public String getDescripcion() {
+        return Descripcion;
+    }
 }

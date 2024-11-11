@@ -2,6 +2,7 @@ package discografica;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -55,7 +56,7 @@ public class Artista implements Comparable<Artista>, Serializable {
 
     public ArrayList<Recital> getRecitales(){ return Recitales; }
 
-    public Liquidacion getLiquidacion(LocalDate fecha)
+    public Liquidacion getLiquidacion(YearMonth fecha)
     {
         Liquidacion liquidacionGanancia = new Liquidacion();
 

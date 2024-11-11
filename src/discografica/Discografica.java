@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.Serializable;
@@ -368,10 +369,9 @@ public class Discografica implements Serializable{
         return discos;
     }
 
-    public void LiquidacionArtista(String IDArtista, LocalDate fecha)
-    {
+    public Liquidacion LiquidacionArtista(String IDArtista, YearMonth fecha) {
         Artista artista  = buscarArtista(IDArtista);
-        Liquidacion liquidacion = artista.getLiquidacion(fecha);
+        return artista.getLiquidacion(fecha);
     }
 
     public TreeSet<Artista> getArtistas(){ return Artistas; }
