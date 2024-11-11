@@ -283,8 +283,8 @@ public class Discografica implements Serializable{
      * @param CantInt cantidad de integrantes
      * @return Lista de Artistas con la cantidad de integrantes
      */
-    public List<Artista> consultaDatos(int CantInt) {
-        List<Artista> artistasEncontrados = new ArrayList<>();
+    public ArrayList<Artista> consultaDatos(int CantInt) {
+        ArrayList<Artista> artistasEncontrados = new ArrayList<>();
 
         for(Artista artista : Artistas) {
             if (CantInt == artista.getCantIntegrantes())
@@ -298,8 +298,8 @@ public class Discografica implements Serializable{
      * @param genero genero muscial
      * @return Lista de Artistas del genero musical
      */
-    public List<Artista> consultaDatos(String genero){
-        List<Artista> artistasEncontrados = new ArrayList<>();
+    public ArrayList<Artista> consultaDatos(String genero){
+        ArrayList<Artista> artistasEncontrados = new ArrayList<>();
 
         for(Artista artista : Artistas) {
             if (genero.equalsIgnoreCase(artista.getGenero()))
@@ -314,8 +314,8 @@ public class Discografica implements Serializable{
      * @param CantInt cantidad de integrantes
      * @return Lista de Artistas que cumplan con la cantidad de integrantes y el genero musical
      */
-    public List<Artista> consultaDatos(String genero, int CantInt){
-        List<Artista> artistasEncontrados = new ArrayList<>();
+    public ArrayList<Artista> consultaDatos(String genero, int CantInt){
+        ArrayList<Artista> artistasEncontrados = new ArrayList<>();
 
         for(Artista artista : Artistas) {
             if (genero.equalsIgnoreCase(artista.getGenero()) && CantInt == artista.getCantIntegrantes())
@@ -365,12 +365,12 @@ public class Discografica implements Serializable{
      * @param genero genero musical
      * @return lista de canciones
      */
-    public List<Cancion> topCancionesGenero(String genero) {
-        List<Cancion> canciones = new ArrayList<>();
+    public ArrayList<Cancion> topCancionesGenero(String genero) {
+        ArrayList<Cancion> canciones = new ArrayList<>();
 
-        List<Cancion> cancionesGenero = new ArrayList<>();
+        ArrayList<Cancion> cancionesGenero = new ArrayList<>();
 
-        // Crea lista con todas las canciones del Genero
+        // Crea lista con todas las canciones del género
         for (Artista artista : Artistas) {
             if (genero.equalsIgnoreCase(artista.getGenero())) {
                 for(Disco disco : artista.getDiscos()){
@@ -382,7 +382,7 @@ public class Discografica implements Serializable{
         // Ordena la lista basado en las reproducciones
         cancionesGenero.sort(Comparator.comparingInt(Cancion::getCantReproducciones).reversed());
         // Devuelve sublista de las primeras 10
-        return cancionesGenero.size() > 10 ? cancionesGenero.subList(0, 10) : cancionesGenero;
+        return cancionesGenero.size() > 10 ? (ArrayList<Cancion>) cancionesGenero.subList(0, 10) : cancionesGenero;
 
     }
 
@@ -390,8 +390,8 @@ public class Discografica implements Serializable{
      * Devuelve una lista de todos Artistas
      * @return lista de Artistas
      */
-	public List<Artista> listarTodosArtistas(){
-		List<Artista> detallesArtistas = new ArrayList<>();
+	public ArrayList<Artista> listarTodosArtistas(){
+        ArrayList<Artista> detallesArtistas = new ArrayList<>();
 
         detallesArtistas.addAll(Artistas);
 

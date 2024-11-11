@@ -293,7 +293,7 @@ public class GUI {
         revisarArtistasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final List<Artista> revisionArtistas = Spotify.listarTodosArtistas();
+                final ArrayList<Artista> revisionArtistas = Spotify.listarTodosArtistas();
                 JPanel revisionPanel = new JPanel(new BorderLayout());
                 mainPanel.add(revisionPanel, "revisionPanel");
                 cardLayout.show(mainPanel, "revisionPanel");
@@ -446,8 +446,8 @@ public class GUI {
                             subMenuPanel.removeAll();
                             subMenuPanel.add(volverSubMenuPanel, BorderLayout.SOUTH);
                             cardLayout.show(mainPanel, "subMenuPanel");
-                            final List<Recital>[] recitalesRevision = new List[1];
-                            recitalesRevision[0] = selectedArtista[0].getRecitales();
+
+                            final ArrayList<Recital> recitalesRevision = selectedArtista[0].getRecitales();
                             String[] columnas = {"Fecha", "Monto recuadado", "Costo de produccion"};
                             DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
                                 @Override
@@ -456,7 +456,7 @@ public class GUI {
                                 }
                             };
 
-                            for (Recital recitales : recitalesRevision[0]) {
+                            for (Recital recitales : recitalesRevision) {
                                 Object[] Data = {recitales.GetFecha(), recitales.GetRecaudacion(), recitales.GetCostoProduccion()};
                                 tablaModelo.addRow(Data);
                             }
@@ -482,7 +482,6 @@ public class GUI {
                             cardLayout.show(mainPanel, "subMenuPanel");
                             HashSet<Disco> revisionDiscos;
                             revisionDiscos = selectedArtista[0].getDiscos();
-                            final List<Cancion>[] cancionesRevision = new List[1];
 
                             String[] columnas = {"Nombre", "Duracion", "Cantidad de reproducciones"};
                             DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
@@ -493,8 +492,8 @@ public class GUI {
                             };
 
                             for (Disco discos : revisionDiscos) {
-                                cancionesRevision[0] = discos.getCanciones();
-                                for (Cancion canciones : cancionesRevision[0]) {
+                                final ArrayList<Cancion> cancionesRevision = discos.getCanciones();
+                                for (Cancion canciones : cancionesRevision) {
                                     Object[] Data = {canciones.getNombre(), canciones.getDuracion(), canciones.getCantReproducciones()};
                                     tablaModelo.addRow(Data);
                                 }
@@ -693,7 +692,6 @@ public class GUI {
         consultaArtistasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final List<Artista>[] datosArtistas = new List[1];
 
                 JPanel buscaPanel = new JPanel(new BorderLayout());
                 mainPanel.add(buscaPanel, "buscaPanel");
@@ -735,26 +733,26 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
+                        ArrayList<Artista> datosArtistas = new ArrayList<>();
                         String genero = generoText.getText();
                         String integrantes = integrantesText.getText();
                         if(Spotify != null && !Spotify.getArtistas().isEmpty()) {
                             if(integrantes.isEmpty() && genero.isEmpty()) {
                                 JOptionPane.showMessageDialog(artistaPanel, "Complete uno o ambos campos.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                                datosArtistas[0] = null;
+                                datosArtistas = null;
                             }else {
                                 if (integrantes.isEmpty())
-                                    datosArtistas[0] = Spotify.consultaDatos(genero);
+                                    datosArtistas = Spotify.consultaDatos(genero);
                                 else {
                                     if (genero.isEmpty())
-                                        datosArtistas[0] = Spotify.consultaDatos(Integer.parseInt(integrantes));
+                                        datosArtistas = Spotify.consultaDatos(Integer.parseInt(integrantes));
                                     else {
-                                        datosArtistas[0] = Spotify.consultaDatos(genero, Integer.parseInt(integrantes));
+                                        datosArtistas = Spotify.consultaDatos(genero, Integer.parseInt(integrantes));
                                     }
                                 }
                             }
-                            if(datosArtistas[0] != null) {
-                                if (!datosArtistas[0].isEmpty()) {
+                            if(datosArtistas != null) {
+                                if (!datosArtistas.isEmpty()) {
                                     String[] columnas = {"ID", "Nombre", "Cantidad de integrantes", "Genero"};
                                     DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
                                         @Override
@@ -763,7 +761,7 @@ public class GUI {
                                         }
                                     };
 
-                                    for (Artista artista : datosArtistas[0]) {
+                                    for (Artista artista : datosArtistas) {
                                         Object[] Data = {artista.getID(), artista.getNombre(), artista.getCantIntegrantes(), artista.getGenero()};
                                         tablaModelo.addRow(Data);
                                     }
@@ -1027,9 +1025,8 @@ public class GUI {
                         if (genero.isEmpty()){
                             JOptionPane.showMessageDialog(reporteCancionesPanel, "Ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
                         }else {
-                            final List<Cancion>[] reporteCanciones = new List[1];
-                            reporteCanciones[0] = Spotify.topCancionesGenero(genero);
-                            Reporte.topCanciones(reporteCanciones[0], genero);
+                            final ArrayList<Cancion> reporteCanciones = Spotify.topCancionesGenero(genero);
+                            Reporte.topCanciones(reporteCanciones, genero);
                             String[] columnas = {"Nombre", "Duracion", "Cantidad de reproducciones"};
                             DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
                                 @Override
@@ -1038,7 +1035,7 @@ public class GUI {
                                 }
                             };
 
-                            for (Cancion canciones : reporteCanciones[0]) {
+                            for (Cancion canciones : reporteCanciones) {
                                 Object[] Data = {canciones.getNombre(), canciones.getDuracion(), canciones.getCantReproducciones()};
                                 tablaModelo.addRow(Data);
                             }
