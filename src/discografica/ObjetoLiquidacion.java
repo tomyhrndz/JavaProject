@@ -1,8 +1,8 @@
 package discografica;
 
 public class ObjetoLiquidacion {
-    String Descripcion;
-    double Monto;
+    private String Descripcion;
+    private double Monto;
 
     public ObjetoLiquidacion(String Descripcion, double Monto)
     {
@@ -14,5 +14,16 @@ public class ObjetoLiquidacion {
     {
         this.Descripcion = "";
         this.Monto = 0;
+    }
+
+    public void setDescripcion(String Descripcion){
+        this.Descripcion = Descripcion;
+    }
+    public void setMonto(double Monto){
+        this.Monto = Monto;
+    }
+
+    public double getMonto() {
+        return Monto;
     }
 }
