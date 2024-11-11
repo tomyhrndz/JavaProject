@@ -3,6 +3,9 @@ package discografica;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Clase Disco que contiene nombre, unidades vendidas y lista de Canciones
+ */
 public class Disco implements Serializable {
     private String Nombre;
     private int UnidadesVendidas;

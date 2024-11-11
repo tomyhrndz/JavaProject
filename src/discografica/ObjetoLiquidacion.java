@@ -1,5 +1,6 @@
 package discografica;
 
+
 public class ObjetoLiquidacion {
     private String Descripcion;
     private double Monto;

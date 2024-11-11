@@ -10,6 +10,9 @@ import java.io.BufferedWriter;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Clase Reporte permite generar los Archivos para los reportes necesarios.
+ */
 public class Reporte {
 
     /**

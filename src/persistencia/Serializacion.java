@@ -4,6 +4,7 @@ import java.io.*;
 
 /**
  * Clase Maneja la persistencia de Discografica
+ * Permite el guardado y carga de Datos
  */
 public class Serializacion {
 

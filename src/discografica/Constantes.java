@@ -14,6 +14,6 @@ public class Constantes {
     public static final double PorcentajeMayor10000 = 1.1; //Porcentaje de ganancia si supera las 10000 reproducciones
 
     //Ganancias por tipo Artista
-    public static final double PorcentajeArtistaEmergente = 1.1; //Porcentaje de ganancia de artista tipo Emergentes
-    public static final double PorcentajeArtistaConsagrado = 1.1; //Porcentaje de ganancia de artista tipo Consagrados
+    public static final double PorcentajeArtistaEmergente = 0.15; //Porcentaje de ganancia de artista tipo Emergentes
+    public static final double PorcentajeArtistaConsagrado = 0.25; //Porcentaje de ganancia de artista tipo Consagrados
 }

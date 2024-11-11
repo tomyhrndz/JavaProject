@@ -18,6 +18,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.Serializable;
 
+/**
+ * Clase de Manejo de Artistas
+ * Permite la lectura, persistencia, baja y consulta de Artistas.
+ */
 public class Discografica implements Serializable{
     TreeSet<Artista> Artistas;
 
@@ -366,7 +370,6 @@ public class Discografica implements Serializable{
      * @return lista de canciones
      */
     public ArrayList<Cancion> topCancionesGenero(String genero) {
-        ArrayList<Cancion> canciones = new ArrayList<>();
 
         ArrayList<Cancion> cancionesGenero = new ArrayList<>();
 
@@ -382,7 +385,7 @@ public class Discografica implements Serializable{
         // Ordena la lista basado en las reproducciones
         cancionesGenero.sort(Comparator.comparingInt(Cancion::getCantReproducciones).reversed());
         // Devuelve sublista de las primeras 10
-        return cancionesGenero.size() > 10 ? (ArrayList<Cancion>) cancionesGenero.subList(0, 10) : cancionesGenero;
+        return cancionesGenero.size() > 10 ? new ArrayList<>(cancionesGenero.subList(0, 10)) : cancionesGenero;
 
     }
 

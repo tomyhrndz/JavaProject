@@ -6,6 +6,9 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Clase Artista que contiene los datos, discos y recitales del mismo.
+ */
 public class Artista implements Comparable<Artista>, Serializable {
     private String ID;
     private String Nombre;
@@ -23,6 +26,10 @@ public class Artista implements Comparable<Artista>, Serializable {
         Recitales = new ArrayList<>();
     }
 
+    /**
+     * Devuelve si el artista es emergente
+     * @return True (Es emergente) o False(Es consagrado)
+     */
     public boolean EsEmergente(){ return true; }
 
     @Override
@@ -30,14 +37,26 @@ public class Artista implements Comparable<Artista>, Serializable {
         return this.ID.compareTo(A.getID());
     }
 
+    /**
+     * Agrega un Objeto Disco al HashSet Discos
+     * @param nuevo Disco nuevo
+     */
     public void CargarDisco(Disco nuevo) {
         Discos.add(nuevo);
     }
 
+    /**
+     * Agrega un Objeto Recital al ArrayList Recitales
+     * @param nuevo Recital nuevo
+     */
     public void CargarRecital (Recital nuevo) {
         Recitales.add(nuevo);
     }
 
+    /**
+     * Devuelve el ID del Artista
+     * @return ID del Artista
+     */
     public String getID(){
         return ID;
     }

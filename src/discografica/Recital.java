@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Clase que contiene la fecha, recaudacion y costos de un Recital
+ */
 public class Recital implements Serializable {
     private LocalDate Fecha;
     private float Recaudacion;

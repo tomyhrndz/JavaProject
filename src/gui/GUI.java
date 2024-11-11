@@ -1,3 +1,5 @@
+package gui;
+
 import discografica.*;
 import exceptions.ArtistaNoEncontradoException;
 import persistencia.Serializacion;
@@ -9,19 +11,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
- * Clase GUI que implementa la interfaz gráfica de usuario para la gestión de una discográfica.
+ * Clase gui.GUI que implementa la interfaz gráfica de usuario para la gestión de una discográfica.
  * Permite la carga, consulta y manipulación de datos de artistas, discos y liquidaciones mensuales.
  */
 public class GUI {
     static Discografica Spotify = new Discografica();
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public static void main(String[] args) {
 
@@ -39,8 +43,9 @@ public class GUI {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Llamada para guardar el estado de Spotify al cerrar la ventana
-                Serializacion.guardarObjeto(Spotify, "discografica.dat");
-                System.out.println("Datos guardados exitosamente.");
+                if(Spotify != null && !Spotify.getArtistas().isEmpty()) {
+                    Serializacion.guardarObjeto(Spotify, "discografica.dat");
+                }
                 System.exit(0);  // Cerrar la aplicación después de guardar
             }
         });
@@ -298,7 +303,7 @@ public class GUI {
                 mainPanel.add(revisionPanel, "revisionPanel");
                 cardLayout.show(mainPanel, "revisionPanel");
 
-                JLabel tituloLabel = new JLabel("Consultar datos", SwingConstants.CENTER);
+                JLabel tituloLabel = new JLabel("Revisar datos", SwingConstants.CENTER);
                 tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
                 revisionPanel.add(tituloLabel, BorderLayout.NORTH);
 
@@ -629,19 +634,19 @@ public class GUI {
                                 };
 
                                 for (ObjetoLiquidacion discos : mensualDisco) {
-                                    tablaModelo.addRow(new Object[]{"Disco: " + discos.getDescripcion(), discos.getMonto()});
+                                    tablaModelo.addRow(new Object[]{"Disco: " + discos.getDescripcion(), df.format(discos.getMonto())});
                                     total += discos.getMonto();
                                 }
                                 for (ObjetoLiquidacion canciones : mensualReproducciones) {
-                                    tablaModelo.addRow(new Object[]{"Cancion: " + canciones.getDescripcion(), canciones.getMonto()});
+                                    tablaModelo.addRow(new Object[]{"Cancion: " + canciones.getDescripcion(), df.format(canciones.getMonto())});
                                     total += canciones.getMonto();
                                 }
                                 for (ObjetoLiquidacion recitales : mensualRecitales) {
-                                    tablaModelo.addRow(new Object[]{"Recital el dia " + recitales.getDescripcion(), recitales.getMonto()});
+                                    tablaModelo.addRow(new Object[]{"Recital el dia " + recitales.getDescripcion(), df.format(recitales.getMonto())});
                                     total += recitales.getMonto();
                                 }
 
-                                tablaModelo.addRow(new Object[]{"Total: ", total});
+                                tablaModelo.addRow(new Object[]{"Total: ", df.format(total)});
 
                                 JTable tabla = new JTable(tablaModelo);
                                 tabla.getTableHeader().setReorderingAllowed(false);
@@ -830,7 +835,7 @@ public class GUI {
                 mainPanel.add(eliminarPanel, "eliminaPanel");
                 cardLayout.show(mainPanel, "eliminaPanel");
 
-                JLabel tituloLabel = new JLabel("Baja de artistas", SwingConstants.CENTER);
+                JLabel tituloLabel = new JLabel("Eliminar artistas", SwingConstants.CENTER);
                 tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
                 eliminarPanel.add(tituloLabel, BorderLayout.NORTH);
 
@@ -1021,11 +1026,12 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
                         String genero = generoTextField.getText().trim();
-                        if (genero.isEmpty()){
+                        if (genero.isEmpty()) {
                             JOptionPane.showMessageDialog(reporteCancionesPanel, "Ingrese un genero.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                        }else {
-                            final ArrayList<Cancion> reporteCanciones = Spotify.topCancionesGenero(genero);
+                        } else {
+                            ArrayList<Cancion> reporteCanciones = Spotify.topCancionesGenero(genero);
                             Reporte.topCanciones(reporteCanciones, genero);
                             String[] columnas = {"Nombre", "Duracion", "Cantidad de reproducciones"};
                             DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
@@ -1034,7 +1040,6 @@ public class GUI {
                                     return false; // Desactiva la edición de celdas
                                 }
                             };
-
                             for (Cancion canciones : reporteCanciones) {
                                 Object[] Data = {canciones.getNombre(), canciones.getDuracion(), canciones.getCantReproducciones()};
                                 tablaModelo.addRow(Data);
@@ -1050,6 +1055,7 @@ public class GUI {
                             reporteCancionesPanel.revalidate();
                             reporteCancionesPanel.repaint();
                         }
+
                     }
                 });
 
@@ -1130,39 +1136,44 @@ public class GUI {
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
                         String nombreSeleccionado = (String) artistaComboBox.getSelectedItem();
+                        if(nombreSeleccionado!=null) {
+                            try {
+                                Artista artista = Spotify.buscarArtistaPorNombre(nombreSeleccionado);
+                                HashSet<Disco> reporteDiscos = artista.getDiscos();
+                                float promedioUnidades = Reporte.promedio(reporteDiscos, artista.getID());
 
-                        try {
-                            Artista artista = Spotify.buscarArtistaPorNombre(nombreSeleccionado);
-                            HashSet<Disco> reporteDiscos = artista.getDiscos();
-                            float promedioUnidades = Reporte.promedio(reporteDiscos, artista.getID());
-
-                            String[] columnas = {"Nombre del Disco", "Unidades Vendidas"};
-                            DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
-                                @Override
-                                public boolean isCellEditable(int row, int column) {
-                                    return false; // Desactiva la edición de celdas
+                                String[] columnas = {"Nombre del Disco", "Unidades Vendidas"};
+                                DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                        return false; // Desactiva la edición de celdas
+                                    }
+                                };
+                                for (Disco disco : reporteDiscos) {
+                                    tablaModelo.addRow(new Object[]{disco.getNombre(), disco.getUnidadesVendidas()});
                                 }
-                            };
-                            for (Disco disco : reporteDiscos) {
-                                tablaModelo.addRow(new Object[]{disco.getNombre(), disco.getUnidadesVendidas()});
+
+                                // Agregar una fila para el promedio al final de la tabla
+                                tablaModelo.addRow(new Object[]{"Promedio de Unidades Vendidas", promedioUnidades});
+
+                                JTable tabla = new JTable(tablaModelo);
+                                tabla.getTableHeader().setReorderingAllowed(false);
+                                JScrollPane scrollPane = new JScrollPane(tabla);
+
+                                tablaPanel.removeAll();
+                                tablaPanel.add(scrollPane, BorderLayout.CENTER);
+                                reporteDiscosPanel.add(tablaPanel, BorderLayout.CENTER);
+                                reporteDiscosPanel.revalidate();
+                                reporteDiscosPanel.repaint();
+
+                            } catch (ArtistaNoEncontradoException ex) {
+                                JOptionPane.showMessageDialog(frame, "No se encontró el artista: " + nombreSeleccionado, "Error", JOptionPane.ERROR_MESSAGE);
                             }
-
-                            // Agregar una fila para el promedio al final de la tabla
-                            tablaModelo.addRow(new Object[]{"Promedio de Unidades Vendidas", promedioUnidades});
-
-                            JTable tabla = new JTable(tablaModelo);
-                            tabla.getTableHeader().setReorderingAllowed(false);
-                            JScrollPane scrollPane = new JScrollPane(tabla);
-
-                            tablaPanel.removeAll();
-                            tablaPanel.add(scrollPane, BorderLayout.CENTER);
-                            reporteDiscosPanel.add(tablaPanel, BorderLayout.CENTER);
-                            reporteDiscosPanel.revalidate();
-                            reporteDiscosPanel.repaint();
-
-                        } catch (ArtistaNoEncontradoException ex) {
-                            JOptionPane.showMessageDialog(frame, "No se encontró el artista: " + nombreSeleccionado, "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(frame, "No hay artistas cargados.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });

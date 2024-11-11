@@ -2,6 +2,9 @@ package discografica;
 
 import java.util.ArrayList;
 
+/**
+ * Clase Dedicada la Liquidacion de Artistas
+ */
 public class Liquidacion {
     private ArrayList<ObjetoLiquidacion> LiquidacionDisco;//Nombre de cada disco con su respectiva ganancia
     private ArrayList<ObjetoLiquidacion> LiquidacionReproducciones;//Nombre de cada cancion con su respectiva ganancia
