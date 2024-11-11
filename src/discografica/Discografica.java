@@ -426,4 +426,27 @@ public class Discografica implements Serializable{
      * @return TreeSet Artistas
      */
     public TreeSet<Artista> getArtistas(){ return Artistas; }
+
+    /**
+     * Busca un artista en la discográfica por su nombre.
+     *
+     * @param nombre Nombre del artista a buscar.
+     * @return Objeto Artista correspondiente al nombre proporcionado.
+     * @throws ArtistaNoEncontradoException Si no se encuentra ningún artista con el nombre especificado.
+     */
+    public Artista buscarArtistaPorNombre(String nombre) throws ArtistaNoEncontradoException {
+        Iterator<Artista> iterator = Artistas.iterator();
+        Artista act = null;
+        boolean bandera = false;
+        while (iterator.hasNext() && !bandera) {
+            act = iterator.next();
+            if (nombre.equalsIgnoreCase(act.getNombre())) {
+                bandera = true;
+            }
+        }
+        if(bandera){
+            return act;
+        }
+        throw new ArtistaNoEncontradoException("El artista con nombre " + nombre + " no fue encontrado.");
+    }
 }

@@ -7,10 +7,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -19,7 +16,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-
+/**
+ * Clase GUI que implementa la interfaz gráfica de usuario para la gestión de una discográfica.
+ * Permite la carga, consulta y manipulación de datos de artistas, discos y liquidaciones mensuales.
+ */
 public class GUI {
     static Discografica Spotify = new Discografica();
 
@@ -34,6 +34,16 @@ public class GUI {
         JFrame frame = new JFrame("Gestion discografica");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 500); // Tamaño del marco
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Llamada para guardar el estado de Spotify al cerrar la ventana
+                Serializacion.guardarObjeto(Spotify, "discografica.dat");
+                System.out.println("Datos guardados exitosamente.");
+                System.exit(0);  // Cerrar la aplicación después de guardar
+            }
+        });
 
         // Crear un panel principal con CardLayout para cambiar entre pantallas
         CardLayout cardLayout = new CardLayout();
@@ -65,6 +75,14 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    /**
+     * Configura los botones en el panel de inicio, permitiendo la navegación a otras secciones.
+     *
+     * @param startPanel Panel inicial que contiene los botones.
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     */
     public static void setUpBotones(JPanel startPanel, JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
         // Crear un panel para los botones y usar GridLayout
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 90)); // 3 filas, 1 columna, 10 píxeles de espacio vertical
@@ -114,6 +132,16 @@ public class GUI {
         });
     }
 
+    /**
+     * Configura el menú de gestión de artistas y sus opciones (carga, revisión, consulta, eliminación, etc.).
+     *
+     * @param startPanel Panel de inicio.
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param artistaPanel Panel específico para la gestión de artistas.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     * @param gestionDeArtistasButton Botón que permite acceder a la gestión de artistas.
+     */
     public static void MenuArtistas (JPanel startPanel, JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton){
         mainPanel.add(artistaPanel, "artistaPanel");
 
@@ -154,6 +182,15 @@ public class GUI {
         });
     }
 
+    /**
+     * Configura la sección de carga de datos de artistas.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     * @param gestionDeArtistasButton Botón para acceder a la sección de gestión de artistas.
+     * @param agregarArtistasButton Botón que permite cargar datos de nuevos artistas.
+     */
     public static void SeccionCarga(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton gestionDeArtistasButton, JButton agregarArtistasButton) {
         gestionDeArtistasButton.addActionListener(new ActionListener() {
             @Override
@@ -244,6 +281,14 @@ public class GUI {
         });
     }
 
+    /**
+     * Configura la sección de revisión de todos los artistas y muestra detalles de cada uno.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     * @param revisarArtistasButton Botón que permite revisar los datos de todos los artistas.
+     */
     public static void SeccionComprobacion(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton revisarArtistasButton) {
         revisarArtistasButton.addActionListener(new ActionListener() {
             @Override
@@ -477,6 +522,14 @@ public class GUI {
         });
     }
 
+    /**
+     * Configura la sección de liquidación mensual, permitiendo seleccionar mes, año y artista desde JComboBox.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     * @param liquidacionesButton Botón que permite acceder a la sección de liquidaciones.
+     */
     public static void SeccionLiquidacion(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton liquidacionesButton) {
         liquidacionesButton.addActionListener(new ActionListener() {
             @Override
@@ -489,25 +542,41 @@ public class GUI {
                 tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
                 liquidacionPanel.add(tituloLabel, BorderLayout.NORTH);
 
+                // Crear JComboBox para el mes, año y nombre del artista
                 JPanel filtrosPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+
+                // ComboBox de Mes
                 JLabel mesLabel = new JLabel("Mes: ");
-                JTextField mesText = new JTextField(10);
+                JComboBox<String> mesComboBox = new JComboBox<>(new String[]{
+                        "01 - Enero", "02 - Febrero", "03 - Marzo", "04 - Abril", "05 - Mayo", "06 - Junio",
+                        "07 - Julio", "08 - Agosto", "09 - Septiembre", "10 - Octubre", "11 - Noviembre", "12 - Diciembre"
+                });
+
+                // ComboBox de Año
                 JLabel yearLabel = new JLabel("Año: ");
-                JTextField yearText = new JTextField(10);
-                JLabel artistaLabel = new JLabel("ID del artista: ");
-                JTextField artistaText = new JTextField(10);
+                JComboBox<String> yearComboBox = new JComboBox<>();
+                int currentYear = LocalDate.now().getYear();
+                for (int i = currentYear; i >= currentYear - 10; i--) {
+                    yearComboBox.addItem(String.valueOf(i));
+                }
 
+                // ComboBox para seleccionar el nombre del artista
+                JLabel artistaLabel = new JLabel("Artista: ");
+                JComboBox<String> artistaComboBox = new JComboBox<>();
+                for (Artista artista : Spotify.listarTodosArtistas()) {
+                    artistaComboBox.addItem(artista.getNombre());
+                }
 
-                JButton enviarButton = new JButton("Enviar");
+                JButton enviarButton = new JButton("Generar");
                 enviarButton.setPreferredSize(new Dimension(90, 20));
-                filtrosPanel.add(mesLabel);
-                filtrosPanel.add(mesText);
-                filtrosPanel.add(yearLabel);
-                filtrosPanel.add(yearText);
-                filtrosPanel.add(artistaLabel);
-                filtrosPanel.add(artistaText);
-                filtrosPanel.add(enviarButton);
 
+                filtrosPanel.add(mesLabel);
+                filtrosPanel.add(mesComboBox);
+                filtrosPanel.add(yearLabel);
+                filtrosPanel.add(yearComboBox);
+                filtrosPanel.add(artistaLabel);
+                filtrosPanel.add(artistaComboBox);
+                filtrosPanel.add(enviarButton);
                 liquidacionPanel.add(filtrosPanel, BorderLayout.CENTER);
 
                 JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -523,105 +592,88 @@ public class GUI {
                     }
                 });
 
-                JPanel volverMuestraPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                JButton volverMuestraButton = new JButton("Volver");
-                volverMuestraButton.setPreferredSize(new Dimension(240, 25));
-                volverMuestraPanel.add(volverMuestraButton);
-
-                volverMuestraButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        cardLayout.show(mainPanel, "liquidacionPanel");
-                    }
-                });
-
+                // Panel para mostrar la liquidación generada
                 JPanel muestraLiquidacionPanel = new JPanel(new BorderLayout());
                 mainPanel.add(muestraLiquidacionPanel, "muestraLiquidacionPanel");
 
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        YearMonth fecha = null;
-                        String date = null;
-                        String mes = mesText.getText();
-                        String year = yearText.getText();
-                        String id = artistaText.getText();
-                        DateTimeFormatter formato = DateTimeFormatter.ofPattern("MM-yyyy");
-                        if(Spotify != null && !Spotify.getArtistas().isEmpty()) {
-                            if(mes.isEmpty() && id.isEmpty()) {
-                                JOptionPane.showMessageDialog(liquidacionPanel, "Complete el campo del mes y ID", "Error", JOptionPane.INFORMATION_MESSAGE);
-                            }else {
-                                if (mes.isEmpty())
-                                    JOptionPane.showMessageDialog(liquidacionPanel, "Complete el campo del mes.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                                else {
-                                    if (id.isEmpty())
-                                        JOptionPane.showMessageDialog(liquidacionPanel, "Complete el campo artista.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                                    else {
-                                        if (year.isEmpty()) {
-                                            String yearActual = String.valueOf(LocalDate.now().getYear());
-                                            date = mes + "-" + yearActual;
-                                        }else{
-                                            date = mes+"-"+year;
-                                        }
-                                        fecha = YearMonth.parse(date, formato);
+                        // Limpiar el panel muestraLiquidacionPanel antes de agregar nuevos componentes
+                        muestraLiquidacionPanel.removeAll();
 
+                        try {
+                            String mesSeleccionado = mesComboBox.getSelectedItem().toString().substring(0, 2); // Extraer el número de mes
+                            String añoSeleccionado = yearComboBox.getSelectedItem().toString();
+                            String nombreSeleccionado = artistaComboBox.getSelectedItem().toString();
+
+                            try {
+                                Artista artista = Spotify.buscarArtistaPorNombre(nombreSeleccionado);
+                                YearMonth fecha = YearMonth.parse(mesSeleccionado + "-" + añoSeleccionado, DateTimeFormatter.ofPattern("MM-yyyy"));
+
+                                JLabel tituloLabel = new JLabel("Liquidacion mensual", SwingConstants.CENTER);
+                                tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
+                                muestraLiquidacionPanel.add(tituloLabel, BorderLayout.NORTH);
+
+                                ArrayList<ObjetoLiquidacion> mensualDisco = artista.getLiquidacion(fecha).getLiquidacionDisco();
+                                ArrayList<ObjetoLiquidacion> mensualReproducciones = artista.getLiquidacion(fecha).getLiquidacionReproducciones();
+                                ArrayList<ObjetoLiquidacion> mensualRecitales = artista.getLiquidacion(fecha).getLiquidacionRecitales();
+                                float total = 0;
+
+                                JPanel tablaPanel = new JPanel(new BorderLayout());
+                                String[] columnas = {"Concepto", "Importe"};
+                                DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                        return false;
                                     }
+                                };
+
+                                for (ObjetoLiquidacion discos : mensualDisco) {
+                                    tablaModelo.addRow(new Object[]{"Disco: " + discos.getDescripcion(), discos.getMonto()});
+                                    total += discos.getMonto();
                                 }
-                            }
-                            if(fecha != null) {
-                                try {
-                                    cardLayout.show(mainPanel, "muestraLiquidacionPanel");
-                                    JLabel tituloLabel = new JLabel("Liquidacion mensual", SwingConstants.CENTER);
-                                    tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
-                                    muestraLiquidacionPanel.add(tituloLabel, BorderLayout.NORTH);
-                                    muestraLiquidacionPanel.add(volverMuestraPanel, BorderLayout.SOUTH);
-                                    ArrayList<ObjetoLiquidacion> mensualDisco;
-                                    ArrayList<ObjetoLiquidacion> mensualReproducciones;
-                                    ArrayList<ObjetoLiquidacion> mensualRecitales;
-                                    Liquidacion liquidacionMensual = Spotify.LiquidacionArtista(id, fecha);
-                                    mensualDisco = liquidacionMensual.getLiquidacionDisco();
-                                    mensualReproducciones = liquidacionMensual.getLiquidacionReproducciones();
-                                    mensualRecitales = liquidacionMensual.getLiquidacionRecitales();
-                                    JPanel tablaPanel = new JPanel(new BorderLayout());
-                                    String[] columnas = {"Concepto", "Importe"};
-                                    DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
-                                        @Override
-                                        public boolean isCellEditable(int row, int column) {
-                                            return false; // Desactiva la edición de celdas
-                                        }
-                                    };
-                                    for (ObjetoLiquidacion discos: mensualDisco) {
-                                        Object[] dataDiscos = {"Disco: " + discos.getDescripcion(), discos.getMonto()};
-                                        tablaModelo.addRow(dataDiscos);
-                                    }
-                                    for (ObjetoLiquidacion canciones: mensualReproducciones) {
-                                        Object[] dataCanciones = {"Cancion: " + canciones.getDescripcion(), canciones.getMonto()};
-                                        tablaModelo.addRow(dataCanciones);
-                                    }
-                                    for (ObjetoLiquidacion recitales : mensualRecitales) {
-                                        Object[] dataRecitales = {"Recital el dia " + recitales.getDescripcion(), recitales.getMonto()};
-                                        tablaModelo.addRow(dataRecitales);
-                                    }
-
-
-                                    JTable tabla = new JTable(tablaModelo);
-                                    tabla.getTableHeader().setReorderingAllowed(false);
-                                    JScrollPane scrollPane = new JScrollPane(tabla);
-
-                                    tablaPanel.removeAll();
-                                    tablaPanel.add(scrollPane, BorderLayout.CENTER);
-                                    muestraLiquidacionPanel.add(tablaPanel, BorderLayout.CENTER);
-                                    muestraLiquidacionPanel.revalidate();
-                                    muestraLiquidacionPanel.repaint();
-
-                                }catch (ArtistaNoEncontradoException eA){
-                                    JOptionPane.showMessageDialog(frame, eA.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                                for (ObjetoLiquidacion canciones : mensualReproducciones) {
+                                    tablaModelo.addRow(new Object[]{"Cancion: " + canciones.getDescripcion(), canciones.getMonto()});
+                                    total += canciones.getMonto();
+                                }
+                                for (ObjetoLiquidacion recitales : mensualRecitales) {
+                                    tablaModelo.addRow(new Object[]{"Recital el dia " + recitales.getDescripcion(), recitales.getMonto()});
+                                    total += recitales.getMonto();
                                 }
 
-                            }
+                                tablaModelo.addRow(new Object[]{"Total: ", total});
 
-                        }else {
-                            JOptionPane.showMessageDialog(liquidacionPanel, "Los artistas no han sido cargados.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                                JTable tabla = new JTable(tablaModelo);
+                                tabla.getTableHeader().setReorderingAllowed(false);
+                                JScrollPane scrollPane = new JScrollPane(tabla);
+
+                                tablaPanel.add(scrollPane, BorderLayout.CENTER);
+                                muestraLiquidacionPanel.add(tablaPanel, BorderLayout.CENTER);
+
+                                JPanel volverMuestraPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                                JButton volverMuestraButton = new JButton("Volver");
+                                volverMuestraButton.setPreferredSize(new Dimension(240, 25));
+                                volverMuestraPanel.add(volverMuestraButton);
+                                muestraLiquidacionPanel.add(volverMuestraPanel, BorderLayout.SOUTH);
+
+                                volverMuestraButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        cardLayout.show(mainPanel, "liquidacionPanel");
+                                    }
+                                });
+
+                                muestraLiquidacionPanel.revalidate();
+                                muestraLiquidacionPanel.repaint();
+
+                                cardLayout.show(mainPanel, "muestraLiquidacionPanel");
+
+                            } catch (ArtistaNoEncontradoException ex) {
+                                JOptionPane.showMessageDialog(frame, "No se encontró el artista: " + nombreSeleccionado, "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (NullPointerException ex) {
+                            JOptionPane.showMessageDialog(frame, "No hay artistas cargados.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
@@ -629,6 +681,14 @@ public class GUI {
         });
     }
 
+    /**
+     * Configura la sección de consulta de datos de artistas, permitiendo realizar búsquedas filtradas.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param artistaPanel Panel específico para la gestión de artistas.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param consultaArtistasButton Botón que permite acceder a la consulta de artistas.
+     */
     public static void SeccionConsulta(JPanel mainPanel, JPanel artistaPanel, CardLayout cardLayout, JButton consultaArtistasButton) {
         consultaArtistasButton.addActionListener(new ActionListener() {
             @Override
@@ -756,6 +816,14 @@ public class GUI {
         });
     }
 
+    /**
+     * Configura la sección de eliminación de artistas.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     * @param eliminarArtistaButton Botón que permite acceder a la sección de eliminación de artistas.
+     */
     public static void SeccionElimina(JPanel mainPanel, CardLayout cardLayout, JFrame frame, JButton eliminarArtistaButton) {
         eliminarArtistaButton.addActionListener(new ActionListener() {
             @Override
@@ -768,35 +836,50 @@ public class GUI {
                 tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
                 eliminarPanel.add(tituloLabel, BorderLayout.NORTH);
 
+                // Panel para los datos del artista a eliminar
                 JPanel datosPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
-                JLabel idLabel = new JLabel("ID del artista: ");
-                JTextField idText = new JTextField(15);
-                JButton enviarButton = new JButton("Enviar");
+                JLabel artistaLabel = new JLabel("Seleccione un artista: ");
+
+                // Crear JComboBox con los nombres de los artistas
+                JComboBox<String> artistaComboBox = new JComboBox<>();
+                for (Artista artista : Spotify.listarTodosArtistas()) {
+                    artistaComboBox.addItem(artista.getNombre());
+                }
+
+                JButton enviarButton = new JButton("Eliminar");
                 enviarButton.setPreferredSize(new Dimension(90, 20));
 
-                JPanel volvelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
+                // Agregar el panel de "Volver"
+                JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 JButton volverButton = new JButton("Volver");
                 volverButton.setPreferredSize(new Dimension(90, 20));
-                JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
                 volverPanel.add(volverButton);
                 eliminarPanel.add(volverPanel, BorderLayout.SOUTH);
 
+                // Acción del botón "Eliminar"
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        try {
-                            String ID = idText.getText();
-                            Spotify.bajaArtista(ID);
-                            JOptionPane.showMessageDialog(frame, "El artista se dio de baja de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                            cardLayout.show(mainPanel, "artistaPanel");
-                        }catch (ArtistaNoEncontradoException eA){
-                            JOptionPane.showMessageDialog(frame, eA.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                        String nombreSeleccionado = (String) artistaComboBox.getSelectedItem();
+                        if(nombreSeleccionado!=null) {
+                            try {
+                                Artista artista = Spotify.buscarArtistaPorNombre(nombreSeleccionado);
+                                if (artista != null) {
+                                    Spotify.bajaArtista(artista.getID());
+                                    JOptionPane.showMessageDialog(frame, "El artista se dio de baja de forma correcta.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                                    cardLayout.show(mainPanel, "artistaPanel");
+                                }
+                            } catch (ArtistaNoEncontradoException ex) {
+                                JOptionPane.showMessageDialog(frame, ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                            }
                         }
-
+                        else{
+                            JOptionPane.showMessageDialog(frame, "No hay artistas cargados", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        }
                     }
                 });
 
+                // Acción del botón "Volver"
                 volverButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -804,17 +887,22 @@ public class GUI {
                     }
                 });
 
-
-                datosPanel.add(idLabel);
-                datosPanel.add(idText);
+                // Añadir elementos al panel
+                datosPanel.add(artistaLabel);
+                datosPanel.add(artistaComboBox);
                 datosPanel.add(enviarButton);
-
-                eliminarPanel.add(datosPanel);
-
+                eliminarPanel.add(datosPanel, BorderLayout.CENTER);
             }
         });
     }
 
+    /**
+     * Configura la sección de reportes, permitiendo generar y mostrar reportes de canciones y discos.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param frame Marco principal de la aplicación.
+     */
     public static void reportes(JPanel mainPanel, CardLayout cardLayout, JFrame frame) {
         JPanel reportesPanel = new JPanel(new BorderLayout());
         mainPanel.add(reportesPanel, "reportesPanel");
@@ -855,6 +943,14 @@ public class GUI {
         reportesPanel.add(volverPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Configura y muestra el reporte de las top 10 canciones de un género específico.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param tituloLabel Etiqueta de título del reporte.
+     * @param topCancionesButton Botón que permite acceder al reporte de top canciones.
+     */
     public static void reporteCanciones(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JButton topCancionesButton) {
         JPanel reporteCancionesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
         JLabel tituloCancionesLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
@@ -972,21 +1068,24 @@ public class GUI {
         });
     }
 
-    public static void reporteDiscos(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JFrame frame,JButton discosVendidosButton) {
+    /**
+     * Configura y muestra el reporte de unidades vendidas por disco de un artista específico,
+     * utilizando un JComboBox para seleccionar el nombre del artista.
+     *
+     * @param mainPanel Panel principal que contiene todos los sub-paneles.
+     * @param cardLayout Administrador de diseño para cambiar entre paneles.
+     * @param tituloLabel Etiqueta de título del reporte.
+     * @param frame Marco principal de la aplicación.
+     * @param discosVendidosButton Botón que permite acceder al reporte de discos vendidos.
+     */
+    public static void reporteDiscos(JPanel mainPanel, CardLayout cardLayout, JLabel tituloLabel, JFrame frame, JButton discosVendidosButton) {
         JPanel reporteDiscosPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 60));
-        JLabel tituloDiscosLabel = new JLabel("Top 10 canciones", SwingConstants.CENTER);
-        tituloLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
         mainPanel.add(reporteDiscosPanel, "reporteDiscosPanel");
-        reporteDiscosPanel.add(tituloDiscosLabel, BorderLayout.NORTH);
-
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        JTextField archivoTextField = new JTextField("Ingrese el ID del artista que desea analizar: ", 30);
 
         discosVendidosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Limpiar el panel para evitar agregar componentes duplicados
+                // Limpiar el panel antes de agregar nuevos componentes
                 reporteDiscosPanel.removeAll();
                 reporteDiscosPanel.setLayout(new BoxLayout(reporteDiscosPanel, BoxLayout.Y_AXIS));
 
@@ -996,40 +1095,29 @@ public class GUI {
                 tituloDiscoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                 reporteDiscosPanel.add(tituloDiscoLabel);
 
-                // Espacio entre el título y el campo de texto
+                // Espacio entre el título y el ComboBox
                 reporteDiscosPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-                // Configurar el campo de texto
-                JTextField discoTextField = new JTextField("Ingrese el ID del artista que desea analizar: ", 30);
-                discoTextField.setMaximumSize(new Dimension(300, 25));
-                discoTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+                // Configurar el ComboBox para seleccionar el artista
+                JLabel artistaLabel = new JLabel("Seleccione un artista: ");
+                JComboBox<String> artistaComboBox = new JComboBox<>();
+                for (Artista artista : Spotify.listarTodosArtistas()) {
+                    artistaComboBox.addItem(artista.getNombre());
+                }
+                artistaComboBox.setMaximumSize(new Dimension(300, 25));
+                artistaComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                discoTextField.addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                        if (discoTextField.getText().equals("Ingrese el ID del artista que desea analizar: ")) {
-                            discoTextField.setText("");
-                        }
-                    }
+                reporteDiscosPanel.add(artistaLabel);
+                reporteDiscosPanel.add(artistaComboBox);
 
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (discoTextField.getText().isEmpty()) {
-                            discoTextField.setText("");
-                        }
-                    }
-                });
-
-                reporteDiscosPanel.add(discoTextField);
-
-                // Espacio entre el campo de texto y los botones
+                // Espacio entre el ComboBox y los botones
                 reporteDiscosPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
                 // Configurar los botones
                 JPanel botonesPanel = new JPanel();
                 botonesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-                JButton enviarButton = new JButton("Enviar");
+                JButton enviarButton = new JButton("Generar Reporte");
                 JButton volverReporteButton = new JButton("Volver");
                 botonesPanel.add(enviarButton);
                 botonesPanel.add(volverReporteButton);
@@ -1040,38 +1128,35 @@ public class GUI {
                         cardLayout.show(mainPanel, "reportesPanel");
                     }
                 });
+
                 JPanel tablaPanel = new JPanel(new BorderLayout());
                 enviarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        String nombreSeleccionado = (String) artistaComboBox.getSelectedItem();
+
                         try {
-                            String ID = discoTextField.getText().trim();
-                            HashSet<Disco> reporteDiscos = null;
-                            reporteDiscos = Spotify.reporteDiscos(ID);
-                            float prom = Reporte.promedio(reporteDiscos, ID);
-                            String[] columnas = {"Nombre", "Unidades vendidas"};
+                            Artista artista = Spotify.buscarArtistaPorNombre(nombreSeleccionado);
+                            HashSet<Disco> reporteDiscos = artista.getDiscos();
+                            float promedioUnidades = Reporte.promedio(reporteDiscos, artista.getID());
+
+                            String[] columnas = {"Nombre del Disco", "Unidades Vendidas"};
                             DefaultTableModel tablaModelo = new DefaultTableModel(columnas, 0) {
                                 @Override
                                 public boolean isCellEditable(int row, int column) {
                                     return false; // Desactiva la edición de celdas
                                 }
                             };
-                            for (Disco discos : reporteDiscos) {
-                                Object[] Data = {discos.getNombre(), discos.getUnidadesVendidas()};
-                                tablaModelo.addRow(Data);
+                            for (Disco disco : reporteDiscos) {
+                                tablaModelo.addRow(new Object[]{disco.getNombre(), disco.getUnidadesVendidas()});
                             }
+
+                            // Agregar una fila para el promedio al final de la tabla
+                            tablaModelo.addRow(new Object[]{"Promedio de Unidades Vendidas", promedioUnidades});
 
                             JTable tabla = new JTable(tablaModelo);
                             tabla.getTableHeader().setReorderingAllowed(false);
                             JScrollPane scrollPane = new JScrollPane(tabla);
-                            Object[] vaciaFila = {"", ""};
-
-                            Object[] promFila = {"Promedio", prom};
-                            tablaModelo.addRow(vaciaFila);
-                            tablaModelo.addRow(promFila);
-
-                            tabla.setRowHeight(tabla.getRowCount() - 1, 20);
-
 
                             tablaPanel.removeAll();
                             tablaPanel.add(scrollPane, BorderLayout.CENTER);
@@ -1079,22 +1164,19 @@ public class GUI {
                             reporteDiscosPanel.revalidate();
                             reporteDiscosPanel.repaint();
 
-                        }catch (ArtistaNoEncontradoException eA){
-                            JOptionPane.showMessageDialog(frame, eA.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                        } catch (ArtistaNoEncontradoException ex) {
+                            JOptionPane.showMessageDialog(frame, "No se encontró el artista: " + nombreSeleccionado, "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
 
                 reporteDiscosPanel.add(botonesPanel);
+                cardLayout.show(mainPanel, "reporteDiscosPanel");
 
-                // Ajustar el panel
+                // Actualizar y mostrar el panel
                 reporteDiscosPanel.revalidate();
                 reporteDiscosPanel.repaint();
-
-                // Mostrar el panel
-                cardLayout.show(mainPanel, "reporteDiscosPanel");
             }
         });
-
     }
 }
